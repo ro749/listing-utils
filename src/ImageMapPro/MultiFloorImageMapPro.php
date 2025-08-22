@@ -77,6 +77,9 @@ class MultiFloorImageMapPro extends ImageMapProBase
         where($this->floor_column,$data->input("floor"))->
         where($this->type_column,$data->input("type"))->
         first();
+        if($data->status != 0){
+            return null;
+        }
         return $data;
     }
 }

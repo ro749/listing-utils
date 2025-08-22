@@ -43,6 +43,9 @@ class SingleImageMapPro extends ImageMapProBase
 
     function get_unit(Request $data){
         $data = DB::table($this->table)->where($this->label_column,$data->input("unit"))->first();
+        if($data->status != 0){
+            return null;
+        }
         return $data;
     }
 }
