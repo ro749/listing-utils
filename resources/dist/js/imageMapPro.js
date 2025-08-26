@@ -8,6 +8,7 @@
                 data: {unit: unit},
                 success: function (response) {
                     $(document).trigger('selected-unit', [{ unit: response }]);
+                    $('#unit-info').show();
                 }
             });
         } 

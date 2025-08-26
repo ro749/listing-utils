@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+use Ro749\ListingUtils\Plans\PlansBase;
+
+class {{ class }} extends PlansBase
+{
+    public function __construct()
+    {
+        parent::__construct(
+            plans_table: "plans",
+            lines_table: "planlines"
+        );
+    }
+
+    protected static ?{{ class }} $instance = null;
+
+    public static function instance(): {{ class }}
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public function get(): array{
+        return $this->get_in_matrix(2);
+    }
+}

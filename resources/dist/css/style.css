@@ -1,0 +1,51 @@
+.UnitsStatus-0{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--success-focus);
+    color: var(--success-main);
+}
+.UnitsStatus-1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--danger-focus);
+    color: var(--danger-main);
+}
+.UnitsStatus-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--warning-focus);
+    color: var(--warning-main);
+}
+
+.plan-title{
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.plan-div{
+    background-color: white;
+}
+
+.plan-div{
+    background-color: white;
+    padding: 1em;
+}
+
+.left{
+    text-align: left;
+}
+
+.right{
+    text-align: right;
+}
+
+.center{
+    text-align: center;
+}

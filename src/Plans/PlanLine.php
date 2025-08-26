@@ -6,24 +6,22 @@ class PlanLine
     public string $text;
     //the percentage of the plan line from 0 to 100
     public float $percentage;
-    public string $data;
 
     public function __construct(
         string $text,
-        float $percentage,
-        string $data
+        float $percentage
     ){
         $this->text = $text;
         $this->percentage = $percentage;
-        $this->data = $data;
     }
 
     public function render(string $id, int $key)
     {
-        return view('Plans.plan-fillable-line', [
-            'line' => $this,
-            'id' => $id,
-            'key' => $key,
+        return view('listing-utils::Plans.plan-fillable-line', [
+            'description' => $this->text,
+            'percentage' => $this->percentage,
+            'id' => $id.'-'.$key,
+            'class' => $id,
         ]);
     }
 }

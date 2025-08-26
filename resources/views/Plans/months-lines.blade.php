@@ -1,18 +1,18 @@
-@include('Plans.plan-line',[
+@include('listing-utils::Plans.plan-line',[
     'description' => $line->text,
     'percentage' => $line->percentage,
     'class' => 'plan-line',
     'id' => 'plan-line-'.$id.'-'.$key,
 ])
 
-@include('Plans.plan-line',[
+@include('listing-utils::Plans.plan-line',[
     'description' => $line->month_tag,
     'percentage' => 0,
     'class' => 'plan-months',
     'id' => 'plan-months-'.$id,
 ])
 
-@include('Plans.plan-line',[
+@include('listing-utils::Plans.plan-line',[
     'description' => $line->mensuality_tag,
     'percentage' => 0,
     'class' => 'plan-mensuality',

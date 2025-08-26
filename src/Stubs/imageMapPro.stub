@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use Ro749\SharedUtils\ImageMapProBase;
+use Ro749\ListingUtils\ImageMapPro\ImageMapProBase;
 
 class {{ class }} extends ImageMapProBase
 {
@@ -18,9 +18,9 @@ class {{ class }} extends ImageMapProBase
         );
     }
 
-    protected static ?ImageMapPro $instance = null;
+    protected static ?{{ class }} $instance = null;
 
-    public static function instance(): ImageMapPro
+    public static function instance(): {{ class }}
     {
         if (!self::$instance) {
             self::$instance = new self();

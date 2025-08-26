@@ -5,6 +5,7 @@ namespace Ro749\ListingUtils\Plans;
 class Plan{
     public int $id;
     public string $title;
+    public float $discounts;
     public array $lines;
     public string $price_tag;
     public string $discount_tag;
@@ -17,6 +18,8 @@ class Plan{
     public function __construct(
         int $id,
         string $title,
+        //if instead of discount the price is fixed, set the column of the price of this plan
+        float|string $discounts,
         array $lines,
         string $price_tag = 'Precio de lista',
         string $discount_tag = 'Descuento',
@@ -28,6 +31,7 @@ class Plan{
     ){
         $this->id = $id;
         $this->title = $title;
+        $this->discounts = $discounts;
         $this->lines = $lines;
         $this->price_tag = $price_tag;
         $this->discount_tag = $discount_tag;
