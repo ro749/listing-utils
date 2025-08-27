@@ -7,6 +7,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Ro749\ListingUtils\Commands\ListingUtilsCommand;
 use Ro749\ListingUtils\Commands\MakeImageMapPro;
 use Ro749\ListingUtils\Commands\MakePlans;
+use Ro749\ListingUtils\Commands\ReadUnits;
 class ListingUtilsServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
@@ -26,6 +27,7 @@ class ListingUtilsServiceProvider extends PackageServiceProvider
                 ListingUtilsCommand::class,
                 MakeImageMapPro::class,
                 MakePlans::class,
+                ReadUnits::class
             ])
             ->hasRoutes('web');
     }
