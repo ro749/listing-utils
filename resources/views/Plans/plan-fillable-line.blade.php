@@ -2,10 +2,9 @@
     'description' => $description,
     'percentage' => $percentage,
     'class' => 'plan-line',
-    'id' => 'plan-line-'.$id.'-'.$class,
+    'id' => 'plan-line-'.$id,
 ])
-
-@push('plan-fill')
+@push($push)
     var value = final_price*{{ $percentage / 100.0 }};
-    $('#fill-plan-line-{{ $id }}-{{ $class }}').text('$'+formatNumber(value));
+    $('#fill-plan-line-{{ $id }}').text('$'+formatNumber(value));
 @endpush

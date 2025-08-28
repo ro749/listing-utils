@@ -21,7 +21,7 @@ class PlanLine
             'description' => $this->text,
             'percentage' => $this->percentage,
             'id' => $id.'-'.$key,
-            'class' => $id,
+            'push' => 'fill-plan-'.$id,
         ]);
     }
 }
