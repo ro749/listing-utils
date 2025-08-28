@@ -2,9 +2,9 @@
 
 namespace {{ namespace }};
 
-use Ro749\ListingUtils\ImageMapPro\ImageMapProBase;
+use Ro749\ListingUtils\ImageMapPro\SingleImageMapPro;
 
-class {{ class }} extends ImageMapProBase
+class {{ class }} extends SingleImageMapPro
 {
     public function __construct(){
         parent::__construct(
@@ -13,8 +13,8 @@ class {{ class }} extends ImageMapProBase
             label_column: 'unit',
             data_column: 'status',
             colors: ["#00ff00","#ff0000","#ffff00"],
-            opacities:[0.8,0.8,0.8]
-
+            opacities:[0.4,0.4,0.4],
+            file: 'imageMapPro.json'
         );
     }
 

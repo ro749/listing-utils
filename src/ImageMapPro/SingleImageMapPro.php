@@ -17,13 +17,15 @@ class SingleImageMapPro extends ImageMapProBase
         string $data_column,
         string $file,
         array $colors,
-        array $opacities
+        array $opacities,
+        string $selected_color
     ){
         parent::__construct(
             id: $id, 
             table:$table, 
             colors: $colors,
-            opacities: $opacities
+            opacities: $opacities,
+            selected_color: $selected_color
         );
         $this->label_column = $label_column;
         $this->data_column = $data_column;
@@ -38,7 +40,9 @@ class SingleImageMapPro extends ImageMapProBase
         foreach($data as $d){
             $dispo[$d->unit] = $d->status;
         }
-        return $this->re_color($map, $dispo);
+        $ans['map'] = $this->re_color($map, $dispo);
+        $ans['selected_color'] = $this->selected_color;
+        return $ans;
     }
 
     function get_unit(Request $data){

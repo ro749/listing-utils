@@ -11,16 +11,20 @@ abstract class ImageMapProBase
     public array $colors = [];
     public array $opacities = [];
 
+    public string $selected_color = "#ffffff";
+
     public function __construct(
         string $id,
         string $table,
         array $colors,
-        array $opacities
+        array $opacities,
+        string $selected_color
     ){
         $this->id = $id;
         $this->table = $table;
         $this->colors = $colors;
         $this->opacities = $opacities;
+        $this->selected_color = $selected_color;
     }
 
     public function style_unit(&$child,&$dispo){

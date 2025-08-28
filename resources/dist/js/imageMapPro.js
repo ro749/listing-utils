@@ -1,12 +1,20 @@
 (function ($) {
     $.fn.imageMapPro = function (options = {}) {
+        var selected_unit = null;
+        var selected_color = null;
         function get_unit(unit){
+            
             $.ajax({
                 url: 'imagemappro/'+options.id+'/unit',
                 method: 'GET',
                 dataType: 'json',
                 data: {unit: unit},
                 success: function (response) {
+                    if(selected_unit){
+                        $('[data-title="' + selected_unit + '"]').attr('style', '');
+                    }
+                    selected_unit = unit;
+                    $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
                     $(document).trigger('selected-unit', [{ unit: response }]);
                     $('#unit-info').show();
                 }
@@ -28,7 +36,7 @@
                 ImageMapPro.hideTooltip(action.payload.map, action.payload.object);
             }
             if(action.type == "artboardChange"){
-                current_artboard = action.payload.artboard;
+                $('[data-title="' + selected_unit + '"]').attr('style', 'background: '+selected_color+' !important;');
             }
         });
 
@@ -37,7 +45,8 @@
             method: 'GET',
             dataType: 'json',
             success: function (response) {
-                ImageMapPro.init('#image-map-pro',response);
+                selected_color = response.selected_color;
+                ImageMapPro.init('#image-map-pro',response.map);
             }
         });
     };
