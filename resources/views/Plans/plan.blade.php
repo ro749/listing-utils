@@ -50,12 +50,11 @@
         var final_price = data['price'] - discount;
         $('#fill-discount-{{ $plan->id }}').text('$'+formatNumber(discount));
         @else
-        var final_price = data['price'];
+        var final_price = parseFloat(data['price']); 
         @endif
     @else
-        var final_price = data['{{ $plan->discount }}'];
+        var final_price = parseFloat(data['{{ $plan->discount }}']);
     @endif
     $('#fill-total-price-{{ $plan->id }}').text('$'+formatNumber(final_price));
     @stack($stack)
-
 @endpush

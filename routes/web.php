@@ -27,3 +27,16 @@ Route::get('imagemappro/{imagemappro}/unit', function (Request $request,$imagema
     $imp = new $impClass();
     return $imp->get_unit($request);
 });
+Route::middleware(['web','auth:asesor'])->group(function () {
+    Route::get('sender/{sender}/link', function (Request $request,$sender){
+        $senderClass = "App\\Senders\\".$sender;
+        $sender = new $senderClass();
+        return $sender->get_link($request);
+    });
+
+    Route::get('sender/{sender}/mail', function (Request $request,$sender){
+        $senderClass = "App\\Senders\\".$sender;
+        $sender = new $senderClass();
+        return $sender->get_mail($request);
+    });
+});

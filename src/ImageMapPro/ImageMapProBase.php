@@ -8,6 +8,7 @@ abstract class ImageMapProBase
 {
     public string $id;
     public string $table;
+    public string $unit_class;
     public array $colors = [];
     public array $opacities = [];
 
@@ -16,12 +17,14 @@ abstract class ImageMapProBase
     public function __construct(
         string $id,
         string $table,
+        string $unit_class,
         array $colors,
         array $opacities,
         string $selected_color
     ){
         $this->id = $id;
         $this->table = $table;
+        $this->unit_class = $unit_class;
         $this->colors = $colors;
         $this->opacities = $opacities;
         $this->selected_color = $selected_color;

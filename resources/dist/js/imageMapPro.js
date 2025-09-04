@@ -14,6 +14,7 @@
                         $('[data-title="' + selected_unit + '"]').attr('style', '');
                     }
                     selected_unit = unit;
+                    $(this).data('unit', unit);
                     $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
                     $(document).trigger('selected-unit', [{ unit: response }]);
                     $('#unit-info').show();
@@ -49,5 +50,8 @@
                 ImageMapPro.init('#image-map-pro',response.map);
             }
         });
+    };
+    $.fn.get_unit() = function (unit) {
+        return $(this).data('unit');
     };
 })(jQuery);

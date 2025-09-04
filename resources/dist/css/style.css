@@ -30,13 +30,11 @@
 }
 
 .plan-div{
-    background-color: white;
-}
-
-.plan-div{
+    margin: 1em;
     background-color: white;
     padding: 1em;
 }
+
 
 .left{
     text-align: left;
@@ -48,4 +46,24 @@
 
 .center{
     text-align: center;
+}
+
+@media (min-width: 992px) {
+    .plan-row{
+        display:flex; 
+        flex-direction: row; 
+        justify-content: space-evenly;
+    }
+
+    .plan-div{
+        width: 100%;
+    }
+    
+}
+
+@media (max-width: 991px) {
+    .plan-row{
+        display:flex; 
+        flex-direction: column; 
+    }
 }

@@ -13,6 +13,7 @@ class SingleImageMapPro extends ImageMapProBase
     public function __construct(
         string $id,
         string $table,
+        string $unit_class,
         string $label_column,
         string $data_column,
         string $file,
@@ -23,6 +24,7 @@ class SingleImageMapPro extends ImageMapProBase
         parent::__construct(
             id: $id, 
             table:$table, 
+            unit_class: $unit_class,
             colors: $colors,
             opacities: $opacities,
             selected_color: $selected_color
@@ -46,10 +48,10 @@ class SingleImageMapPro extends ImageMapProBase
     }
 
     function get_unit(Request $data){
-        $data = DB::table($this->table)->where($this->label_column,$data->input("unit"))->first();
-        if($data->status != 0){
+        $unit = $this->unit_class::get("unit", $data->input("unit"));
+        if($unit->status != 0){
             return null;
         }
-        return $data;
+        return $unit;
     }
 }
