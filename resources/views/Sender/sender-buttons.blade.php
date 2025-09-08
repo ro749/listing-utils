@@ -23,7 +23,7 @@
             method: 'GET',
             dataType: 'text',
             data: {
-                unit: selected_unit_id
+                unit: {{ isset($unit) ? $unit->id : "selected_unit_id" }}
             },
             success: function (response) {
                 window.open(response, '_blank');
@@ -36,7 +36,7 @@
             method: 'GET',
             dataType: 'json',
             data: {
-                unit: selected_unit_id
+                unit: {{ isset($unit) ? $unit->id : "selected_unit_id" }}
             },
             success: function (response) {
                 navigator.clipboard.writeText(response.link);
