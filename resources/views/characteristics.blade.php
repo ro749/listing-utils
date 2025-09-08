@@ -10,6 +10,7 @@
 
 @if(empty($unit))
 @push('fill')
+$('#characteristics').empty();
 for(var i = 0; i < data['characteristics'].length; i++){
     var char = data['characteristics'][i];
     $('#characteristics').append(`
