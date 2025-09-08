@@ -14,10 +14,19 @@
                         $('[data-title="' + selected_unit + '"]').attr('style', '');
                     }
                     selected_unit = unit;
-                    $(this).data('unit', unit);
                     $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
                     $(document).trigger('selected-unit', [{ unit: response }]);
                     $('#unit-info').show();
+                    console.log('resize');
+                    setTimeout(function(){
+                        const event = new UIEvent('resize', {
+                          bubbles: true,
+                          cancelable: false,
+                          view: window,
+                          detail: 0
+                        });
+                        window.dispatchEvent(event);
+                    }, 1000);
                 }
             });
         } 
@@ -29,6 +38,15 @@
                         get_unit(event.target.getAttribute("data-title"));
                     });
                 }
+                setTimeout(function(){
+                    const event = new UIEvent('resize', {
+                      bubbles: true,
+                      cancelable: false,
+                      view: window,
+                      detail: 0
+                    });
+                    window.dispatchEvent(event);
+                }, 1000);
             }
             if(action.type == "objectClick"){
                 get_unit(action.payload.object);
@@ -50,8 +68,5 @@
                 ImageMapPro.init('#image-map-pro',response.map);
             }
         });
-    };
-    $.fn.get_unit = function (unit) {
-        return $(this).data('unit');
     };
 })(jQuery);
