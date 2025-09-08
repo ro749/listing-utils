@@ -51,7 +51,7 @@
             }
         });
     };
-    $.fn.get_unit() = function (unit) {
+    $.fn.get_unit = function (unit) {
         return $(this).data('unit');
     };
 })(jQuery);
