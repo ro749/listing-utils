@@ -11,7 +11,6 @@ class SingleImageMapPro extends ImageMapProBase
     public string $file;
 
     public function __construct(
-        string $id,
         string $table,
         string $unit_class,
         string $label_column,
@@ -22,7 +21,6 @@ class SingleImageMapPro extends ImageMapProBase
         string $selected_color
     ){
         parent::__construct(
-            id: $id, 
             table:$table, 
             unit_class: $unit_class,
             colors: $colors,

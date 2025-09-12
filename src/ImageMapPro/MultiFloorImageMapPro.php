@@ -14,7 +14,6 @@ class MultiFloorImageMapPro extends ImageMapProBase
     public array $files;
 
     public function __construct(
-        string $id,
         string $table,
         string $floor_column,
         string $type_column,
@@ -25,7 +24,6 @@ class MultiFloorImageMapPro extends ImageMapProBase
         array $floors
     ){
         parent::__construct(
-            id: $id, 
             table:$table, 
             colors: $colors,
             opacities: $opacities

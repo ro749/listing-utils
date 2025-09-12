@@ -6,7 +6,7 @@
 @push('scripts')
 <script>
     $(document).ready(function () {
-        $('#image-map-pro').imageMapPro(@json($imp));
+        $('#image-map-pro').imageMapPro(@json($imp->get_info()));
     });
 </script>
 @endpush

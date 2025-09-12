@@ -21,7 +21,7 @@
 <script>
     $('#send-link-btn').on('click', function () {
         $.ajax({
-            url: 'sender/' + '{{ $sender->id }}' + '/link',
+            url: 'sender/' + '{{ $sender->get_id() }}' + '/link',
             method: 'GET',
             dataType: 'text',
             data: {
@@ -35,7 +35,7 @@
     });
     $('#send-mail-btn').on('click', function () {
         $.ajax({
-            url: 'sender/' + '{{ $sender->id }}' + '/mail',
+            url: 'sender/' + '{{ $sender->get_id() }}' + '/mail',
             method: 'GET',
             dataType: 'text',
             data: {

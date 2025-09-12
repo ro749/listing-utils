@@ -9,13 +9,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Mail\Mailable;
 class BaseCotizationSender
 {
-    public string $id = '';
     public string $mail_class = '';
     public $client;
     
-    public function __construct(string $id,string $mail_class)
+    public function __construct(string $mail_class)
     {
-        $this->id = $id;
         $this->mail_class = $mail_class;
         $client_id = session()->get('client_id');
         $this->client = DB::table('clients')->where('id', $client_id)->first();
@@ -41,5 +39,9 @@ class BaseCotizationSender
             link: route('client-view', ['id' => $id])
         );
         Mail::to($this->client->mail)->send($mail);
+    }
+
+    function get_id(){
+        return class_basename($this);
     }
 }

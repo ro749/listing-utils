@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 abstract class ImageMapProBase
 {
-    public string $id;
     public string $table;
     public string $unit_class;
     public array $colors = [];
@@ -15,14 +14,12 @@ abstract class ImageMapProBase
     public string $selected_color = "#ffffff";
 
     public function __construct(
-        string $id,
         string $table,
         string $unit_class,
         array $colors,
         array $opacities,
         string $selected_color
     ){
-        $this->id = $id;
         $this->table = $table;
         $this->unit_class = $unit_class;
         $this->colors = $colors;
@@ -85,6 +82,18 @@ abstract class ImageMapProBase
             }
         }
         return $map;
+    }
+
+    function get_id(){
+        return class_basename($this);
+    }
+
+    function get_info(){
+        return [
+            'id' => $this->get_id(),
+            'colors' => $this->colors,
+            'opacities' => $this->opacities
+        ];
     }
     abstract function get_unit(Request $data);
 }
