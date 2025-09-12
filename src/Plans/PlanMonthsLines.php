@@ -20,10 +20,14 @@ class PlanMonthsLines extends PlanLine
 
     public function render(string $id, int $key)
     {
-        return view('Plans.plan-fillable-lines', [
-            'line' => $this,
-            'id' => $id,
-            'key' => $key,
+        return view('listing-utils::Plans.months-lines', [
+            'description' => $this->text,
+            'percentage' => $this->percentage,
+            'month_tag' => $this->month_tag,
+            'mensuality_tag' => $this->mensuality_tag,
+            'num' => $this->num,
+            'id' => $id.'-'.$key,
+            'push' => 'fill-plan-'.$id,
         ]);
     }
 }

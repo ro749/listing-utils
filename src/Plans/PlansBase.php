@@ -4,16 +4,22 @@ namespace Ro749\ListingUtils\Plans;
 
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 abstract class PlansBase
 {   
     public string $plans_table;
     public string $lines_table;
 
     public Plan $default_plan;
-
+    public string $months_tag = '';
+    public string $mensuality_tag = '';
+    public int $months;
     public function __construct(
         string $plans_table, 
         string $lines_table,
+        string $months_tag = 'Meses',
+        string $mensuality_tag = 'Mensualidad',
         Plan $default_plan = new Plan(
             id: 0,
             title: 'Default',
@@ -32,13 +38,24 @@ abstract class PlansBase
         $this->plans_table = $plans_table;
         $this->lines_table = $lines_table;
         $this->default_plan = $default_plan;
+        $this->months_tag = $months_tag;
+        $this->mensuality_tag = $mensuality_tag;
     }
 
     public function get_plans_data()
     {
         $plans_db = DB::table($this->plans_table)->get();
         $plans = [];
+        
         foreach ($plans_db as $key => $plan) {
+            if($plan->final_date != null){
+                $targetDate = Carbon::parse($plan->final_date);
+                $now = Carbon::now();
+                $monthsUntil = $now->diffInMonths($targetDate);
+            }
+            else{
+                $monthsUntil = 0;
+            }
             $new_plan = json_decode(json_encode($this->default_plan));
             $new_plan->title = $plan->title;
             $new_plan->discount = $plan->discount;
@@ -47,10 +64,22 @@ abstract class PlansBase
                 ->where('plan','=', $plan->id)
                 ->get();
             foreach ($lines as $line) {
-                $new_plan->lines[] = new PlanLine(
-                    text: $line->description,
-                    percentage: $line->percent
-                );
+                if($line->months != 0){
+                    $new_plan->lines[] = new PlanMonthsLines(
+                        text: $line->description,
+                        percentage: $line->percent,
+                        num: $monthsUntil,
+                        month_tag: $this->months_tag,
+                        mensuality_tag: $this->mensuality_tag
+                    );
+                }
+                else{
+                    $new_plan->lines[] = new PlanLine(
+                        text: $line->description,
+                        percentage: $line->percent
+                    );
+                }
+                
             }
             $plans[] = $new_plan;
         }

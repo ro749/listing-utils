@@ -1,34 +1,33 @@
 @include('listing-utils::Plans.plan-line',[
-    'description' => $line->text,
-    'percentage' => $line->percentage,
+    'description' =>  $description,
+    'percentage' => $percentage,
     'class' => 'plan-line',
-    'id' => 'plan-line-'.$id.'-'.$key,
+    'id' => 'plan-line-'.$id,
 ])
 
 @include('listing-utils::Plans.plan-line',[
-    'description' => $line->month_tag,
+    'description' => $month_tag,
     'percentage' => 0,
     'class' => 'plan-months',
     'id' => 'plan-months-'.$id,
 ])
 
 @include('listing-utils::Plans.plan-line',[
-    'description' => $line->mensuality_tag,
+    'description' => $mensuality_tag,
     'percentage' => 0,
     'class' => 'plan-mensuality',
     'id' => 'plan-mensuality-'.$id,
 ])
 
-<script>
-@push('plan-fill')
-    var value = final_price*{{ $line->percentage / 100.0 }};
-    $('#plan-line-{{ $id }}-{{ $key }}').text(formatNumber(value));
-    @if(is_numeric($line->num))
-        var months = {{$line->num}};
+
+@push($push)
+    var value = final_price*{{ $percentage / 100.0 }};
+    $('#fill-plan-line-{{ $id }}').text('$'+formatNumber(value));
+    @if(is_numeric($num))
+        var months = {{$num}};
     @else
-        var months = plan['{{$line->num}}'];
+        var months = plan['{{$num}}'];
     @endif
-    $('#plan-months-{{ $id }}').text(months);
-    $('#plan-mensuality-{{ $id }}').text(value/months);
+    $('#fill-plan-months-{{ $id }}').text(months);
+    $('#fill-plan-mensuality-{{ $id }}').text('$'+formatNumber(value/months));
 @endpush
-</script>
