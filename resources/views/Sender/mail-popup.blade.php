@@ -6,7 +6,7 @@
     </div>
     <div style="height:6px"></div>
     <div class="row" style="justify-content: center; margin:0px;">
-        <button onclick="hide(\'ask-mail-Modal\');" class="btn btn-secondary btn-round btn-block mb-3" style="width: 40%; margin-top: 6px; margin-left: auto; margin-right: auto;" type="button"  id="send-mail-btn">
+        <button class="btn btn-secondary btn-round btn-block mb-3" style="width: 40%; margin-top: 6px; margin-left: auto; margin-right: auto;" type="button"  id="send-mail-btn">
             Aceptar
         </button>
     </div>

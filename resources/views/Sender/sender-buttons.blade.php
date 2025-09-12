@@ -14,7 +14,9 @@
 <x-shared-utils::modal id="ask-mail-Modal">
     @include('listing-utils::Sender.mail-popup',["name" => $sender->client->name, "mail" => $sender->client->mail])
 </x-shared-utils::modal>
-
+<x-shared-utils::modal id="sent-mail-Modal">
+    @include('listing-utils::Sender.sent-mail-popup',["name" => $sender->client->name, "mail" => $sender->client->mail])
+</x-shared-utils::modal>
 @push('scripts')
 <script>
     $('#send-link-btn').on('click', function () {
@@ -27,6 +29,7 @@
             },
             success: function (response) {
                 window.open(response, '_blank');
+                closePopup('ask-link-Modal');
             }
         })
     });
@@ -34,12 +37,14 @@
         $.ajax({
             url: 'sender/' + '{{ $sender->id }}' + '/mail',
             method: 'GET',
-            dataType: 'json',
+            dataType: 'text',
             data: {
                 unit: {{ isset($unit) ? $unit->id : "selected_unit_id" }}
             },
             success: function (response) {
-                navigator.clipboard.writeText(response.link);
+                closePopup('ask-mail-Modal');
+                openPopup('sent-mail-Modal',500);
+                
             }
         })
     })

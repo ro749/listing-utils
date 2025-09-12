@@ -18,6 +18,13 @@ class Cotization{
     }
 
     public function save(){
+        $cotization = DB::table('cotizations')
+            ->where('unit', $this->unit)
+            ->where('client',session('client_id'))
+            ->first();
+        if($cotization){
+            return $cotization->id;
+        }
         do {
             $id = rand(10000000, 99999999); // genera 8 números aleatorios
         } while (
