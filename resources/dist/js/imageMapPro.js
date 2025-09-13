@@ -17,7 +17,6 @@
                     $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
                     $(document).trigger('selected-unit', [{ unit: response }]);
                     $('#unit-info').show();
-                    console.log('resize');
                     setTimeout(function(){
                         const event = new UIEvent('resize', {
                           bubbles: true,
