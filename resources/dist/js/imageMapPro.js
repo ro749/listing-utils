@@ -17,15 +17,9 @@
                     $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
                     $(document).trigger('selected-unit', [{ unit: response }]);
                     $('#unit-info').show();
-                    setTimeout(function(){
-                        const event = new UIEvent('resize', {
-                          bubbles: true,
-                          cancelable: false,
-                          view: window,
-                          detail: 0
-                        });
-                        window.dispatchEvent(event);
-                    }, 1000);
+                    $('html, body').animate({
+                      scrollTop: $("#unit-info").offset().top
+                    }, 800);
                 }
             });
         } 
