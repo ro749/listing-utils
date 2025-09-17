@@ -7,14 +7,14 @@ use Illuminate\Support\Str;
 class Cotization{
     public string $unit;
 
-    public bool $mail;
+    public CotizationMedium $medium;
 
     public function __construct(
         string $unit,
-        bool $mail
+        CotizationMedium $medium
     ){
         $this->unit = $unit;
-        $this->mail = $mail;
+        $this->medium = $medium;
     }
 
     public function save(){
@@ -36,7 +36,7 @@ class Cotization{
             'unit' => $this->unit,
             'client' => session('client_id'),
             'asesor' => Auth::guard('asesor')->user()->id,
-            'medium' => $this->mail?1:0,
+            'medium' => $this->medium->value,
             'quoted_price'=>$unit->price
         ]);
         return $id;

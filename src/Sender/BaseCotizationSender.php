@@ -21,7 +21,15 @@ class BaseCotizationSender
     public function get_link(Request $request){
         $cotization = new Cotization(
             unit: $request->input('unit'),
-            mail: false
+            medium: CotizationMedium::LINK
+        );
+        $id = $cotization->save();
+        return route('client-view', ['id' => $id]);
+    }
+    public function get_whatsapp(Request $request){
+        $cotization = new Cotization(
+            unit: $request->input('unit'),
+            medium: CotizationMedium::WHATSAPP
         );
         $id = $cotization->save();
         return 'https://wa.me/'.$this->client->phone.'?text='.route('client-view', ['id' => $id]);
@@ -30,7 +38,7 @@ class BaseCotizationSender
     public function get_mail(Request $request){
         $cotization = new Cotization(
             unit: $request->input('unit'),
-            mail: true
+            medium: CotizationMedium::MAIL
         );
         $id = $cotization->save();
         $mail_class = $this->mail_class;

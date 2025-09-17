@@ -1,12 +1,11 @@
 <div class="sender-popup">
     <div style="text-align:center">
-        <h4>Quieres enviar whatsapp a:</h4>
+        <h4>Quieres el link para:</h4>
         <p>{{ $name }}</p>
-        <p>{{ $phone }}</p>
     </div>
     <div style="height:6px"></div>
     <div class="row" style="justify-content: center; margin:0px;">
-        <button onclick="hide('ask-link-Modal');" class="btn btn-secondary btn-round btn-block mb-3" style="width: 40%; margin-top: 6px; margin-left: auto; margin-right: auto;" type="button"  id="send-link-btn">
+        <button id="confirm-link" class="btn btn-secondary btn-round btn-block mb-3" style="width: 40%; margin-top: 6px; margin-left: auto; margin-right: auto;" type="button">
             Aceptar
         </button>
     </div>
