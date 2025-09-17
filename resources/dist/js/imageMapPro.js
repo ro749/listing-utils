@@ -20,6 +20,15 @@
                     $('html, body').animate({
                       scrollTop: $("#unit-info").offset().top
                     }, 800);
+                    setTimeout(function(){
+                        const event = new UIEvent('resize', {
+                          bubbles: true,
+                          cancelable: false,
+                          view: window,
+                          detail: 0
+                        });
+                        window.dispatchEvent(event);
+                    }, 166);
                 }
             });
         } 
