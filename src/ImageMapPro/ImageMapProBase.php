@@ -27,13 +27,25 @@ abstract class ImageMapProBase
         $this->selected_color = $selected_color;
     }
 
+    public function no_color_unit(&$child){
+        $child["default_style"]["background_color"] = "#ffffff";
+        $child["default_style"]["background_opacity"] = 0;
+        $child["mouseover_style"]["opacity"] = 0;
+        $child["mouseover_style"]["background_opacity"] = 0;
+        unset( $child["tooltip_content"]);
+        unset( $child["tooltip_style"]);
+    }
+
     public function style_unit(&$child,&$dispo){
         if(!isset($dispo[$child["title"]])){
-            $child["default_style"]["background_color"] = "#ffffff";
-            $child["default_style"]["background_opacity"] = 0;
+            $this->no_color_unit($child);
             return;
         }
         $color_value = $dispo[$child["title"]];
+        if(!isset($this->colors[$color_value])){
+            $this->no_color_unit($child);
+            return;
+        }
         $color = $this->colors[$color_value];
         $opacity = $this->opacities[$color_value];
         $child["default_style"]["background_color"] = $color;

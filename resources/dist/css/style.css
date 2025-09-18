@@ -22,6 +22,14 @@
     background-color: var(--warning-focus);
     color: var(--warning-main);
 }
+.UnitsStatus-3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--neutral-100);
+    color: var(--text-primary-light);
+}
 
 .plan-title{
     text-align: center;
