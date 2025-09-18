@@ -1,7 +1,7 @@
 <div style="display: flex; flex-direction:row; justify-content: center; gap:6px; margin-bottom: 1.5%; margin-top: 1%;">
     <button id="send-email-btn" style="display: flex; flex-direction:row; align-items: center; gap:6px;"  class="btn btn-light send-btn">
         <iconify-icon icon="{{ \Ro749\SharedUtils\Enums\Icon::SEND_MAIL->value }}"></iconify-icon>
-        <span id="mail-tag">Enviar Correo</span>
+        <span id="mail-tag">Correo</span>
     </button>
     <button id="send-whatsapp-btn" style="display: flex; flex-direction:row; align-items: center; gap:6px;"  class="btn btn-light send-btn">
         <iconify-icon icon="{{ \Ro749\SharedUtils\Enums\Icon::WHATSAPP->value }}"></iconify-icon>
@@ -9,7 +9,7 @@
     </button>
     <button  id="get-link-btn" style="display: flex; flex-direction:row; align-items: center; gap:6px;" class="btn btn-light send-btn">
         <iconify-icon icon="{{ \Ro749\SharedUtils\Enums\Icon::LINK->value }}"></iconify-icon>
-        <span id="link-tag">Enviar Link</span>
+        <span id="link-tag">Link</span>
     </button>
 </div>
 <x-shared-utils::modal id="ask-whatsapp-modal">
