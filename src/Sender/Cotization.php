@@ -18,7 +18,7 @@ class Cotization{
     }
 
     public function save(){
-        $cotization = DB::table('cotizations')
+        $cotization = DB::table('quotations')
             ->where('unit', $this->unit)
             ->where('client',session('client_id'))
             ->first();
@@ -28,10 +28,10 @@ class Cotization{
         do {
             $id = rand(10000000, 99999999); // genera 8 números aleatorios
         } while (
-            DB::table('cotizations')->where('id', $id)->exists()
+            DB::table('quotations')->where('id', $id)->exists()
         );
         $unit = DB::table('units')->where('id','=', $this->unit)->first();
-        DB::table('cotizations')->insert([
+        DB::table('quotations')->insert([
             'id' => $id,
             'unit' => $this->unit,
             'client' => session('client_id'),
