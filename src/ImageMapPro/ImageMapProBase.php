@@ -76,6 +76,7 @@ abstract class ImageMapProBase
         ];
         if($opacity == 0 && $color != "#ffffff"){
             $child["default_style"]["border_color"] = $color;
+            $child["default_style"]["stroke_color"] = $color;
         }
     }
 

@@ -14,7 +14,12 @@
                         $('[data-title="' + selected_unit + '"]').attr('style', '');
                     }
                     selected_unit = unit;
-                    $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
+                    if("svg" == $('[data-title="' + unit + '"]').prop("tagName")){
+                        $('[data-title="' + unit + '"]').attr('style', 'fill: '+selected_color+' !important;');
+                    }
+                    else{
+                        $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
+                    }
                     $(document).trigger('selected-unit', [{ unit: response }]);
                     $('#unit-info').show();
                     $('html, body').animate({
