@@ -3,39 +3,30 @@
         var selected_unit = null;
         var selected_color = null;
         function get_unit(unit){
-            
-            $.ajax({
-                url: 'imagemappro/'+options.id+'/unit',
-                method: 'GET',
-                dataType: 'json',
-                data: {unit: unit},
-                success: function (response) {
-                    if(selected_unit){
-                        $('[data-title="' + selected_unit + '"]').attr('style', '');
-                    }
-                    selected_unit = unit;
-                    if("svg" == $('[data-title="' + unit + '"]').prop("tagName")){
-                        $('[data-title="' + unit + '"]').attr('style', 'fill: '+selected_color+' !important;');
-                    }
-                    else{
-                        $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
-                    }
-                    $(document).trigger('selected-unit', [{ unit: response }]);
-                    $('#unit-info').show();
-                    $('html, body').animate({
-                      scrollTop: $("#unit-info").offset().top
-                    }, 800);
-                    setTimeout(function(){
-                        const event = new UIEvent('resize', {
-                          bubbles: true,
-                          cancelable: false,
-                          view: window,
-                          detail: 0
-                        });
-                        window.dispatchEvent(event);
-                    }, 166);
-                }
-            });
+            if(selected_unit){
+                $('[data-title="' + selected_unit + '"]').attr('style', '');
+            }
+            selected_unit = unit;
+            if("svg" == $('[data-title="' + unit + '"]').prop("tagName")){
+                $('[data-title="' + unit + '"]').attr('style', 'fill: '+selected_color+' !important;');
+            }
+            else{
+                $('[data-title="' + unit + '"]').attr('style', 'background: '+selected_color+' !important;');
+            }
+            $(document).trigger('selected-unit', [{ unit: unit }]);
+            $('#unit-info').show();
+            $('html, body').animate({
+              scrollTop: $("#unit-info").offset().top
+            }, 800);
+            setTimeout(function(){
+                const event = new UIEvent('resize', {
+                  bubbles: true,
+                  cancelable: false,
+                  view: window,
+                  detail: 0
+                });
+                window.dispatchEvent(event);
+            }, 166);
         } 
 
         ImageMapPro.subscribe((action) =>{
