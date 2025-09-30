@@ -29,7 +29,10 @@ abstract class ImageMapProBase
 
     public function no_color_unit(&$child){
         $child["default_style"]["background_color"] = "#ffffff";
+        $child["default_style"]["stroke_color"] = "#ffffff";
         $child["default_style"]["background_opacity"] = 0;
+        $child["default_style"]["stroke_opacity"] = 0;
+        $child["default_style"]["border_opacity"] = 0;
         $child["mouseover_style"]["opacity"] = 0;
         $child["mouseover_style"]["background_opacity"] = 0;
         unset( $child["tooltip_content"]);
