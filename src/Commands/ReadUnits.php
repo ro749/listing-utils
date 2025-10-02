@@ -12,7 +12,7 @@ class ReadUnits extends Command
      *
      * @var string
      */
-    protected $signature = 'read:cvs {file} {--update : Update instead of create}';
+    protected $signature = 'read:units {file} {--update : Update instead of create}';
 
     /**
      * The console command description.
