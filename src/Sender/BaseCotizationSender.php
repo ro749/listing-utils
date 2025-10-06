@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Ro749\ListingUtils\Sender\Cotization;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Mail\Mailable;
 class BaseCotizationSender
 {
     public string $mail_class = '';
