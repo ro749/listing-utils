@@ -49,9 +49,14 @@ abstract class PlansBase
         
         foreach ($plans_db as $key => $plan) {
             if($plan->final_date != null){
-                $targetDate = Carbon::parse($plan->final_date);
-                $now = Carbon::now();
-                $monthsUntil = $now->diffInMonths($targetDate);
+                if(!is_numeric($plan->final_date)){
+                    $targetDate = Carbon::parse($plan->final_date);
+                    $now = Carbon::now();
+                    $monthsUntil = $now->diffInMonths($targetDate);
+                }
+                else{
+                    $monthsUntil = $plan->final_date;
+                }
             }
             else{
                 $monthsUntil = 0;
