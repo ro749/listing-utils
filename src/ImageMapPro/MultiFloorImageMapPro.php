@@ -3,6 +3,7 @@
 namespace Ro749\ListingUtils\ImageMapPro;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MultiFloorImageMapPro extends ImageMapProBase
 {
@@ -13,6 +14,8 @@ class MultiFloorImageMapPro extends ImageMapProBase
 
     public array $files;
 
+    public string $floors_table = 'floors';
+
     public function __construct(
         string $table,
         string $floor_column,
@@ -21,7 +24,8 @@ class MultiFloorImageMapPro extends ImageMapProBase
         array $files,
         array $colors,
         array $opacities,
-        array $floors
+        string $status_column = 'status',
+        string $floors_table = 'floors'
     ){
         parent::__construct(
             table:$table, 
@@ -32,7 +36,7 @@ class MultiFloorImageMapPro extends ImageMapProBase
         $this->type_column = $type_column;
         $this->data_column = $data_column;
         $this->files = $files;
-        $this->floors = $floors;
+        $this->floors_table = $floors_table;
     }
 
     public function get_tower_map(){
@@ -51,13 +55,15 @@ class MultiFloorImageMapPro extends ImageMapProBase
             ->get();
         $dispo = [];
         foreach($data as $d){
-            $dispo[$d->floor] = $d->status;
+            Log::debug(json_encode($d));
+            $dispo[$d->{$this->floor_column}] = $d->status;
         }
         return $this->re_color($map, $dispo);
     }
 
     public function get_floor_map($floor){
-        $path = storage_path($this->files[$this->floors[$floor]]);
+        $map_id = DB::table($this->floors_table)->where('floor',$floor)->value('map');
+        $path = storage_path($this->files[$map_id]);
         $map = json_decode(file_get_contents($path),true);
         $data = DB::table($this->table)
         ->select('id',$this->type_column,$this->data_column)
@@ -65,7 +71,7 @@ class MultiFloorImageMapPro extends ImageMapProBase
         ->get();
         $dispo = [];
         foreach($data as $d){
-            $dispo[$d->type] = $d->status;
+            $dispo[$d->{$this->type_column}] = $d->{$this->status_column};
         }
         return $this->re_color($map, $dispo);
     }

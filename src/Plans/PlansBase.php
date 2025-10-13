@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 
-abstract class PlansBase
+class PlansBase
 {   
     public string $plans_table;
     public string $lines_table;
@@ -16,8 +16,8 @@ abstract class PlansBase
     public string $mensuality_tag = '';
     public int $months;
     public function __construct(
-        string $plans_table, 
-        string $lines_table,
+        string $plans_table='plans', 
+        string $lines_table='planlines',
         string $months_tag = 'Meses',
         string $mensuality_tag = 'Mensualidad',
         Plan $default_plan = new Plan(
@@ -107,6 +107,12 @@ abstract class PlansBase
     }
 
     //regresa los planes en matrizes de como se van a acompodar
-    abstract function get(): array;
+    public function get(): array{
+        return $this->get_in_matrix(2);
+    }
     
+    public static function instance(): PlansBase
+    {
+        return new (config('overrides.plans'));
+    }
 }

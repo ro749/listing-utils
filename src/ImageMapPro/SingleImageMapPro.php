@@ -3,6 +3,7 @@
 namespace Ro749\ListingUtils\ImageMapPro;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SingleImageMapPro extends ImageMapProBase
 {
@@ -11,18 +12,16 @@ class SingleImageMapPro extends ImageMapProBase
     public string $file;
 
     public function __construct(
-        string $table,
-        string $unit_class,
-        string $label_column,
-        string $data_column,
-        string $file,
-        array $colors,
-        array $opacities,
-        string $selected_color
+        string $table = 'units',
+        string $label_column = 'unit',
+        string $data_column = 'status',
+        array $colors = ['#00ff00','#ff0000','#ffff00'],
+        array $opacities = [0.4,0.4,0.4],
+        string $selected_color = "#ffffff",
+        string $file = 'imageMapPro.json'
     ){
         parent::__construct(
             table:$table, 
-            unit_class: $unit_class,
             colors: $colors,
             opacities: $opacities,
             selected_color: $selected_color
@@ -46,7 +45,8 @@ class SingleImageMapPro extends ImageMapProBase
     }
 
     function get_unit(Request $data){
-        $unit = $this->unit_class::get("unit", $data->input("unit"));
+        Log::debug(config('overrides.models.Unit'));
+        $unit = (config('overrides.models.Unit'))::get("unit", $data->input("unit"));
         if($unit->status != 0){
             return null;
         }

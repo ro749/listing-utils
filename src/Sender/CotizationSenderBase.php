@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Ro749\ListingUtils\Sender\Cotization;
 use Illuminate\Support\Facades\Mail;
-class BaseCotizationSender
+class CotizationSenderBase
 {
     public string $mail_class = '';
     public $client;
@@ -50,5 +50,10 @@ class BaseCotizationSender
 
     function get_id(){
         return class_basename($this);
+    }
+
+    public static function instance(): CotizationSenderBase
+    {
+        return new (config('overrides.sender'));
     }
 }
