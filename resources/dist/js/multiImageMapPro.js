@@ -4,6 +4,8 @@
         var current_floor;
         function get_floor(floor){
             current_floor = floor;
+            $(".floor-cover").hide();
+            $(".floor").show();
             $.ajax({
                 url: 'imagemappro/'+options.id+'/floor',
                 method: 'GET',
@@ -16,6 +18,8 @@
         } 
 
         function get_unit(floor,type){
+            $(".unit-cover").hide();
+            $(".unit").show();
             $.ajax({
                 url: 'imagemappro/'+options.id+'/unit',
                 method: 'GET',

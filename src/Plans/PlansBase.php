@@ -15,11 +15,15 @@ class PlansBase
     public string $months_tag = '';
     public string $mensuality_tag = '';
     public int $months;
+    public string $title_column = 'title';
+    public string $discount_column = 'discount';
     public function __construct(
         string $plans_table='plans', 
         string $lines_table='planlines',
         string $months_tag = 'Meses',
         string $mensuality_tag = 'Mensualidad',
+        string $title_column = 'title',
+        string $discount_column = 'discount',
         Plan $default_plan = new Plan(
             id: 0,
             title: 'Default',
@@ -40,6 +44,8 @@ class PlansBase
         $this->default_plan = $default_plan;
         $this->months_tag = $months_tag;
         $this->mensuality_tag = $mensuality_tag;
+        $this->title_column = $title_column;
+        $this->discount_column = $discount_column;
     }
 
     public function get_plans_data()
@@ -62,8 +68,8 @@ class PlansBase
                 $monthsUntil = 0;
             }
             $new_plan = json_decode(json_encode($this->default_plan));
-            $new_plan->title = $plan->title;
-            $new_plan->discount = $plan->discount;
+            $new_plan->title = $plan->{$this->title_column};
+            $new_plan->discount = $plan->{$this->discount_column};
             $new_plan->id = $plan->id;
             $lines = DB::table($this->lines_table)
                 ->where('plan','=', $plan->id)

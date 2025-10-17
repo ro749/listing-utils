@@ -52,4 +52,8 @@ class SingleImageMapPro extends ImageMapProBase
         }
         return $unit;
     }
+
+    public function render(){
+        return view('listing-utils::ImageMapPro.image-map-pro', $this);
+    }
 }

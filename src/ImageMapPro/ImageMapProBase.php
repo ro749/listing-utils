@@ -119,4 +119,6 @@ abstract class ImageMapProBase
     {
         return new (config('overrides.image_map_pro'));
     }
+
+    public function render(){}
 }

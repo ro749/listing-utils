@@ -41,24 +41,22 @@ class MultiFloorImageMapPro extends ImageMapProBase
 
     public function get_tower_map(){
         $path = storage_path($this->files[0]);
-        $map = json_decode(file_get_contents($path),true);
-        $data = DB::table($this->table)
-            ->select($this->floor_column)
-            ->selectRaw("
-                CASE 
-                    WHEN MIN(".$this->data_column.") >= 1 AND MAX(".$this->data_column.") <= 2 
-                    THEN 1 
-                    ELSE 0 
-                END as ".$this->data_column."
-            ")
-            ->groupBy($this->floor_column)
-            ->get();
-        $dispo = [];
-        foreach($data as $d){
-            Log::debug(json_encode($d));
-            $dispo[$d->{$this->floor_column}] = $d->status;
-        }
-        return $this->re_color($map, $dispo);
+        //$data = DB::table($this->table)
+        //    ->select($this->floor_column)
+        //    ->selectRaw("
+        //        CASE 
+        //            WHEN MIN(".$this->data_column.") >= 1 AND MAX(".$this->data_column.") <= 2 
+        //            THEN 1 
+        //            ELSE 0 
+        //        END as ".$this->data_column."
+        //    ")
+        //    ->groupBy($this->floor_column)
+        //    ->get();
+        //$dispo = [];
+        //foreach($data as $d){
+        //    $dispo[$d->{$this->floor_column}] = $d->status;
+        //}
+        return file_get_contents($path);
     }
 
     public function get_floor_map($floor){
@@ -85,5 +83,9 @@ class MultiFloorImageMapPro extends ImageMapProBase
             return null;
         }
         return $data;
+    }
+
+    public function render(){
+        return view('listing-utils::ImageMapPro.multi-image-map-pro', $this);
     }
 }
