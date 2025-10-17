@@ -3,7 +3,6 @@
 namespace Ro749\ListingUtils\ImageMapPro;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class SingleImageMapPro extends ImageMapProBase
 {

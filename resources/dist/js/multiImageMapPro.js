@@ -4,12 +4,15 @@
         var current_floor;
         function get_floor(floor){
             current_floor = floor;
+            
             $.ajax({
                 url: 'imagemappro/'+options.id+'/floor',
                 method: 'GET',
                 dataType: 'json',
                 data: {floor: floor},
                 success: function (response) {
+                    $(".floor-cover").hide();
+                    $(".floor").show();
                     ImageMapPro.init('#image-map-pro-floor',response);
                 }
             });
@@ -25,7 +28,11 @@
                     type: type
                 },
                 success: function (response) {
+                    $(".unit-cover").hide();
+                    $(".unit-area").show();
+                    $('#plans').show();
                     $(document).trigger('selected-unit', [{ unit: response }]);
+                    
                 }
             });
         } 
