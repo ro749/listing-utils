@@ -31,6 +31,15 @@
     color: var(--text-primary-light);
 }
 
+.UnitsStatus-4{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--neutral-100);
+    color: var(--text-primary-light);
+}
+
 .plan-title{
     text-align: center;
     font-size: 2em;

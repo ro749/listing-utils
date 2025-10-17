@@ -45,7 +45,6 @@ class SingleImageMapPro extends ImageMapProBase
     }
 
     function get_unit(Request $data){
-        Log::debug(config('overrides.models.Unit'));
         $unit = (config('overrides.models.Unit'))::get("unit", $data->input("unit"));
         if($unit->status != 0){
             return null;
