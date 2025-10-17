@@ -41,21 +41,21 @@ class MultiFloorImageMapPro extends ImageMapProBase
 
     public function get_tower_map(){
         $path = storage_path($this->files[0]);
-        //$data = DB::table($this->table)
-        //    ->select($this->floor_column)
-        //    ->selectRaw("
-        //        CASE 
-        //            WHEN MIN(".$this->data_column.") >= 1 AND MAX(".$this->data_column.") <= 2 
-        //            THEN 1 
-        //            ELSE 0 
-        //        END as ".$this->data_column."
-        //    ")
-        //    ->groupBy($this->floor_column)
-        //    ->get();
-        //$dispo = [];
-        //foreach($data as $d){
-        //    $dispo[$d->{$this->floor_column}] = $d->status;
-        //}
+        $data = DB::table($this->table)
+            ->select($this->floor_column)
+            ->selectRaw("
+                CASE 
+                    WHEN MIN(".$this->data_column.") >= 1 AND MAX(".$this->data_column.") <= 2 
+                    THEN 1 
+                    ELSE 0 
+                END as ".$this->data_column."
+            ")
+            ->groupBy($this->floor_column)
+            ->get();
+        $dispo = [];
+        foreach($data as $d){
+            $dispo[$d->{$this->floor_column}] = $d->status;
+        }
         return file_get_contents($path);
     }
 
