@@ -41,6 +41,7 @@ class MultiFloorImageMapPro extends ImageMapProBase
 
     public function get_tower_map(){
         $path = storage_path($this->files[0]);
+        $map = json_decode(file_get_contents($path),true);
         $data = DB::table($this->table)
             ->select($this->floor_column)
             ->selectRaw("
@@ -56,7 +57,8 @@ class MultiFloorImageMapPro extends ImageMapProBase
         foreach($data as $d){
             $dispo[$d->{$this->floor_column}] = $d->status;
         }
-        return file_get_contents($path);
+        return $this->re_color($map, $dispo);
+        //return file_get_contents($path);
     }
 
     public function get_floor_map($floor){
