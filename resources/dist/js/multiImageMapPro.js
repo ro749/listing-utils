@@ -29,7 +29,7 @@
                     type: type
                 },
                 success: function (response) {
-                    $(document).trigger('selected-unit', [{ unit: event.target.getAttribute("data-title") }]);
+                    $(document).trigger('selected-unit', [{ unit: response }]);
                 }
             });
         } 
