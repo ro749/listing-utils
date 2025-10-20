@@ -1,9 +1,11 @@
+@if(!empty($plan->total_tag))
 @include('listing-utils::Plans.plan-line',[
     'description' => $plan->total_tag,
     'percentage' => 0,
     'class' => 'total-price',
     'id' => 'total-price-'.$plan->id,
 ])
+@endif
 @if($plan->ppm)
 @include('listing-utils::Plans.plan-line',[
     'description' => $plan->ppm_tag,
