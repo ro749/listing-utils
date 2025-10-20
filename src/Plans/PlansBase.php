@@ -5,7 +5,7 @@ namespace Ro749\ListingUtils\Plans;
 use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Log;
 class PlansBase
 {   
     public string $plans_table;
@@ -55,7 +55,7 @@ class PlansBase
         
         foreach ($plans_db as $key => $plan) {
             if($plan->final_date != null){
-                if(!is_numeric($plan->final_date)){
+                if(!is_numeric($plan->final_date) && strtotime($plan->final_date) !== false){
                     $targetDate = Carbon::parse($plan->final_date);
                     $now = Carbon::now();
                     $monthsUntil = $now->diffInMonths($targetDate);
@@ -67,6 +67,7 @@ class PlansBase
             else{
                 $monthsUntil = 0;
             }
+            //Log::info('Months until: '.$monthsUntil);
             $new_plan = json_decode(json_encode($this->default_plan));
             $new_plan->title = $plan->{$this->title_column};
             $new_plan->discount = $plan->{$this->discount_column};
