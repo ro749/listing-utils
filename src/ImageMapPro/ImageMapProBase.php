@@ -1,13 +1,9 @@
 <?php
 
 namespace Ro749\ListingUtils\ImageMapPro;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Ro749\ListingUtils\Units\UnitBase;
-use Illuminate\Support\Facades\Log;
 abstract class ImageMapProBase
 {
-    public string $table;
     public string $status_column;
     public string $unit_class;
     public array $colors = [];
@@ -16,13 +12,11 @@ abstract class ImageMapProBase
     public string $selected_color = "#ffffff";
 
     public function __construct(
-        string $table = 'units',
         array $colors = ['#00ff00','#ff0000','#ffff00'],
         array $opacities = [0.4,0.4,0.4],
         string $selected_color = "#ffffff",
         string $status_column = 'status'
     ){
-        $this->table = $table;
         $this->colors = $colors;
         $this->opacities = $opacities;
         $this->selected_color = $selected_color;

@@ -6,16 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Ro749\ListingUtils\Sender\Cotization;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 class CotizationSenderBase
 {
     public string $mail_class = '';
     public $client;
     
-    public function __construct(string $mail_class)
+    public function __construct()
     {
-        $this->mail_class = $mail_class;
+        $this->mail_class = config('listing.cotization_mail_class','App\Mail\CotizationMail');
         $client_id = session()->get('client_id');
         $this->client = DB::table('clients')->where('id', $client_id)->first();
+        Log::debug('Client ID: '.$client_id);
     }
     public function get_link(Request $request){
         $cotization = new Cotization(
