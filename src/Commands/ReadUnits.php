@@ -29,14 +29,14 @@ class ReadUnits extends Command
         $file = $this->argument('file');
         if ($this->option('update')) {
             $reader = new DbUpdate(
-                table: 'units',
+                model_class: config('overrides.models.Unit'),
                 add_new_columns: false,
                 public_id: 'unit'
             );
         }
         else{
             $reader = new DbReader(
-                table: 'units',
+                model_class: config('overrides.models.Unit'),
                 required_columns: ['unit','price','status'],
                 add_new_columns: true
             );
