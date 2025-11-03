@@ -7,7 +7,7 @@ var data = @json($unit);
 <div class="plan-row">
     @foreach($row as $plan)
     
-        @include('listing-utils::Plans.plan', ['plan' => $plan, 'stack' => 'fill-plan-'.$plan->id])
+        {!! $plan->render() !!}
 
     @endforeach
 </div>

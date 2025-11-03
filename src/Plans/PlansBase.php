@@ -10,13 +10,20 @@ class PlansBase
 {   
     public string $plans_table;
     public string $lines_table;
-
-    public Plan $default_plan;
     public string $months_tag = '';
     public string $mensuality_tag = '';
     public int $months;
     public string $title_column = 'title';
     public string $discount_column = 'discount';
+    public string $price_tag = 'Precio de lista';
+    public string $discount_tag = 'Descuento';
+
+    public string $total_tag = 'Total';
+    public string $ppm_tag = 'Precio por metro';
+    public bool $total_on_top = false;
+    public bool $ppm = false;
+    public bool $show_base_price = true;
+    public ?Plan $personalized_plan = null;
     public function __construct(
         string $plans_table='plans', 
         string $lines_table='planlines',
@@ -24,28 +31,49 @@ class PlansBase
         string $mensuality_tag = 'Mensualidad',
         string $title_column = 'title',
         string $discount_column = 'discount',
-        Plan $default_plan = new Plan(
-            id: 0,
-            title: 'Default',
-            discounts: 0,
-            lines: [],
-            price_tag: 'Precio de lista',
-            discount_tag: 'Descuento',
-            total_tag: 'Total',
-            ppm_tag: 'Precio por metro',
-            total_on_top: false,
-            ppm: false,
-            show_base_price: true
-        )
+
+        string $price_tag = 'Precio de lista',
+        string $discount_tag = 'Descuento',
+        string $total_tag = 'Total',
+        string $ppm_tag = 'Precio por metro',
+        bool $total_on_top = false,
+        bool $ppm = false,
+        bool $show_base_price = true
     )
     {
         $this->plans_table = $plans_table;
         $this->lines_table = $lines_table;
-        $this->default_plan = $default_plan;
+        
         $this->months_tag = $months_tag;
         $this->mensuality_tag = $mensuality_tag;
         $this->title_column = $title_column;
         $this->discount_column = $discount_column;
+
+        $this->price_tag = $price_tag;
+        $this->discount_tag = $discount_tag;
+        $this->total_tag = $total_tag;
+        $this->ppm_tag = $ppm_tag;
+        $this->total_on_top = $total_on_top;
+        $this->ppm = $ppm;
+        $this->show_base_price = $show_base_price;
+
+        $this->personalized_plan = config()->has('listing.plans.personalized_plan') ? 
+            new Plan(
+                id: 'personal',
+                title: config('listing.plans.personalized_plan.title', 'Personalizado'),
+                discounts: config('listing.plans.personalized_plan.discounts', 0),
+                lines: [],
+            )
+             : null;
+    }
+
+    function get_default_plan($id,$title,$discounts){
+        return new Plan(
+            id: $id,
+            title: $title,
+            discounts: 0,
+            lines: [],
+        );
     }
 
     public function get_plans_data()
@@ -68,10 +96,11 @@ class PlansBase
                 $monthsUntil = 0;
             }
             //Log::info('Months until: '.$monthsUntil);
-            $new_plan = json_decode(json_encode($this->default_plan));
-            $new_plan->title = $plan->{$this->title_column};
-            $new_plan->discount = $plan->{$this->discount_column};
-            $new_plan->id = $plan->id;
+            $new_plan = $this->get_default_plan(
+                $plan->id, 
+                $plan->{$this->title_column}, 
+                $plan->{$this->discount_column}
+            );
             $lines = DB::table($this->lines_table)
                 ->where('plan','=', $plan->id)
                 ->get();
@@ -110,12 +139,15 @@ class PlansBase
             }
             $matrix[] = $row;
         }
+        if($this->personalized_plan){
+            $matrix[] = [$this->personalized_plan];
+        }
         return $matrix;
     }
 
     //regresa los planes en matrizes de como se van a acompodar
     public function get(): array{
-        return $this->get_in_matrix(2);
+        return $this->get_in_matrix(config('listing.plans.plans_per_row'));
     }
     
     public static function instance(): PlansBase

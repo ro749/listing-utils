@@ -3,7 +3,7 @@
 namespace Ro749\ListingUtils\Plans;
 
 class Plan{
-    public int $id;
+    public string $id;
     public string $title;
     public float $discounts;
     public array $lines;
@@ -16,7 +16,7 @@ class Plan{
     public bool $show_base_price;
 
     public function __construct(
-        int $id,
+        string $id,
         string $title,
         //if instead of discount the price is fixed, set the column of the price of this plan
         float|string $discounts,
@@ -40,5 +40,11 @@ class Plan{
         $this->total_on_top = $total_on_top;
         $this->ppm = $ppm;
         $this->show_base_price = $show_base_price;
+    }
+
+    public function render(){
+        return view('listing-utils::Plans.plan', [
+            'plan' => $this, 'stack' => 'fill-plan-'.$this->id
+        ]);
     }
 }
