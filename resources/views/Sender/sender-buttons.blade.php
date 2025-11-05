@@ -40,14 +40,29 @@
     $('#get-link-btn').on('click', function () {
         openPopup('ask-link-modal');
     });
+
+    function get_data(method){
+        var formData = {};
+        formData['medium'] = method;
+        formData['unit'] = {{ isset($unit) ? $unit->id : "selected_unit_id" }};
+        @if(isset($personalized_plan))
+        $('#BaseForm').submit();
+        var form = Alpine.$data($('#BaseForm')[0]).form;
+        formData['personalized_data'] = {};
+        Object.entries(form).forEach(([key, value]) => {
+            formData['personalized_data'][key] = value;
+        });
+        @endif
+        return formData;
+    }
+    
+
     $('#confirm-whatsapp').on('click', function () {
         $.ajax({
-            url: 'sender/' + '{{ $sender->get_id() }}' + '/whatsapp',
-            method: 'GET',
+            url: 'sender',
+            method: 'POST',
             dataType: 'text',
-            data: {
-                unit: {{ isset($unit) ? $unit->id : "selected_unit_id" }}
-            },
+            data: get_data(0),
             success: function (response) {
                 window.open(response, '_blank');
                 closePopup('ask-link-modal');
@@ -56,12 +71,10 @@
     });
     $('#confirm-mail').on('click', function () {
         $.ajax({
-            url: 'sender/' + '{{ $sender->get_id() }}' + '/mail',
-            method: 'GET',
+            url: 'sender',
+            method: 'POST',
             dataType: 'text',
-            data: {
-                unit: {{ isset($unit) ? $unit->id : "selected_unit_id" }}
-            },
+            data: get_data(1),
             success: function (response) {
                 closePopup('ask-mail-modal');
                 openPopup('sent-mail-modal',1000);
@@ -71,12 +84,10 @@
     });
     $('#confirm-link').on('click', function () {
         $.ajax({
-            url: 'sender/' + '{{ $sender->get_id() }}' + '/link',
-            method: 'GET',
+            url: 'sender',
+            method: 'POST',
             dataType: 'text',
-            data: {
-                unit: {{ isset($unit) ? $unit->id : "selected_unit_id" }}
-            },
+            data: get_data(2),
             success: function (response) {
                 navigator.clipboard.writeText(response);
                 $('#link').html(response);

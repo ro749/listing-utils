@@ -25,22 +25,10 @@ Route::middleware(['web'])->group(function () {
         return $imp->get_unit($request);
     });
 
-    Route::get('sender/{sender}/whatsapp', function (Request $request,$sender){
+    Route::post('sender', function (Request $request){
         $senderClass = config('overrides.sender');
         $sender = new $senderClass();
-        return $sender->get_whatsapp($request);
-    });
-
-    Route::get('sender/{sender}/mail', function (Request $request,$sender){
-        $senderClass = config('overrides.sender');
-        $sender = new $senderClass();
-        return $sender->get_mail($request);
-    });
-
-    Route::get('sender/{sender}/link', function (Request $request,$sender){
-        $senderClass = config('overrides.sender');
-        $sender = new $senderClass();
-        return $sender->get_link($request);
+        return $sender->prosses($request);
     });
 });
 

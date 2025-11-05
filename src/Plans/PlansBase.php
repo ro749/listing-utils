@@ -5,6 +5,9 @@ namespace Ro749\ListingUtils\Plans;
 use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
+use Ro749\SharedUtils\Forms\BaseForm;
+use Ro749\SharedUtils\Forms\Field;
+use Ro749\SharedUtils\Forms\InputType;
 use Illuminate\Support\Facades\Log;
 class PlansBase
 {   
@@ -57,21 +60,37 @@ class PlansBase
         $this->ppm = $ppm;
         $this->show_base_price = $show_base_price;
 
-        $this->personalized_plan = config()->has('listing.plans.personalized_plan') ? 
-            new Plan(
+        
+
+        if(config()->has('listing.plans.personalized_plan')){
+            $lines = config('listing.plans.personalized_plan.lines', []);
+            $form = new BaseForm();
+            foreach ($lines as $key => $line) {
+                if(empty($line['editable'])){
+                    $lines[$key] = new PlanLine(text: $line['text'], percentage: 0);
+                }
+                else{
+                    $form->fields['per_'.$key] = new Field(type: InputType::PERCENTAGE);
+                    $form->fields['fill_'.$key] = new Field(type: InputType::MONEY);
+                    $lines[$key] = new PersonalizedPlanLine(text: $line['text']);
+                }
+            }
+            $this->personalized_plan = new PersonalizedPlan(
                 id: 'personal',
                 title: config('listing.plans.personalized_plan.title', 'Personalizado'),
-                discounts: config('listing.plans.personalized_plan.discounts', 0),
-                lines: [],
-            )
-             : null;
+                discount: config('listing.plans.personalized_plan.discounts', 0),
+                lines: $lines,
+            );
+
+            $this->personalized_plan->form = $form;
+        }
     }
 
-    function get_default_plan($id,$title,$discounts){
+    function get_default_plan($id,$title,$discount){
         return new Plan(
             id: $id,
             title: $title,
-            discounts: 0,
+            discount: $discount,
             lines: [],
         );
     }
@@ -95,7 +114,6 @@ class PlansBase
             else{
                 $monthsUntil = 0;
             }
-            //Log::info('Months until: '.$monthsUntil);
             $new_plan = $this->get_default_plan(
                 $plan->id, 
                 $plan->{$this->title_column}, 
@@ -127,7 +145,7 @@ class PlansBase
         return $plans;
     }
 
-    public function get_in_matrix(int $plans_per_row)
+    public function get_in_matrix(int $plans_per_row,bool $needs_personal = true)
     {
         $plans = $this->get_plans_data();
         $matrix = [];
@@ -139,15 +157,15 @@ class PlansBase
             }
             $matrix[] = $row;
         }
-        if($this->personalized_plan){
+        if($this->personalized_plan && $needs_personal){
             $matrix[] = [$this->personalized_plan];
         }
         return $matrix;
     }
 
     //regresa los planes en matrizes de como se van a acompodar
-    public function get(): array{
-        return $this->get_in_matrix(config('listing.plans.plans_per_row'));
+    public function get(bool $needs_personal = true): array{
+        return $this->get_in_matrix(config('listing.plans.plans_per_row'),$needs_personal);
     }
     
     public static function instance(): PlansBase

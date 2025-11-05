@@ -1,7 +1,7 @@
 <?php
 
 namespace Ro749\ListingUtils\Plans;
-
+use Illuminate\Support\Facades\Log;
 class Plan{
     public string $id;
     public string $title;
@@ -19,7 +19,7 @@ class Plan{
         string $id,
         string $title,
         //if instead of discount the price is fixed, set the column of the price of this plan
-        float|string $discounts,
+        float|string $discount,
         array $lines,
         string $price_tag = 'Precio de lista',
         string $discount_tag = 'Descuento',
@@ -31,7 +31,7 @@ class Plan{
     ){
         $this->id = $id;
         $this->title = $title;
-        $this->discounts = $discounts;
+        $this->discount = $discount;
         $this->lines = $lines;
         $this->price_tag = $price_tag;
         $this->discount_tag = $discount_tag;
