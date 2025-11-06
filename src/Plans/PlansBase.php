@@ -73,6 +73,10 @@ class PlansBase
                     $form->fields['per_'.$key] = new Field(type: InputType::PERCENTAGE);
                     $form->fields['fill_'.$key] = new Field(type: InputType::MONEY);
                     $lines[$key] = new PersonalizedPlanLine(text: $line['text']);
+                    if(isset($line['min_percentage'])){
+                        Log::debug($line['min_percentage']);
+                        $lines[$key]->min_percentage = $line['min_percentage'];
+                    }
                 }
             }
             $this->personalized_plan = new PersonalizedPlan(

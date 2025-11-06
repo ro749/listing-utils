@@ -31,8 +31,8 @@ class PersonalizedPlanLine
     {
         return view('listing-utils::Plans.personalized-plan-line', [
             'description' => $this->text,
-            'min_percentage' => $this->min_percentage,
-            'max_percentage' => $this->max_percentage,
+            'min_percent' => $this->min_percentage,
+            'max_percent' => $this->max_percentage,
             'min_money' => $this->min_money,
             'max_money' => $this->max_money,
             'form' => $form,
