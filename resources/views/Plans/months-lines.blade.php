@@ -22,7 +22,7 @@
 
 @push($push)
     var value = final_price*{{ $percentage / 100.0 }};
-    $('#fill-plan-line-{{ $id }}').text('$'+formatNumber(value));
+    $('#fill-plan-line-{{ $id }}').set_money(value);
     console.log('{{$num}}');
     @if(is_numeric($num))
         var months = {{$num}};
@@ -30,5 +30,5 @@
         var months = data['{{$num}}'];
     @endif
     $('#fill-plan-months-{{ $id }}').text(months);
-    $('#fill-plan-mensuality-{{ $id }}').text('$'+formatNumber(value/months));
+    $('#fill-plan-mensuality-{{ $id }}').set_money(value);
 @endpush

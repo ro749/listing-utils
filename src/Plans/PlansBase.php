@@ -149,7 +149,7 @@ class PlansBase
         return $plans;
     }
 
-    public function get_in_matrix(int $plans_per_row,bool $needs_personal = true)
+    public function get_in_matrix(int $plans_per_row = 2,bool $needs_personal = true)
     {
         $plans = $this->get_plans_data();
         $matrix = [];
@@ -169,7 +169,7 @@ class PlansBase
 
     //regresa los planes en matrizes de como se van a acompodar
     public function get(bool $needs_personal = true): array{
-        return $this->get_in_matrix(config('listing.plans.plans_per_row'),$needs_personal);
+        return $this->get_in_matrix(config('listing.plans.plans_per_row',2),$needs_personal);
     }
     
     public static function instance(): PlansBase

@@ -40,22 +40,22 @@
 
 @push('fill')
     @if($plan->show_base_price)
-        $('#fill-base-price-{{ $plan->id }}').text('$'+formatNumber(parseFloat(data['price'])));          
+        $('#fill-base-price-{{ $plan->id }}').set_money(data['price']);         
     @endif
     @if($plan->ppm)
-        $('#fill-ppm-price-{{ $plan->id }}').text('$'+formatNumber(data['price']/data['total']));
+        $('#fill-ppm-price-{{ $plan->id }}').set_money(data['price']/data['total']);
     @endif
     @if(is_numeric($plan->discount))
         @if( $plan->discount != 0)
         var discount = data['price'] * {{ $plan->discount / 100.0 }};
         var final_price = data['price'] - discount;
-        $('#fill-discount-{{ $plan->id }}').text('$'+formatNumber(discount));
+        $('#fill-discount-{{ $plan->id }}').set_money(discount);
         @else
         var final_price = parseFloat(data['price']); 
         @endif
     @else
         var final_price = parseFloat(data['{{ $plan->discount }}']);
     @endif
-    $('#fill-total-price-{{ $plan->id }}').text('$'+formatNumber(final_price));
+    $('#fill-total-price-{{ $plan->id }}').set_money(final_price);
     @stack($stack)
 @endpush
