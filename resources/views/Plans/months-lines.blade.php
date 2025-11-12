@@ -30,5 +30,5 @@
         var months = data['{{$num}}'];
     @endif
     $('#fill-plan-months-{{ $id }}').text(months);
-    $('#fill-plan-mensuality-{{ $id }}').set_money(value);
+    $('#fill-plan-mensuality-{{ $id }}').set_money(value/months);
 @endpush

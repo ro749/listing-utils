@@ -13,7 +13,7 @@ class SingleImageMapPro extends ImageMapProBase
     public function __construct()
     {
         parent::__construct(
-            colors: config('listing.image_map_pro.colors',['#00ff00','#ff0000','#ffff00']),
+            colors: config('listing.image_map_pro.colors',['#173111','#ff0000','#ffff00']),
             opacities: config('listing.image_map_pro.opacities',[0.4,0.4,0.4]),
             selected_color: config('listing.image_map_pro.selected_color',"#ffffff"),
         );
