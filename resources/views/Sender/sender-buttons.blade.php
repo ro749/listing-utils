@@ -44,7 +44,7 @@
     function get_data(method){
         var formData = {};
         formData['medium'] = method;
-        formData['unit'] = {{ isset($unit) ? $unit->id : "selected_unit_id" }};
+        formData['unit'] = data['id'];
         @if(isset($personalized_plan))
         $('#BaseForm').submit();
         var form = Alpine.$data($('#BaseForm')[0]).form;
