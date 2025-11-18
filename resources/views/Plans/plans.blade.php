@@ -26,7 +26,10 @@ var data = @json($unit);
     $('#{{ $key }}').prop('disabled', true);
     @endif$
     @endforeach
-    changed_personal();
+    
+    $(document).ready(function(){
+        changed_personal();
+    });
 </script>
 @endpush
 @endif

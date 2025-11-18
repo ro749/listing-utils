@@ -30,8 +30,8 @@ class PlansBase
     public function __construct(
         string $plans_table='plans', 
         string $lines_table='planlines',
-        string $months_tag = 'Meses',
-        string $mensuality_tag = 'Mensualidad',
+        string $months_tag = 'MESES',
+        string $mensuality_tag = 'MENSUALIDAD',
         string $title_column = 'title',
         string $discount_column = 'discount',
 
@@ -63,6 +63,7 @@ class PlansBase
         
 
         if(config()->has('listing.plans.personalized_plan')){
+            
             $lines = config('listing.plans.personalized_plan.lines', []);
             $form = new BaseForm();
             foreach ($lines as $key => $line) {
@@ -72,11 +73,24 @@ class PlansBase
                 else{
                     $form->fields['per_'.$key] = new Field(type: InputType::PERCENTAGE);
                     $form->fields['fill_'.$key] = new Field(type: InputType::MONEY);
-                    $lines[$key] = new PersonalizedPlanLine(text: $line['text']);
-                    if(isset($line['min_percentage'])){
-                        Log::debug($line['min_percentage']);
-                        $lines[$key]->min_percentage = $line['min_percentage'];
+                    if(!empty($line['months'])){
+                        $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
+                        $now = Carbon::now();
+                        $monthsUntil = $now->diffInMonths($targetDate);
+                        $lines[$key] = new PersonalizedMonthLines(
+                            text: $line['text'],
+                            num: $monthsUntil,
+                            month_tag: $this->months_tag,
+                            mensuality_tag: $this->mensuality_tag,
+                        );
                     }
+                    else{
+                        $lines[$key] = new PersonalizedPlanLine(text: $line['text']);
+                        if(isset($line['min_percentage'])){
+                            $lines[$key]->min_percentage = $line['min_percentage'];
+                        }
+                    }
+                    
                 }
             }
             $this->personalized_plan = new PersonalizedPlan(

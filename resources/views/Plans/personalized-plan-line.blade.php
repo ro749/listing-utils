@@ -15,7 +15,6 @@
 <script>
     $('#per_{{ $key }}').on('input', function () {
         var val = $(this).get_number();
-        
         var value = (val/100.0)*data['price'];
         $('#fill_{{ $key }}').set_money(value);
         changed_personal();

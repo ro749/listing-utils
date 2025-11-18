@@ -16,6 +16,7 @@
         var final_value = Number(data['price']) - val0 - val1;
         $('#fill-plan-line-personal-2').set_money(final_value);
         $('#per-plan-line-personal-2').set_percent(((final_value/data['price'])*100.0));
+        $(document).trigger('personalized_plan_changed');
     }
 </script>
 @endpush

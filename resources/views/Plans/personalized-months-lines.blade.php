@@ -1,6 +1,5 @@
-@include('listing-utils::Plans.plan-line',[
+@include('listing-utils::Plans.personalized-plan-line',[
     'description' =>  $description,
-    'percentage' => $percentage,
     'class' => 'plan-line',
     'id' => 'plan-line-'.$id,
 ])
@@ -18,16 +17,16 @@
     'class' => 'plan-mensuality',
     'id' => 'plan-mensuality-'.$id,
 ])
-
-
 @push($push)
-    var value = final_price*{{ $percentage / 100.0 }};
-    $('#fill-plan-line-{{ $id }}').set_money(value);
     @if(is_numeric($num))
         var months = {{$num}};
     @else
         var months = data['{{$num}}'];
     @endif
     $('#fill-plan-months-{{ $id }}').text(months);
-    $('#fill-plan-mensuality-{{ $id }}').set_money(value/months);
+    $(document).on('personalized_plan_changed', function(){
+        console.log('updating months lines for personalized plan line {{ $id }}');
+        var value = $('#fill_{{ $key }}').get_number();
+        $('#fill-plan-mensuality-{{ $id }}').set_money(value/months);
+    });
 @endpush
