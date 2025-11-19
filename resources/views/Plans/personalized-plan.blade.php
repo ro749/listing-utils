@@ -3,7 +3,7 @@
     'plan' => $plan, 'stack' => $stack, 'form' => $form
 ])
 </x-smartForm>
-<p>*Plan sujeto a autorización interna y condiciones de venta</p>
+<p style="font-size: .833rem">*Plan sujeto a autorización interna y condiciones de venta</p>
 @push('scripts')
 <script>
     function changed_personal(){
