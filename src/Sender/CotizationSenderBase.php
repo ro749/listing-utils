@@ -41,8 +41,7 @@ class CotizationSenderBase extends BaseForm
             $form->model_class = config('overrides.models.PersonalPlan');
             foreach ($lines as $key => $line) {
                 if(!empty($line['editable'])){
-                    $form->fields['fill_'.$key] = new Field(type: InputType::PERCENTAGE);
-                    $form->fields['per_'.$key] = new Field(type: InputType::MONEY);
+                    $form->fields['per_'.$key] = new Field(type: InputType::PERCENTAGE);
                 }
             }
             $this->fields['personalized_data'] = new FormField(form: $form, owner_column: 'quotation');

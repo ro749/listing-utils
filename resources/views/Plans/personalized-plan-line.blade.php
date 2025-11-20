@@ -1,3 +1,6 @@
+@php
+$field = new \Ro749\SharedUtils\Forms\Field(type: \Ro749\SharedUtils\Forms\InputType::MONEY);
+@endphp
 <tr id="{{ $id }}">
     <td class="right">
         <strong><span id="line-{{ $id }}" class="plan-line-desc">{{ $description }}:</span></strong>
@@ -6,7 +9,7 @@
         <x-field name="per_{{ $key }}" :form="$form"/>
     </td>
     <td class="left">
-        <x-field name="fill_{{ $key }}" :form="$form"/>
+        <x-field name="fill_{{ $key }}" :field="$field"/>
     </td>
 </tr>
 
@@ -14,6 +17,7 @@
 @push('scripts')
 <script>
     $('#per_{{ $key }}').on('input', function () {
+        console.log('changed percent');
         var val = $(this).get_number();
         var value = (val/100.0)*data['price'];
         $('#fill_{{ $key }}').set_money(value);
