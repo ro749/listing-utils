@@ -3,6 +3,7 @@
 namespace Ro749\ListingUtils\ImageMapPro;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SingleImageMapPro extends ImageMapProBase
 {
@@ -36,14 +37,14 @@ class SingleImageMapPro extends ImageMapProBase
     }
 
     function get_unit(Request $data){
-        $unit = (config('overrides.models.Unit'))::get("unit", $data->input("unit"));
-        if($unit->status != 0){
+        $unit = (config('overrides.models.Unit'))::get($this->label_column, $data->input("unit"));
+        if($unit->{$this->data_column} != 0){
             return null;
         }
         return $unit;
     }
 
     public function render(){
-        return view('listing-utils::ImageMapPro.image-map-pro', $this);
+        return view('listing-utils::ImageMapPro.image-map-pro', ['imp' => $this]);
     }
 }

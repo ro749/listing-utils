@@ -28,8 +28,6 @@ class PlansBase
     public bool $show_base_price = true;
     public ?Plan $personalized_plan = null;
     public function __construct(
-        string $plans_table='plans', 
-        string $lines_table='planlines',
         string $months_tag = 'MESES',
         string $mensuality_tag = 'MENSUALIDAD',
         string $title_column = 'title',
@@ -37,15 +35,12 @@ class PlansBase
 
         string $price_tag = 'Precio de lista',
         string $discount_tag = 'Descuento',
-        string $total_tag = 'Total',
         string $ppm_tag = 'Precio por metro',
-        bool $total_on_top = false,
-        bool $ppm = false,
-        bool $show_base_price = true
+        bool $ppm = false
     )
     {
-        $this->plans_table = $plans_table;
-        $this->lines_table = $lines_table;
+        $this->plans_table = config('listing.plans.table','plans');
+        $this->lines_table = config('listing.plans.lines_table','planlines');
         
         $this->months_tag = $months_tag;
         $this->mensuality_tag = $mensuality_tag;
@@ -54,11 +49,11 @@ class PlansBase
 
         $this->price_tag = $price_tag;
         $this->discount_tag = $discount_tag;
-        $this->total_tag = $total_tag;
+        $this->total_tag = config('listing.plans.total_tag','Total');
         $this->ppm_tag = $ppm_tag;
-        $this->total_on_top = $total_on_top;
+        $this->total_on_top = config('listing.plans.total_on_top',false);
         $this->ppm = $ppm;
-        $this->show_base_price = $show_base_price;
+        $this->show_base_price = config('listing.plans.show_base_price',true);
 
         
 
@@ -90,7 +85,6 @@ class PlansBase
                             $lines[$key]->min_percentage = $line['min_percentage'];
                         }
                     }
-                    
                 }
             }
             $this->personalized_plan = new PersonalizedPlan(
@@ -110,11 +104,16 @@ class PlansBase
             title: $title,
             discount: $discount,
             lines: [],
+            show_base_price: $this->show_base_price,
+            price_tag: $this->price_tag,
+            total_on_top: $this->total_on_top,
+            total_tag: $this->total_tag,
         );
     }
 
     public function get_plans_data()
     {
+        
         $plans_db = DB::table($this->plans_table)->get();
         $plans = [];
         
@@ -188,6 +187,9 @@ class PlansBase
     
     public static function instance(): PlansBase
     {
-        return new (config('overrides.plans'));
+        DB::enableQueryLog();
+        $plans = new (config('overrides.plans'));
+        Log::info(DB::getQueryLog());
+        return $plans;
     }
 }
