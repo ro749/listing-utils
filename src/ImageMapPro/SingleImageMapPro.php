@@ -29,7 +29,7 @@ class SingleImageMapPro extends ImageMapProBase
         $data = (config('overrides.models.Unit'))::select('id',$this->label_column,$this->data_column)->get();
         $dispo = [];
         foreach($data as $d){
-            $dispo[$d->unit] = $d->status;
+            $dispo[$d->{$this->label_column}] = $d->{$this->data_column};
         }
         $ans['map'] = $this->re_color($map, $dispo);
         $ans['selected_color'] = $this->selected_color;
