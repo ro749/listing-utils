@@ -20,9 +20,12 @@ var data = @json($unit);
     $(document).ready(function(){
         var data = @json($unit);
         @foreach($personal_plan->toArray() as $key=>$value)
-        @if(substr($key, 0, 3) == 'per')
-        $('#{{ $key }}').set_percent({{ $value }});
+        @if(substr($key, 0, 4) == 'fill')
+        $('#{{ $key }}').set_money({{ $value }});
         $('#{{ $key }}').trigger('input');
+        $('#{{ $key }}').prop('disabled', true);
+        @endif
+        @if(substr($key, 0, 3) == 'per')
         $('#{{ $key }}').prop('disabled', true);
         @endif
         @endforeach
