@@ -25,9 +25,8 @@ var data = @json($unit);
         $('#{{ $key }}').trigger('input');
         $('#{{ $key }}').prop('disabled', true);
         @endif
-        @if(substr($key, 0, 3) == 'per')
-        $('#{{ $key }}').prop('disabled', true);
-        @endif
+        $('#per_0').prop('disabled', true);
+        $('#per_1').prop('disabled', true);
         @endforeach
         changed_personal();
     });
