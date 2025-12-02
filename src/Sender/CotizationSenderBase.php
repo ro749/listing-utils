@@ -57,7 +57,7 @@ class CotizationSenderBase extends BaseForm
             case CotizationMedium::LINK->value:
                 return route('client-view', ['id' => $model->id]);
             case CotizationMedium::WHATSAPP->value:
-                return 'https://wa.me/'.$this->client->phone.'?text='.route('client-view', ['id' => $model->id]);
+                return 'https://wa.me/52'.$this->client->phone.'?text='.route('client-view', ['id' => $model->id]);
             case CotizationMedium::MAIL->value:
                 $mail_class = $this->mail_class;
                 $mail = new $mail_class(
