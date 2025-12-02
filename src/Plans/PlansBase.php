@@ -9,6 +9,7 @@ use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
 use Illuminate\Support\Facades\Log;
+use Ro749\ListingUtils\Plans\PlanFillableLine;
 class PlansBase
 {   
     public string $plans_table;
@@ -32,8 +33,6 @@ class PlansBase
         string $mensuality_tag = 'MENSUALIDAD',
         string $title_column = 'title',
         string $discount_column = 'discount',
-
-        string $price_tag = 'Precio de lista',
         string $discount_tag = 'Descuento',
         string $ppm_tag = 'Precio por metro',
         bool $ppm = false
@@ -47,8 +46,8 @@ class PlansBase
         $this->title_column = $title_column;
         $this->discount_column = $discount_column;
 
-        $this->price_tag = $price_tag;
-        $this->discount_tag = $discount_tag;
+        $this->price_tag = config('listing.plans.price_tag','Precio de lista');
+        $this->discount_tag = config('listing.plans.discount_tag','Descuento');
         $this->total_tag = config('listing.plans.total_tag','Total');
         $this->ppm_tag = $ppm_tag;
         $this->total_on_top = config('listing.plans.total_on_top',false);
@@ -63,7 +62,7 @@ class PlansBase
             $form = new BaseForm();
             foreach ($lines as $key => $line) {
                 if(empty($line['editable'])){
-                    $lines[$key] = new PlanLine(text: $line['text'], percentage: 0);
+                    $lines[$key] = new PlanFillableLine(text: $line['text'], percentage: 0);
                 }
                 else{
                     $form->fields['per_'.$key] = new Field(type: InputType::PERCENTAGE);
@@ -87,23 +86,90 @@ class PlansBase
                     }
                 }
             }
-            $this->personalized_plan = new PersonalizedPlan(
+            $this->personalized_plan = $this->get_default_plan(
                 id: 'personal',
                 title: config('listing.plans.personalized_plan.title', 'Personalizado'),
                 discount: config('listing.plans.personalized_plan.discounts', 0),
-                lines: $lines,
+                personal: true
             );
-
+            $this->personalized_plan->lines = $lines;
+            
             $this->personalized_plan->form = $form;
         }
+
+        
     }
 
-    function get_default_plan($id,$title,$discount){
+    
+
+    function get_default_plan($id,$title,$discount,$personal=false){
+        $top_lines = [];
+        $bottom_lines = [];
+        if($this->show_base_price){
+            $top_lines[] = new PlanLine(
+                text: $this->price_tag, 
+                fillable_class: 'base-price',
+                fillable_id: 'base-price-'.$id
+            );
+        }
+        if(is_numeric($discount) && $discount != 0){
+            $top_lines[] = new PlanLine(
+                text: $this->discount_tag, 
+                percentage: $discount,
+                fillable_class: 'discount',
+                fillable_id: 'discount-'.$id
+            );
+        }
+        if($this->total_on_top){
+            $top_lines[] = new PlanLine(
+                text: $this->total_tag, 
+                fillable_class: 'total-price',
+                fillable_id: 'total-price-'.$id
+            );
+            if($this->ppm){
+                $top_lines[] = new PlanLine(
+                    text: $this->total_tag, 
+                    fillable_class: 'ppm-price',
+                    fillable_id: 'ppm-price-'.$id
+                );
+            }
+        }
+        else{
+            $bottom_lines[] = new PlanLine(
+                text: $this->total_tag, 
+                fillable_class: 'total-price',
+                fillable_id: 'total-price-'.$id
+            );
+            if($this->ppm){
+                $bottom_lines[] = new PlanLine(
+                    text: $this->total_tag, 
+                    fillable_class: 'ppm-price',
+                    fillable_id: 'ppm-price-'.$id
+                );
+            }
+        }
+
+        if($personal){
+            return new PersonalizedPlan(
+                id: $id,
+                title: $title,
+                discount: $discount,
+                top_lines: $top_lines,
+                lines: [],
+                bottom_lines: $bottom_lines,
+                show_base_price: $this->show_base_price,
+                price_tag: $this->price_tag,
+                total_on_top: $this->total_on_top,
+                total_tag: $this->total_tag,
+            );
+        }
         return new Plan(
             id: $id,
             title: $title,
             discount: $discount,
+            top_lines: $top_lines,
             lines: [],
+            bottom_lines: $bottom_lines,
             show_base_price: $this->show_base_price,
             price_tag: $this->price_tag,
             total_on_top: $this->total_on_top,
@@ -150,7 +216,7 @@ class PlansBase
                     );
                 }
                 else{
-                    $new_plan->lines[] = new PlanLine(
+                    $new_plan->lines[] = new PlanFillableLine(
                         text: $line->description,
                         percentage: $line->percent
                     );
@@ -175,6 +241,7 @@ class PlansBase
             $matrix[] = $row;
         }
         if($this->personalized_plan && $needs_personal){
+
             $matrix[] = [$this->personalized_plan];
         }
         return $matrix;

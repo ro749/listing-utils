@@ -6,7 +6,9 @@ class Plan{
     public string $id;
     public string $title;
     public float $discounts;
+    public array $top_lines;
     public array $lines;
+    public array $bottom_lines;
     public string $price_tag;
     public string $discount_tag;
     public string $total_tag;
@@ -20,7 +22,9 @@ class Plan{
         string $title,
         //if instead of discount the price is fixed, set the column of the price of this plan
         float|string $discount,
+        array $top_lines,
         array $lines,
+        array $bottom_lines,
         string $price_tag = 'Precio de lista',
         string $discount_tag = 'Descuento',
         string $total_tag = 'Total',
@@ -32,7 +36,9 @@ class Plan{
         $this->id = $id;
         $this->title = $title;
         $this->discount = $discount;
+        $this->top_lines = $top_lines;
         $this->lines = $lines;
+        $this->bottom_lines = $bottom_lines;
         $this->price_tag = $price_tag;
         $this->discount_tag = $discount_tag;
         $this->total_tag = $total_tag;

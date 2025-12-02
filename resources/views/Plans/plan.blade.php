@@ -2,26 +2,9 @@
 <div class="table-responsive">
     <table class="table">
         <tbody>
-            @if($plan->show_base_price)
-                @include('listing-utils::Plans.plan-line',[
-                    'description' => $plan->price_tag,
-                    'percentage' => 0,
-                    'class' => 'base-price',
-                    'id' => 'base-price-'.$plan->id,
-                ])
-            @endif
-            @if(is_numeric($plan->discount) && $plan->discount != 0)
-                @include('listing-utils::Plans.plan-line',[
-                    'description' => $plan->discount_tag,
-                    'percentage' => $plan->discount,
-                    'class' => 'discount',
-                    'id' => 'discount-'.$plan->id,
-                ])
-            @endif
-            
-            @if($plan->total_on_top)
-                @include('listing-utils::Plans.plan-totals',['plan'=>$plan])
-            @endif
+            @foreach ($plan->top_lines as $line)
+                {!! $line->render($plan->id, $loop->index) !!}
+            @endforeach
             @if(isset($form))
             @foreach ($plan->lines as $line)
                 {!! $line->render($plan->id, $loop->index, $form) !!}
@@ -31,9 +14,9 @@
                 {!! $line->render($plan->id, $loop->index) !!}
             @endforeach
             @endif
-            @if(!$plan->total_on_top)
-                @include('listing-utils::Plans.plan-totals',['plan'=>$plan])
-            @endif
+            @foreach ($plan->bottom_lines as $line)
+                {!! $line->render($plan->id, $loop->index) !!}
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -52,6 +35,7 @@
         $('#fill-discount-{{ $plan->id }}').set_money(discount);
         @else
         var final_price = parseFloat(data['price']); 
+        console.log(final_price);
         @endif
     @else
         var final_price = parseFloat(data['{{ $plan->discount }}']);

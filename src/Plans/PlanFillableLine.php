@@ -1,34 +1,27 @@
 <?php
 namespace Ro749\ListingUtils\Plans;
-class PlanLine
+class PlanFillableLine
 {
     //the text of the first row, is an index from the list of line text
     public string $text;
     //the percentage of the plan line from 0 to 100
-    public ?float $percentage;
-    public string $fillable_class;
-
-    public string $fillable_id;
+    public float $percentage;
 
     public function __construct(
         string $text,
-        string $fillable_class,
-        ?float $percentage = null,
-        string $fillable_id=''
+        float $percentage
     ){
         $this->text = $text;
         $this->percentage = $percentage;
-        $this->fillable_class = $fillable_class;
-        $this->fillable_id = $fillable_id;
     }
 
     public function render(string $id, int $key)
     {
-        return view('listing-utils::Plans.plan-line', [
+        return view('listing-utils::Plans.plan-fillable-line', [
             'description' => $this->text,
             'percentage' => $this->percentage,
-            'id' => $this->fillable_id,
-            'class' => $this->fillable_class
+            'id' => $id.'-'.$key,
+            'push' => 'fill-plan-'.$id,
         ]);
     }
 }

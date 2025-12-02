@@ -1,8 +1,3 @@
-@if(!empty($unit))
-@push('fill')
-var data = @json($unit);
-@endpush
-@endif
 @foreach ($plans as $row)
 <div class="plan-row">
     @foreach($row as $plan)
@@ -18,7 +13,6 @@ var data = @json($unit);
     
     
     $(document).ready(function(){
-        var data = @json($unit);
         @foreach($personal_plan->toArray() as $key=>$value)
         @if(substr($key, 0, 4) == 'fill')
         $('#{{ $key }}').set_money({{ $value }});

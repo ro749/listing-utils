@@ -1,6 +1,6 @@
 <?php
 namespace Ro749\ListingUtils\Plans;
-class PlanMonthsLines extends PlanLine
+class PlanMonthsLines extends PlanFillableLine
 {
     public string|int $num;
     public string $month_tag;
