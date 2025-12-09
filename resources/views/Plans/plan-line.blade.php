@@ -3,7 +3,7 @@
         <strong><span id="line-{{ $id }}" class="plan-line-desc line-{{ $class }}">{{ $description }}:</span></strong>
     </td>
     <td class="center">
-        <span id="per-{{ $id }}" class="plan-line-per per-{{ $class }}"></span>
+        <span id="per-{{ $id }}" class="plan-line-per per-{{ $class }}">
         @if($percentage != 0)
             {{ $percentage }}%
         @endif 
