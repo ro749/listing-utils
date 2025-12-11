@@ -28,6 +28,9 @@ class PlansBase
     public bool $ppm = false;
     public bool $show_base_price = true;
     public ?Plan $personalized_plan = null;
+
+    public ?BaseForm $form = null;
+
     public function __construct(
         string $months_tag = 'MESES',
         string $mensuality_tag = 'MENSUALIDAD',
@@ -35,7 +38,7 @@ class PlansBase
         string $discount_column = 'discount',
         string $discount_tag = 'Descuento',
         string $ppm_tag = 'Precio por metro',
-        bool $ppm = false
+        bool $ppm = false,
     )
     {
         $this->plans_table = config('listing.plans.table','plans');
@@ -59,14 +62,14 @@ class PlansBase
         if(config()->has('listing.plans.personalized_plan')){
             
             $lines = config('listing.plans.personalized_plan.lines', []);
-            $form = new BaseForm();
+            $this->form = new BaseForm();
             foreach ($lines as $key => $line) {
                 if(empty($line['editable'])){
                     $lines[$key] = new PlanFillableLine(text: $line['text'], percentage: 0);
                 }
                 else{
-                    $form->fields['per_'.$key] = new Field(type: InputType::PERCENTAGE);
-                    $form->fields['fill_'.$key] = new Field(type: InputType::MONEY);
+                    $this->form->fields['per_personal_'.$key] = new Field(type: InputType::PERCENTAGE);
+                    $this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
                     if(!empty($line['months'])){
                         $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
                         $now = Carbon::now();
@@ -93,8 +96,6 @@ class PlansBase
                 personal: true
             );
             $this->personalized_plan->lines = $lines;
-            
-            $this->personalized_plan->form = $form;
         }
 
         
@@ -252,6 +253,12 @@ class PlansBase
         return $this->get_in_matrix(config('listing.plans.plans_per_row',2),$needs_personal);
     }
     
+    public function render(){
+        return view('listing-utils::Plans.plans', [
+            'plans' => $this->get(),
+            'form'=>$this->form,
+        ]);
+    }
     public static function instance(): PlansBase
     {
         DB::enableQueryLog();

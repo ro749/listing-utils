@@ -1,12 +1,14 @@
+<x-smartForm :form="$form">
 @foreach ($plans as $row)
 <div class="plan-row">
     @foreach($row as $plan)
         <div class="plan-div" id="plan-div-{{ $plan->id }}">
-        {!! $plan->render() !!}
+        {!! $plan->render($form) !!}
         </div>
     @endforeach
 </div>
 @endforeach
+</x-smartForm>
 @if(isset($personal_plan))
 @push('scripts')
 <script>

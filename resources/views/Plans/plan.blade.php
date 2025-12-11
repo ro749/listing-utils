@@ -2,21 +2,32 @@
 <div class="table-responsive">
     <table class="table">
         <tbody>
-            @foreach ($plan->top_lines as $line)
-                {!! $line->render($plan->id, $loop->index) !!}
-            @endforeach
+            
             @if(isset($form))
+            @foreach ($plan->top_lines as $line)
+                "{{ $line->render($plan->id, strval($loop->index).'_top', $form) }}"
+            @endforeach
             @foreach ($plan->lines as $line)
                 {!! $line->render($plan->id, $loop->index, $form) !!}
             @endforeach
             @else
+            @foreach ($plan->top_lines as $line)
+                {!! $line->render($plan->id, strval($loop->index)+'_top') !!}
+            @endforeach
             @foreach ($plan->lines as $line)
                 {!! $line->render($plan->id, $loop->index) !!}
             @endforeach
             @endif
+            @if(isset($form))
+            @foreach ($plan->bottom_lines as $line)
+                {!! $line->render($plan->id, strval($loop->index).'_bottom', $form) !!}
+            @endforeach
+            @else
             @foreach ($plan->bottom_lines as $line)
                 {!! $line->render($plan->id, $loop->index) !!}
             @endforeach
+            @endif
+
         </tbody>
     </table>
 </div>

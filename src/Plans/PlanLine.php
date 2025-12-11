@@ -22,7 +22,7 @@ class PlanLine
         $this->fillable_id = $fillable_id;
     }
 
-    public function render(string $id, int $key)
+    public function render(string $id, string $key)
     {
         return view('listing-utils::Plans.plan-line', [
             'description' => $this->text,

@@ -3,12 +3,11 @@
 namespace Ro749\ListingUtils\Plans;
 use Ro749\SharedUtils\Forms\BaseForm;
 class PersonalizedPlan extends Plan{
-    public ?BaseForm $form = null;
-    public function render(){
+    public function render($form){
         return view('listing-utils::Plans.personalized-plan', [
             'plan' => $this, 
             'stack' => 'fill-plan-'.$this->id,
-            'form' => $this->form
+            'form' => $form
         ]);
     }
 }

@@ -48,9 +48,10 @@ class Plan{
         $this->show_base_price = $show_base_price;
     }
 
-    public function render(){
+    public function render($form){
         return view('listing-utils::Plans.plan', [
-            'plan' => $this, 'stack' => 'fill-plan-'.$this->id
-        ]);
+            'plan' => $this, 'stack' => 'fill-plan-'.$this->id,
+            'form' => $form
+        ] );
     }
 }
