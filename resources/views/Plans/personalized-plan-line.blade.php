@@ -66,14 +66,8 @@ $field = new \Ro749\SharedUtils\Forms\Field(type: \Ro749\SharedUtils\Forms\Input
     $('#per_{{ $input_id }}').set_value(0);
     @elseif(!empty($amount))
     $('#fill_{{ $input_id }}').set_value(0);
-    $('#fill_{{ $input_id }}').on('input', function () {
-        changed_personal();
-    });
     @else
     $('#per_{{ $input_id }}').set_value(0);
-    $('#per_{{ $input_id }}').on('input', function () {
-        changed_personal();
-    });
     @endif
 
 </script>

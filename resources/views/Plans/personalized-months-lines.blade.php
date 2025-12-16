@@ -25,7 +25,7 @@
     @endif
     $('#fill-plan-months-{{ $id }}').text(months);
     $(document).on('personalized_plan_changed', function(){
-        var value = $('#fill_{{ $key }}').get_number();
+        var value = $('#fill_personal_{{ $key }}').get_number();
         $('#fill-plan-mensuality-{{ $id }}').set_money(value/months);
     });
 @endpush
