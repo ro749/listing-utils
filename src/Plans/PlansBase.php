@@ -237,6 +237,9 @@ class PlansBase
         for ($i=0;$i<$rows;$i++) {
             $row = [];
             for ($j=0;$j<$plans_per_row;$j++) {
+                if($i*$plans_per_row+$j >= count($plans)){
+                    break;
+                }
                 $row[] = $plans[$i*$plans_per_row+$j];
             }
             $matrix[] = $row;

@@ -8,11 +8,11 @@
                 "{{ $line->render($plan->id, strval($loop->index).'_top', $form) }}"
             @endforeach
             @foreach ($plan->lines as $line)
-                {!! $line->render($plan->id, $loop->index, $form) !!}
+                {!! $line->render($plan->id, $loop->index) !!}
             @endforeach
             @else
             @foreach ($plan->top_lines as $line)
-                {!! $line->render($plan->id, strval($loop->index)+'_top') !!}
+                {!! $line->render($plan->id, $loop->index) !!}
             @endforeach
             @foreach ($plan->lines as $line)
                 {!! $line->render($plan->id, $loop->index) !!}
