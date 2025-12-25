@@ -2,10 +2,13 @@
 namespace Ro749\ListingUtils\Plans;
 use Illuminate\Support\Facades\Log;
 use Ro749\SharedUtils\Forms\BaseForm;
+use Ro749\SharedUtils\Forms\InputType;
 class PersonalizedPlanLine
 {
     //the text of the first row, is an index from the list of line text
     public string $text;
+
+    public InputType $type = InputType::MONEY;
     //the percentage of the plan line from 0 to 100
     public float $min_percentage;
     public float $max_percentage;
@@ -18,6 +21,7 @@ class PersonalizedPlanLine
 
     public function __construct(
         string $text,
+        InputType $type = InputType::MONEY,
         bool $percent = true,
         bool $amount = true,
         float $min_percentage=0,
@@ -26,6 +30,7 @@ class PersonalizedPlanLine
         float $max_money=0
     ){
         $this->text = $text;
+        $this->type = $type;
         $this->percent = $percent;
         $this->amount = $amount;
         $this->min_percentage = $min_percentage;
@@ -34,11 +39,11 @@ class PersonalizedPlanLine
         $this->max_money = $max_money;
     }
 
-    public function render(string $id, string $key, BaseForm $form)
+    public function render(string $id, string $key, BaseForm $form = null)
     {
-        Log::debug('PersonalizedPlanLine percent: '.($this->percent?'yes':'no'));
         return view('listing-utils::Plans.personalized-plan-line', [
             'description' => $this->text,
+            'type' => $this->type,
             'percent' => $this->percent,
             'amount' => $this->amount,
             'min_percent' => $this->min_percentage,

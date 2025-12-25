@@ -1,5 +1,7 @@
 @php
-$field = new \Ro749\SharedUtils\Forms\Field(type: \Ro749\SharedUtils\Forms\InputType::MONEY);
+if(empty($form)){
+$field = new \Ro749\SharedUtils\Forms\Field(type: $type);
+}
 @endphp
 <tr id="{{ $input_id }}">
     <td class="right">
@@ -7,7 +9,9 @@ $field = new \Ro749\SharedUtils\Forms\Field(type: \Ro749\SharedUtils\Forms\Input
     </td>
     <td class="center">
         @if(!empty($percent))
+        @if(!empty($form))
         <x-field name="per_{{ $input_id }}" :form="$form"/>
+        @endif
         @else
         <div id="per_{{ $input_id }}"></div>
         @endif
@@ -15,7 +19,11 @@ $field = new \Ro749\SharedUtils\Forms\Field(type: \Ro749\SharedUtils\Forms\Input
     </td>
     <td class="left">
         @if(!empty($amount))
+        @if(!empty($form))
         <x-field name="fill_{{ $input_id }}" :form="$form"/>
+        @else
+        <x-field name="fill_{{ $input_id }}" class="{{ $key }}" :field="$field"/>
+        @endif
         @else
         <div id="fill_{{ $input_id }}"></div>
         @endif
