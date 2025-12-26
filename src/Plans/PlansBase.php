@@ -256,10 +256,11 @@ class PlansBase
         return $this->get_in_matrix(config('listing.plans.plans_per_row',2),$needs_personal);
     }
     
-    public function render(){
+    public function render($personal_plan = null){
         return view('listing-utils::Plans.plans', [
             'plans' => $this->get(),
             'form'=>$this->form,
+            'personal_plan'=>$personal_plan
         ]);
     }
     public static function instance(): PlansBase

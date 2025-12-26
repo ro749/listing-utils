@@ -9,7 +9,7 @@
 </div>
 @endforeach
 </x-smartForm>
-@if(isset($personal_plan))
+@if(!empty($personal_plan))
 @push('scripts')
 <script>
     
@@ -21,8 +21,8 @@
         $('#{{ $key }}').trigger('input');
         $('#{{ $key }}').prop('disabled', true);
         @endif
-        $('#per_0').prop('disabled', true);
-        $('#per_1').prop('disabled', true);
+        $('#per_personal_0').prop('disabled', true);
+        $('#per_personal_1').prop('disabled', true);
         @endforeach
         changed_personal();
     });
