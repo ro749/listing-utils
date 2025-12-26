@@ -5,7 +5,7 @@
             
             @if(isset($form))
             @foreach ($plan->top_lines as $line)
-                "{{ $line->render($plan->id, strval($loop->index).'_top', $form) }}"
+                {{ $line->render($plan->id, strval($loop->index).'_top', $form) }}
             @endforeach
             @foreach ($plan->lines as $line)
                 {!! $line->render($plan->id, $loop->index) !!}
