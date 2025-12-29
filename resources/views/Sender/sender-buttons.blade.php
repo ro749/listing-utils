@@ -64,7 +64,12 @@
             dataType: 'text',
             data: get_data(0),
             success: function (response) {
-                window.open(response, '_blank');
+                var win = window.open(response, '_blank');
+                setTimeout(() => {
+                  if (!win || win.closed) {
+                    alert("No se pudo abrir WhatsApp. Verificá que esté instalado.");
+                  }
+                }, 2000);
                 closePopup('ask-link-modal');
             }
         })
