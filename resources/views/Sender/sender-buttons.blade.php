@@ -17,6 +17,9 @@
 <x-shared-utils::modal id="ask-whatsapp-modal">
     @include('listing-utils::Sender.whatsapp-popup',["name" => $sender->client->name, "phone" => $sender->client->phone])
 </x-shared-utils::modal>
+<x-shared-utils::modal id="sent-whatsapp-modal">
+    @include('listing-utils::Sender.sent-whatsapp-popup',["name" => $sender->client->name, "phone" => $sender->client->phone])
+</x-shared-utils::modal>
 <x-shared-utils::modal id="ask-link-modal">
     @include('listing-utils::Sender.link-popup',["name" => $sender->client->name, "phone" => $sender->client->phone])
 </x-shared-utils::modal>
@@ -64,13 +67,9 @@
             dataType: 'text',
             data: get_data(0),
             success: function (response) {
-                var win = window.open(response, '_blank');
-                setTimeout(() => {
-                  if (!win || win.closed) {
-                    alert("No se pudo abrir WhatsApp. Verificá que esté instalado.");
-                  }
-                }, 2000);
-                closePopup('ask-link-modal');
+                window.open(response, '_blank');
+                closePopup('ask-whatsapp-modal');
+                openPopup('sent-whatsapp-modal');
             }
         })
     });
