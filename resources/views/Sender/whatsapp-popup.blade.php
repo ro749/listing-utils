@@ -6,7 +6,7 @@
     </div>
     <div style="height:6px"></div>
     <div class="row" style="justify-content: center; margin:0px;">
-        <button id="confirm-whatsapp" onclick="hide('ask-whatsapp-modal');" class="btn btn-secondary btn-round btn-block mb-3" style="width: 40%; margin-top: 6px; margin-left: auto; margin-right: auto;" type="button">
+        <button id="confirm-whatsapp" class="btn btn-secondary btn-round btn-block mb-3" style="width: 40%; margin-top: 6px; margin-left: auto; margin-right: auto;" type="button">
             Aceptar
         </button>
     </div>
