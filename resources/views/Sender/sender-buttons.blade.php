@@ -72,13 +72,17 @@
             dataType: 'text',
             data: get_data(0),
             success: function (response) {
-                const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-                if(isSafari){
+                const isApple =
+                /Mac|iPhone|iPad|iPod/i.test(navigator.platform) ||
+                (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+                if(true){
+                    navigator.clipboard.writeText(response);
+                    $('#whatsapp-quotation').html(response);
                     closePopup('ask-whatsapp-modal');
                     openPopup('sent-whatsapp-safari-modal');
                 }
                 else{
-                    window.open(response, '_blank');
+                    window.open('https://wa.me/52{{ $sender->client->phone }}?text='+response, '_blank');
                     closePopup('ask-whatsapp-modal');
                     openPopup('sent-whatsapp-modal');
                 }
