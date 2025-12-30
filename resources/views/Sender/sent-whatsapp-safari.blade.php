@@ -1,6 +1,6 @@
 <div class="sender-popup">
     <div style="text-align:center">
-        Abra Whatsapp para enviar el cotización al cliente.
+        Copie el enlace y abra WhatsApp para enviar cotización.
         <p id="whatsapp-quotation"></p>
     </div>
     <div class="row" style="justify-content: center; margin:0px;">
