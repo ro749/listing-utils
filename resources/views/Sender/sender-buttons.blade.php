@@ -75,7 +75,7 @@
                 const isApple =
                 /Mac|iPhone|iPad|iPod/i.test(navigator.platform) ||
                 (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-                if(true){
+                if(isApple){
                     navigator.clipboard.writeText(response);
                     $('#whatsapp-quotation').html(response);
                     closePopup('ask-whatsapp-modal');
