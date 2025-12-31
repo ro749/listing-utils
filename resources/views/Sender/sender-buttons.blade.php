@@ -72,10 +72,8 @@
             dataType: 'text',
             data: get_data(0),
             success: function (response) {
-                const isApple =
-                /Mac|iPhone|iPad|iPod/i.test(navigator.platform) ||
-                (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-                if(isApple){
+                const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                if(isSafari){
                     navigator.clipboard.writeText(response);
                     $('#whatsapp-quotation').html(response);
                     closePopup('ask-whatsapp-modal');
