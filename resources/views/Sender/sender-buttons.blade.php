@@ -72,7 +72,7 @@
             dataType: 'text',
             data: get_data(0),
             success: function (response) {
-                const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                const isSafari = /^((?!chrome|android|crios).)*safari/i.test(navigator.userAgent);
                 if(isSafari){
                     navigator.clipboard.writeText(response);
                     $('#whatsapp-quotation').html(response);
