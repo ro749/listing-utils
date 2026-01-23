@@ -1,29 +1,24 @@
-@php
-if(empty($form)){
-$field = new \Ro749\SharedUtils\Forms\Field(type: $type);
-}
-@endphp
 <tr id="{{ $input_id }}">
     <td class="right">
         <strong><span id="line-{{ $input_id }}" class="plan-line-desc">{{ $description }}:</span></strong>
     </td>
     <td class="center">
         @if(!empty($percent))
-        @if(!empty($form))
+            @if(!empty($form))
         <x-field name="per_{{ $input_id }}" :form="$form"/>
-        @endif
+            @endif
         @else
         <div id="per_{{ $input_id }}"></div>
         @endif
 
     </td>
     <td class="left">
-        @if(!empty($amount))
-        @if(!empty($form))
+        @if(!empty($ammount))
+            @if(!empty($form))
         <x-field name="fill_{{ $input_id }}" :form="$form"/>
-        @else
-        <x-field name="fill_{{ $input_id }}" class="{{ $key }}" :field="$field"/>
-        @endif
+            @else
+        <x-field name="fill_{{ $input_id }}" class="{{ $key }}" :field="$ammount"/>
+            @endif
         @else
         <div id="fill_{{ $input_id }}"></div>
         @endif
@@ -74,7 +69,7 @@ $field = new \Ro749\SharedUtils\Forms\Field(type: $type);
     $('#per_{{ $input_id }}').set_value(0);
     @elseif(!empty($amount))
     $('#fill_{{ $input_id }}').set_value(0);
-    @else
+    @elseif(!empty($percent))
     $('#per_{{ $input_id }}').set_value(0);
     @endif
 

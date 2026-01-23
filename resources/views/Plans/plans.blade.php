@@ -1,3 +1,8 @@
+@php
+if(empty($form)){
+    $form = null;
+}
+@endphp
 <x-smartForm :form="$form">
 @foreach ($plans as $row)
 <div class="plan-row">

@@ -37,7 +37,7 @@ class ReadUnits extends Command
         else{
             $reader = new DbReader(
                 model_class: config('overrides.models.Unit'),
-                required_columns: ['unit','price'],
+                required_columns: ['unit','price','status'],
                 add_new_columns: true
             );
         }

@@ -257,7 +257,7 @@ class PlansBase
     }
     
     public function render($personal_plan = null){
-        return view('listing-utils::Plans.plans', [
+        return view(config('overrides.views.plans'), [
             'plans' => $this->get(),
             'form'=>$this->form,
             'personal_plan'=>$personal_plan
