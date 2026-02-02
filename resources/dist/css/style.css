@@ -1,4 +1,4 @@
-.UnitsStatus-0, .AsesorStatus-0{
+.UnitsStatus-0, .AsesorStatus-0, .AsesorCategories-0{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     background-color: var(--success-focus);
     color: var(--success-main);
 }
-.UnitsStatus-1, .AsesorStatus-1{
+.UnitsStatus-1, .AsesorStatus-1, .AsesorCategories-1{
     display: flex;
     justify-content: center;
     align-items: center;
