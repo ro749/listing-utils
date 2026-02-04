@@ -82,7 +82,11 @@ class PlansBase
                         );
                     }
                     else{
-                        $lines[$key] = new PersonalizedPlanLine(text: $line['text']);
+                        $lines[$key] = new PersonalizedPlanLine(
+                            text: $line['text'],
+                            percent: $this->form->fields['per_personal_'.$key],
+                            ammount: $this->form->fields['fill_personal_'.$key],
+                        );
                         if(isset($line['min_percentage'])){
                             $lines[$key]->min_percentage = $line['min_percentage'];
                         }

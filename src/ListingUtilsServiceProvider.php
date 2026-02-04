@@ -31,4 +31,21 @@ class ListingUtilsServiceProvider extends PackageServiceProvider
             ])
             ->hasRoutes('web');
     }
+
+    public function register()
+    {
+        parent::register();
+        $packageConfig = require __DIR__.'/../config/listing-utils.php';
+        config(['overrides' => $this->mergeConfigs($packageConfig['overrides'], config('overrides', []))]);    
+    }
+
+    protected function mergeConfigs(array $package, array $project): array
+    {
+        foreach ($project as $key => $value) {
+            $package[$key] = (is_array($value) && isset($package[$key]) && is_array($package[$key]))
+                ? $this->mergeConfigs($package[$key], $value)
+                : $value;
+        }
+        return $package;
+    }
 }
