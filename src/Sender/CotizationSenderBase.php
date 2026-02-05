@@ -12,13 +12,14 @@ use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\CopyField;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\FormField;
+use Ro749\ListingUtils\Plans\PlansBase;
 class CotizationSenderBase extends BaseForm
 {
     public string $mail_class = '';
     public $client;
     public bool $personalized_plan = false;
     
-    public function __construct()
+    public function __construct(PlansBase $plans)
     {
         $this->mail_class = config('listing.cotization_mail_class','App\Mail\CotizationMail');
         $client_id = session()->get('client_id');
@@ -33,19 +34,7 @@ class CotizationSenderBase extends BaseForm
             column: 'price',
             id: 'unit'
         );
-        
-        if(config()->has('listing.plans.personalized_plan')){
-            $this->personalized_plan = true;
-            $lines = config('listing.plans.personalized_plan.lines', []);
-            $form = new BaseForm();
-            $form->model_class = config('overrides.models.PersonalPlan');
-            foreach ($lines as $key => $line) {
-                if(!empty($line['editable'])){
-                    $form->fields['fill_personal_'.$key] = new Field(type: InputType::PERCENTAGE);
-                }
-            }
-            $this->fields['personalized_data'] = new FormField(form: $form, owner_column: 'quotation');
-        } 
+        $this->fields['personal_plans'] = new FormField(form: $plans->form,owner_column: 'quotation');
     }
 
     public function before_process(array &$data){
@@ -74,10 +63,11 @@ class CotizationSenderBase extends BaseForm
     }
 
     function render(){
-        if($this->personalized_plan){
-            return view('listing-utils::Sender.sender-buttons', ['sender' => $this, 'personalized_plan' => true]);
-        }
-        return view('listing-utils::Sender.sender-buttons', ['sender' => $this]);
+        //Log::debug(json_encode($this->fields['personal_plans']->form,JSON_PRETTY_PRINT));
+        return view(
+            'listing-utils::Sender.sender-buttons', 
+            ['sender' => $this,'form' => $this->fields['personal_plans']->form]
+        );
     }
 
     public static function instance(): CotizationSenderBase

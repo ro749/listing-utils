@@ -26,8 +26,10 @@ Route::middleware(['web'])->group(function () {
     });
 
     Route::post('sender', function (Request $request){
+        $plans = config('overrides.plans');
+        $plans = new $plans();
         $senderClass = config('overrides.sender');
-        $sender = new $senderClass();
+        $sender = new $senderClass($plans);
         return $sender->prosses($request);
     });
 });

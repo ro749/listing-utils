@@ -46,7 +46,6 @@
         $('#fill-discount-{{ $plan->id }}').set_money(discount);
         @else
         var final_price = parseFloat(data['price']); 
-        console.log(final_price);
         @endif
     @else
         var final_price = parseFloat(data['{{ $plan->discount }}']);

@@ -30,6 +30,7 @@ class PlansBase
     public ?Plan $personalized_plan = null;
 
     public ?BaseForm $form = null;
+    public $plans = [];
 
     public function __construct(
         string $months_tag = 'MESES',
@@ -102,7 +103,7 @@ class PlansBase
             $this->personalized_plan->lines = $lines;
         }
 
-        
+        $this->plans = $this->get();
     }
 
     
@@ -259,10 +260,53 @@ class PlansBase
     public function get(bool $needs_personal = true): array{
         return $this->get_in_matrix(config('listing.plans.plans_per_row',2),$needs_personal);
     }
+
+    public function add_field(
+        string $name,
+        InputType $type, 
+        string $label="", 
+        string $placeholder="", 
+        string $icon="", 
+        array $rules=[], 
+        string $message="", 
+        string $value = "",
+        Closure|bool $required = false,
+        bool $unique = false,
+        int $max = null,
+        int $min = null,
+        bool $encrypt = false,
+        bool $autosave = false,
+        bool $sufficient = false,
+        string $field_class = ""
+    )
+    {
+        if($this->form == null){
+            $this->form = new BaseForm();
+        }
+        $new_field = new Field(
+            type : $type,
+            label : $label,
+            placeholder : $placeholder,
+            icon : $icon,
+            rules : $rules,
+            message : $message,
+            value : $value,
+            required : $required,
+            unique : $unique,
+            max : $max,
+            min : $min,
+            encrypt : $encrypt,
+            autosave : $autosave,
+            sufficient : $sufficient,
+            field_class : $field_class
+        );
+        $this->form->fields[$name] = $new_field;
+        return $this->form->fields[$name];
+    }
     
     public function render($personal_plan = null){
         return view(config('overrides.views.plans'), [
-            'plans' => $this->get(),
+            'plans' => $this->plans,
             'form'=>$this->form,
             'personal_plan'=>$personal_plan
         ]);

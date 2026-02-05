@@ -53,12 +53,13 @@
         var formData = {};
         formData['medium'] = method;
         formData['unit'] = data['id'];
-        @if(isset($personalized_plan))
+        @if(!empty($form))
         $('#BaseForm').submit();
         var form = Alpine.$data($('#BaseForm')[0]).form;
-        formData['personalized_data'] = {};
+        formData['personal_plans'] = {};
         Object.entries(form).forEach(([key, value]) => {
-            formData['personalized_data'][key] = value;
+            console.log(key+" "+value);
+            formData['personal_plans'][key] = value;
         });
         @endif
         return formData;
