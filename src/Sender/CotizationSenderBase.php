@@ -13,6 +13,7 @@ use Ro749\SharedUtils\Forms\CopyField;
 use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\FormField;
 use Ro749\ListingUtils\Plans\PlansBase;
+use Symfony\Component\Mailer\Test\Constraint\EmailCount;
 class CotizationSenderBase extends BaseForm
 {
     public string $mail_class = '';
@@ -34,7 +35,9 @@ class CotizationSenderBase extends BaseForm
             column: 'price',
             id: 'unit'
         );
-        $this->fields['personal_plans'] = new FormField(form: $plans->form,owner_column: 'quotation');
+        if(!empty($plans->form)){
+            $this->fields['personal_plans'] = new FormField(form: $plans->form,owner_column: 'quotation');
+        }
     }
 
     public function before_process(array &$data){
@@ -63,10 +66,13 @@ class CotizationSenderBase extends BaseForm
     }
 
     function render(){
-        //Log::debug(json_encode($this->fields['personal_plans']->form,JSON_PRETTY_PRINT));
+        $data = ['sender' => $this];
+        if(!empty($this->fields['personal_plans']->form)){
+            $data['form'] = $this->fields['personal_plans']->form;
+        }
         return view(
             'listing-utils::Sender.sender-buttons', 
-            ['sender' => $this,'form' => $this->fields['personal_plans']->form]
+            $data
         );
     }
 
