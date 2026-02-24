@@ -4,7 +4,7 @@
 return [
     'overrides'=>[
         'views' => [
-            'plans' => 'listing-utils::plans.plans',
+            'plans' => 'listing-utils::Plans.plans',
         ],
     ]
 ];
