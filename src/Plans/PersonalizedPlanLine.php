@@ -15,8 +15,8 @@ class PersonalizedPlanLine
 
     public function __construct(
         string $text,
-        ?Field $percent,
-        ?Field $ammount,
+        ?Field $percent = null,
+        ?Field $ammount = null,
     ){
         $this->text = $text;
         $this->percent = $percent;

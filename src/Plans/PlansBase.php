@@ -263,44 +263,13 @@ class PlansBase
 
     public function add_field(
         string $name,
-        InputType $type, 
-        string $label="", 
-        string $placeholder="", 
-        string $icon="", 
-        array $rules=[], 
-        string $message="", 
-        string $value = "",
-        Closure|bool $required = false,
-        bool $unique = false,
-        int $max = null,
-        int $min = null,
-        bool $encrypt = false,
-        bool $autosave = false,
-        bool $sufficient = false,
-        string $field_class = ""
+        Field $field
     )
     {
         if($this->form == null){
             $this->form = new BaseForm();
         }
-        $new_field = new Field(
-            type : $type,
-            label : $label,
-            placeholder : $placeholder,
-            icon : $icon,
-            rules : $rules,
-            message : $message,
-            value : $value,
-            required : $required,
-            unique : $unique,
-            max : $max,
-            min : $min,
-            encrypt : $encrypt,
-            autosave : $autosave,
-            sufficient : $sufficient,
-            field_class : $field_class
-        );
-        $this->form->fields[$name] = $new_field;
+        $this->form->fields[$name] = $field;
         return $this->form->fields[$name];
     }
     
