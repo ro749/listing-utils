@@ -33,11 +33,8 @@ class PlansBase
     public $plans = [];
 
     public function __construct(
-        string $months_tag = 'MESES',
-        string $mensuality_tag = 'MENSUALIDAD',
         string $title_column = 'title',
         string $discount_column = 'discount',
-        string $discount_tag = 'Descuento',
         string $ppm_tag = 'Precio por metro',
         bool $ppm = false,
     )
@@ -45,8 +42,8 @@ class PlansBase
         $this->plans_table = config('listing.plans.table','plans');
         $this->lines_table = config('listing.plans.lines_table','planlines');
         
-        $this->months_tag = $months_tag;
-        $this->mensuality_tag = $mensuality_tag;
+        $this->months_tag = config('listing.plans.months_tag','MESES');
+        $this->mensuality_tag = config('listing.plans.mensuality_tag','MENSUALIDAD');
         $this->title_column = $title_column;
         $this->discount_column = $discount_column;
 
