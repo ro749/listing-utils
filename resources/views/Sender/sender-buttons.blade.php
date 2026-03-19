@@ -58,7 +58,6 @@
         var form = Alpine.$data($('#BaseForm')[0]).form;
         formData['personal_plans'] = {};
         Object.entries(form).forEach(([key, value]) => {
-            console.log(key+" "+value);
             formData['personal_plans'][key] = value;
         });
         @endif

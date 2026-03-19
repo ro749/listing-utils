@@ -49,7 +49,6 @@ class PersonalizedMonthLines
 
     public function render(string $id, string $key, BaseForm $form = null)
     {
-        Log::info('personalized month plan line');
         return view('listing-utils::Plans.personalized-months-lines', [
             'description' => $this->text,
             'type' => $this->type,

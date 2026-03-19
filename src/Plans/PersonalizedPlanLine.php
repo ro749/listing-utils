@@ -25,7 +25,6 @@ class PersonalizedPlanLine
 
     public function render(string $id, string $key, BaseForm $form = null)
     {
-        Log::info('personalized plan line');
         return view('listing-utils::Plans.personalized-plan-line', [
             'description' => $this->text,
             'percent' => $this->percent,

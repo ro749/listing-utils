@@ -29,7 +29,6 @@
 @push('scripts')
 <script>
     @if(!empty($percent) && !empty($amount))
-    console.log("personal fillable line");
     $('#per_{{ $input_id }}').on('input', function () {
         var val = $(this).get_number();
         var value = (val/100.0)*data['price'];
