@@ -13,11 +13,11 @@
 
     </td>
     <td class="left">
-        @if(!empty($ammount))
-            @if(!empty($form))
+        @if(!empty($amount))
+            @if(!empty($form) && !empty($form->fields[$key]))
         <x-field name="fill_{{ $input_id }}" :form="$form"/>
             @else
-        <x-field name="fill_{{ $input_id }}" class="{{ $key }}" :field="$ammount"/>
+        <x-field name="fill_{{ $input_id }}" class="{{ $key }}" :field="$amount"/>
             @endif
         @else
         <div id="fill_{{ $input_id }}"></div>
@@ -29,10 +29,11 @@
 @push('scripts')
 <script>
     @if(!empty($percent) && !empty($amount))
+    console.log("personal fillable line");
     $('#per_{{ $input_id }}').on('input', function () {
         var val = $(this).get_number();
         var value = (val/100.0)*data['price'];
-        $('#fill_{{ $input_id }}').set_money(value);
+        $('#fill_{{ $input_id }}').set_value(value);
         changed_personal();
     });
     

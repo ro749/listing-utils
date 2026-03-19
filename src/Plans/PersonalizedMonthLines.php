@@ -3,6 +3,8 @@ namespace Ro749\ListingUtils\Plans;
 
 use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\InputType;
+use Ro749\SharedUtils\Forms\Field;
+use Illuminate\Support\Facades\Log;
 class PersonalizedMonthLines
 {
     //the text of the first row, is an index from the list of line text
@@ -18,37 +20,36 @@ class PersonalizedMonthLines
     public string|int $num;
     public string $month_tag;
     public string $mensuality_tag;
-
-    public bool $percent = true;
-    public bool $amount = true;
+    public ?Field $percent;
+    public ?Field $amount;
 
     public function __construct(
         string $text,
         string|int $num,
         string $month_tag,
         string $mensuality_tag,
-        InputType $type = InputType::MONEY,
-        bool $percent = true,
-        bool $amount = true,
+        ?Field $percent = null,
+        ?Field $amount = null,
         float $min_percentage=0,
         float $max_percentage=0,
         float $min_money=0,
         float $max_money=0,
     ){
         $this->text = $text;
-        $this->type = $type;
         $this->num = $num;
         $this->month_tag = $month_tag;
         $this->mensuality_tag = $mensuality_tag;
-        $this->percent = $percent;
         $this->min_percentage = $min_percentage;
         $this->max_percentage = $max_percentage;
         $this->min_money = $min_money;
         $this->max_money = $max_money;
+        $this->percent = $percent;
+        $this->amount = $amount;
     }
 
     public function render(string $id, string $key, BaseForm $form = null)
     {
+        Log::info('personalized month plan line');
         return view('listing-utils::Plans.personalized-months-lines', [
             'description' => $this->text,
             'type' => $this->type,

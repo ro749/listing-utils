@@ -67,23 +67,28 @@ class PlansBase
                 }
                 else{
                     $this->form->fields['per_personal_'.$key] = new Field(type: InputType::PERCENTAGE);
-                    $this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
+                    //$this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
                     if(!empty($line['months'])){
-                        $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
-                        $now = Carbon::now();
-                        $monthsUntil = $now->diffInMonths($targetDate);
+                        $monthsUntil = config('listing.plans.personalized_plan.final_date');
+                        if(str_contains($monthsUntil,'-')){
+                            $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
+                            $now = Carbon::now();
+                            $monthsUntil = $now->diffInMonths($targetDate);
+                        }
                         $lines[$key] = new PersonalizedMonthLines(
                             text: $line['text'],
                             num: $monthsUntil,
                             month_tag: $this->months_tag,
                             mensuality_tag: $this->mensuality_tag,
+                            percent: $this->form->fields['per_personal_'.$key],
+                            amount: new Field(type: InputType::MONEY),
                         );
                     }
                     else{
                         $lines[$key] = new PersonalizedPlanLine(
                             text: $line['text'],
                             percent: $this->form->fields['per_personal_'.$key],
-                            ammount: $this->form->fields['fill_personal_'.$key],
+                            amount: new Field(type: InputType::MONEY),
                         );
                         if(isset($line['min_percentage'])){
                             $lines[$key]->min_percentage = $line['min_percentage'];
@@ -271,6 +276,7 @@ class PlansBase
     }
     
     public function render($personal_plan = null){
+        Log::debug(json_encode($this->form,JSON_PRETTY_PRINT));
         return view(config('overrides.views.plans'), [
             'plans' => $this->plans,
             'form'=>$this->form,
@@ -279,9 +285,7 @@ class PlansBase
     }
     public static function instance(): PlansBase
     {
-        DB::enableQueryLog();
         $plans = new (config('overrides.plans'));
-        Log::info(DB::getQueryLog());
         return $plans;
     }
 }

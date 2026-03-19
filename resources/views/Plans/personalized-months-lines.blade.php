@@ -2,6 +2,8 @@
     'description' =>  $description,
     'class' => 'plan-line',
     'id' => 'plan-line-'.$id,
+    'amount' => $amount,
+    'percent' => $percent
 ])
 
 @include('listing-utils::Plans.plan-line',[

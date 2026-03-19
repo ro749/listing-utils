@@ -11,24 +11,25 @@ class PersonalizedPlanLine
     public string $text;
 
     public ?Field $percent;
-    public ?Field $ammount;
+    public ?Field $amount;
 
     public function __construct(
         string $text,
         ?Field $percent = null,
-        ?Field $ammount = null,
+        ?Field $amount = null,
     ){
         $this->text = $text;
         $this->percent = $percent;
-        $this->ammount = $ammount;
+        $this->amount = $amount;
     }
 
     public function render(string $id, string $key, BaseForm $form = null)
     {
+        Log::info('personalized plan line');
         return view('listing-utils::Plans.personalized-plan-line', [
             'description' => $this->text,
             'percent' => $this->percent,
-            'ammount' => $this->ammount,
+            'amount' => $this->amount,
             'form' => $form,
             'id' => $id.'-'.$key,
             'input_id' => $id.'_'.$key,
@@ -41,8 +42,8 @@ class PersonalizedPlanLine
         if(!empty($this->percent)){
             $form->fields['per_'.$id.'_'.$key] = $this->percent;
         }
-        if(!empty($this->ammount)){
-            $form->fields['fill_'.$id.'_'.$key] = $this->ammount;
+        if(!empty($this->amount)){
+            $form->fields['fill_'.$id.'_'.$key] = $this->amount;
         }
     }
 }
