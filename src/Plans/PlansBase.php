@@ -276,7 +276,6 @@ class PlansBase
     }
     
     public function render($personal_plan = null){
-        Log::debug(json_encode($this->form,JSON_PRETTY_PRINT));
         return view(config('overrides.views.plans'), [
             'plans' => $this->plans,
             'form'=>$this->form,
