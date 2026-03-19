@@ -4,8 +4,10 @@
     </td>
     <td class="center">
         @if(!empty($percent))
-            @if(!empty($form))
+            @if(!empty($form) && !empty($form->fields[$key]))
         <x-field name="per_{{ $input_id }}" :form="$form"/>
+            @else
+        <x-field name="per_{{ $input_id }}" class="{{ $key }}" :field="$percent"/>
             @endif
         @else
         <div id="per_{{ $input_id }}"></div>

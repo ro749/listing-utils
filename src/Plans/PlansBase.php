@@ -66,8 +66,8 @@ class PlansBase
                     $lines[$key] = new PlanFillableLine(text: $line['text'], percentage: 0);
                 }
                 else{
-                    $this->form->fields['per_personal_'.$key] = new Field(type: InputType::PERCENTAGE);
-                    //$this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
+                    //$this->form->fields['per_personal_'.$key] = new Field(type: InputType::PERCENTAGE);
+                    $this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
                     if(!empty($line['months'])){
                         $monthsUntil = config('listing.plans.personalized_plan.final_date');
                         if(str_contains($monthsUntil,'-')){
@@ -80,15 +80,15 @@ class PlansBase
                             num: $monthsUntil,
                             month_tag: $this->months_tag,
                             mensuality_tag: $this->mensuality_tag,
-                            percent: $this->form->fields['per_personal_'.$key],
-                            amount: new Field(type: InputType::MONEY),
+                            percent: new Field(type: InputType::PERCENTAGE),
+                            amount: $this->form->fields['fill_personal_'.$key],
                         );
                     }
                     else{
                         $lines[$key] = new PersonalizedPlanLine(
                             text: $line['text'],
-                            percent: $this->form->fields['per_personal_'.$key],
-                            amount: new Field(type: InputType::MONEY),
+                            percent:  new Field(type: InputType::PERCENTAGE),
+                            amount: $this->form->fields['fill_personal_'.$key],
                         );
                         if(isset($line['min_percentage'])){
                             $lines[$key]->min_percentage = $line['min_percentage'];
