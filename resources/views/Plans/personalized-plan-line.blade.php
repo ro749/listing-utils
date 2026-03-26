@@ -30,19 +30,40 @@
 
 @push('scripts')
 <script>
+    var is_updating = false;
     @if(!empty($percent) && !empty($amount))
     $('#per_{{ $input_id }}').on('input', function () {
+        if(is_updating) return;
         var val = $(this).get_number();
         var value = (val/100.0)*data['price'];
         $('#fill_{{ $input_id }}').set_value(value);
+        is_updating = true;
+        $('#fill_{{ $input_id }}').trigger('input');
+        is_updating = false;
         changed_personal();
     });
     
     $('#fill_{{ $input_id }}').on('input', function () {
+        if(is_updating) return;
         var val = $(this).get_number();
         var value = (val/data['price'])*100.0;
         $('#per_{{ $input_id }}').set_value(value);
+        is_updating = true;
+        $('#per_{{ $input_id }}').trigger('input');
+        is_updating = false;
         changed_personal();
+    });
+    $('#per_{{ $input_id }}').on('change', function () {
+        if(is_updating) return;
+        is_updating = true;
+        $('#fill_{{ $input_id }}').trigger('change');
+        is_updating = false;
+    });
+    $('#fill_{{ $input_id }}').on('change', function () {
+        if(is_updating) return;
+        is_updating = true;
+        $('#per_{{ $input_id }}').trigger('change');
+        is_updating = false;
     });
     @if(isset($min_percent))
     $('#per_{{ $input_id }}').on('change', function () {
@@ -75,5 +96,14 @@
     $('#per_{{ $input_id }}').set_value(0);
     @endif
 
+    @if(!empty($personal_plan) && !empty($personal_plan->{'fill_'.$input_id}))
+    $(document).ready(function () {
+        $('#fill_{{ $input_id }}').set_value({{ $personal_plan->{'fill_'.$input_id} }});
+        $('#fill_{{ $input_id }}').trigger('input');
+        $('#per_{{ $input_id }}').trigger('input');
+        $('#fill_{{ $input_id }}').prop('disabled', true);
+        $('#per_{{ $input_id }}').prop('disabled', true);
+    });
+    @endif
 </script>
 @endpush

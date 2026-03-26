@@ -7,6 +7,7 @@
 @push('scripts')
 <script>
     function changed_personal(){
+        return;
         var val0 = $('#fill_personal_0').get_number();
         var val1 = $('#fill_personal_1').get_number();
         if(val0+val1>data['price']){

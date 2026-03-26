@@ -1,3 +1,4 @@
+@props(['personal_plan'=>null])
 <p class="plan-title" id="plan-title-{{ $plan->id }}">{{ $plan->title }}</p>
 <div class="table-responsive">
     <table class="table">
@@ -8,7 +9,7 @@
                 {{ $line->render($plan->id, strval($loop->index).'_top', $form) }}
             @endforeach
             @foreach ($plan->lines as $line)
-                {!! $line->render($plan->id, $loop->index, $form) !!}
+                {!! $line->render($plan->id, $loop->index, $form, $personal_plan) !!}
             @endforeach
             @else
             @foreach ($plan->top_lines as $line)

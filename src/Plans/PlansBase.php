@@ -63,10 +63,26 @@ class PlansBase
             $this->form = new BaseForm();
             foreach ($lines as $key => $line) {
                 if(empty($line['editable'])){
-                    $lines[$key] = new PlanFillableLine(text: $line['text'], percentage: 0);
+                    if(!empty($line['months'])){
+                        $monthsUntil = config('listing.plans.personalized_plan.final_date');
+                        if(str_contains($monthsUntil,'-')){
+                            $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
+                            $now = Carbon::now();
+                            $monthsUntil = $now->diffInMonths($targetDate);
+                        }
+                        $lines[$key] = new PlanMonthsLines(
+                            text: $line['text'],
+                            percentage: 0,
+                            num: $monthsUntil,
+                            month_tag: $this->months_tag,
+                            mensuality_tag: $this->mensuality_tag,
+                        );
+                    }
+                    else{
+                        $lines[$key] = new PlanFillableLine(text: $line['text'], percentage: 0);
+                    }
                 }
                 else{
-                    //$this->form->fields['per_personal_'.$key] = new Field(type: InputType::PERCENTAGE);
                     $this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
                     if(!empty($line['months'])){
                         $monthsUntil = config('listing.plans.personalized_plan.final_date');
@@ -91,7 +107,7 @@ class PlansBase
                             amount: $this->form->fields['fill_personal_'.$key],
                         );
                         if(isset($line['min_percentage'])){
-                            $lines[$key]->min_percentage = $line['min_percentage'];
+                            $lines[$key]->percent->min = $line['min_percentage'];
                         }
                     }
                 }
@@ -279,7 +295,7 @@ class PlansBase
         return view(config('overrides.views.plans'), [
             'plans' => $this->plans,
             'form'=>$this->form,
-            'personal_plan'=>$personal_plan
+            'personal_plan'=>$personal_plan,
         ]);
     }
     public static function instance(): PlansBase
