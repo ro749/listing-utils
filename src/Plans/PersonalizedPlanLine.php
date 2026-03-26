@@ -23,7 +23,7 @@ class PersonalizedPlanLine
         $this->amount = $amount;
     }
 
-    public function render(string $id, string $key, BaseForm $form = null,$personal_plan)
+    public function render(string $id, string $key, BaseForm $form = null,$personal_plan=null)
     {
         return view('listing-utils::Plans.personalized-plan-line', [
             'description' => $this->text,

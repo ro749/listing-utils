@@ -101,7 +101,6 @@
     $(document).ready(function () {
         $('#fill_{{ $input_id }}').set_value({{ $personal_plan->{'fill_'.$input_id} }});
         $('#fill_{{ $input_id }}').trigger('input');
-        $('#per_{{ $input_id }}').trigger('input');
         $('#fill_{{ $input_id }}').prop('disabled', true);
         $('#per_{{ $input_id }}').prop('disabled', true);
     });
