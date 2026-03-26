@@ -30,40 +30,41 @@
 
 @push('scripts')
 <script>
-    var is_updating = false;
+    var is_updating_change = false;
+    var is_updating_input = false;
     @if(!empty($percent) && !empty($amount))
     $('#per_{{ $input_id }}').on('input', function () {
-        if(is_updating) return;
+        if(is_updating_input) return;
         var val = $(this).get_number();
         var value = (val/100.0)*data['price'];
         $('#fill_{{ $input_id }}').set_value(value);
-        is_updating = true;
+        is_updating_input = true;
         $('#fill_{{ $input_id }}').trigger('input');
-        is_updating = false;
+        is_updating_input = false;
         changed_personal();
     });
     
     $('#fill_{{ $input_id }}').on('input', function () {
-        if(is_updating) return;
+        if(is_updating_input) return;
         var val = $(this).get_number();
         var value = (val/data['price'])*100.0;
         $('#per_{{ $input_id }}').set_value(value);
-        is_updating = true;
+        is_updating_input = true;
         $('#per_{{ $input_id }}').trigger('input');
-        is_updating = false;
+        is_updating_input = false;
         changed_personal();
     });
     $('#per_{{ $input_id }}').on('change', function () {
-        if(is_updating) return;
-        is_updating = true;
+        if(is_updating_change) return;
+        is_updating_change = true;
         $('#fill_{{ $input_id }}').trigger('change');
-        is_updating = false;
+        is_updating_change = false;
     });
     $('#fill_{{ $input_id }}').on('change', function () {
-        if(is_updating) return;
-        is_updating = true;
+        if(is_updating_change) return;
+        is_updating_change = true;
         $('#per_{{ $input_id }}').trigger('change');
-        is_updating = false;
+        is_updating_change = false;
     });
     @if(isset($min_percent))
     $('#per_{{ $input_id }}').on('change', function () {
