@@ -109,6 +109,9 @@ class PlansBase
                         if(isset($line['min_percentage'])){
                             $lines[$key]->percent->min = $line['min_percentage'];
                         }
+                        if(isset($line['max_percentage'])){
+                            $lines[$key]->percent->max = $line['max_percentage'];
+                        }
                     }
                 }
             }
