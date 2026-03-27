@@ -36,7 +36,7 @@
     $('#per_{{ $input_id }}').on('input', function () {
         if(is_updating_input) return;
         var val = $(this).get_number();
-        var value = (val/100.0)*data['price'];
+        var value = (val/100.0)*data['{{ config('listing.personalized_plan.discounts') }}'];
         $('#fill_{{ $input_id }}').set_value(value);
         is_updating_input = true;
         $('#fill_{{ $input_id }}').trigger('input');
@@ -72,7 +72,7 @@
         if(val<{{ $min_percent }}){
             val = {{ $min_percent }};
             $('#per_{{ $input_id }}').set_percent(val);
-            var value = (val/100.0)*data['price'];
+            var value = (val/100.0)*data['{{ config('listing.personalized_plan.discounts') }}'];
             $('#fill_{{ $input_id }}').set_value(value);
             changed_personal();
         }
@@ -82,7 +82,7 @@
         var value = (val/data['price'])*100.0;
         if(value<{{ $min_percent }}){
             value = {{ $min_percent }};
-            val = (value/100.0)*data['price'];
+            val = (value/100.0)*data['{{ config('listing.personalized_plan.discounts') }}'];
             $('#fill_{{ $input_id }}').set_value(val);
             $('#per_{{ $input_id }}').set_value(value);
         }
