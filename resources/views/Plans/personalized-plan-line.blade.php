@@ -72,7 +72,7 @@
         if(val<{{ $min_percent }}){
             val = {{ $min_percent }};
             $('#per_{{ $input_id }}').set_percent(val);
-            var value = (val/100.0)*data['{{ config('listing.personalized_plan.discounts') }}'];
+            var value = (val/100.0)*data['{{ config('listing.plans.personalized_plan.discounts') }}'];
             $('#fill_{{ $input_id }}').set_value(value);
             changed_personal();
         }
@@ -82,7 +82,7 @@
         var value = (val/data['price'])*100.0;
         if(value<{{ $min_percent }}){
             value = {{ $min_percent }};
-            val = (value/100.0)*data['{{ config('listing.personalized_plan.discounts') }}'];
+            val = (value/100.0)*data['{{ config('listing.plans.personalized_plan.discounts') }}'];
             $('#fill_{{ $input_id }}').set_value(val);
             $('#per_{{ $input_id }}').set_value(value);
         }
