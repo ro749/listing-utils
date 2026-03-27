@@ -36,7 +36,7 @@
     $('#per_{{ $input_id }}').on('input', function () {
         if(is_updating_input) return;
         var val = $(this).get_number();
-        var value = (val/100.0)*data['{{ config('listing.personalized_plan.discounts') }}'];
+        var value = (val/100.0)*data['{{ config('listing.plans.personalized_plan.discounts') }}'];
         $('#fill_{{ $input_id }}').set_value(value);
         is_updating_input = true;
         $('#fill_{{ $input_id }}').trigger('input');
