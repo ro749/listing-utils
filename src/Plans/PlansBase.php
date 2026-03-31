@@ -84,8 +84,14 @@ class PlansBase
                 }
                 else{
                     $this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
+                    $this->form->fields['fill_personal_month_'.$key] = new Field(type: InputType::NUMBER);
                     if(!empty($line['months'])){
-                        $monthsUntil = config('listing.plans.personalized_plan.final_date');
+                        if (config()->has('listing.plans.personalized_plan.final_date')) {
+                            $monthsUntil = config('listing.plans.personalized_plan.final_date');
+                        }
+                        else {
+                            $monthsUntil = null;
+                        }
                         if(str_contains($monthsUntil,'-')){
                             $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
                             $now = Carbon::now();
@@ -98,6 +104,7 @@ class PlansBase
                             mensuality_tag: $this->mensuality_tag,
                             percent: new Field(type: InputType::PERCENTAGE),
                             amount: $this->form->fields['fill_personal_'.$key],
+                            months: $this->form->fields['fill_personal_month_'.$key],
                         );
                     }
                     else{

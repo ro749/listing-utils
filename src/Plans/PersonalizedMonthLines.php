@@ -17,19 +17,21 @@ class PersonalizedMonthLines
     public float $min_money;
     public float $max_money;
 
-    public string|int $num;
+    public string|int|null $num;
     public string $month_tag;
     public string $mensuality_tag;
     public ?Field $percent;
     public ?Field $amount;
+    public ?Field $months;
 
     public function __construct(
         string $text,
-        string|int $num,
+        string|int|null $num,
         string $month_tag,
         string $mensuality_tag,
         ?Field $percent = null,
         ?Field $amount = null,
+        ?Field $months = null,
         float $min_percentage=0,
         float $max_percentage=0,
         float $min_money=0,
@@ -45,6 +47,7 @@ class PersonalizedMonthLines
         $this->max_money = $max_money;
         $this->percent = $percent;
         $this->amount = $amount;
+        $this->months = $months;
     }
 
     public function render(string $id, string $key, BaseForm $form = null)
@@ -54,6 +57,7 @@ class PersonalizedMonthLines
             'type' => $this->type,
             'percent' => $this->percent,
             'amount' => $this->amount,
+            'months' => $this->months,
             'min_percent' => $this->min_percentage,
             'max_percent' => $this->max_percentage,
             'min_money' => $this->min_money,
