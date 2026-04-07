@@ -8,6 +8,7 @@ use Ro749\ListingUtils\Commands\ListingUtilsCommand;
 use Ro749\ListingUtils\Commands\MakeImageMapPro;
 use Ro749\ListingUtils\Commands\MakePlans;
 use Ro749\ListingUtils\Commands\ReadUnits;
+use Illuminate\Support\Facades\Blade;
 class ListingUtilsServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
@@ -30,6 +31,18 @@ class ListingUtilsServiceProvider extends PackageServiceProvider
                 ReadUnits::class
             ])
             ->hasRoutes('web');
+    }
+
+    public function packageBooted(): void
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'listingutils');
+        Blade::component('listingutils::Plans.Lines.plan-line', 'plan-line');
+        Blade::component('listingutils::Plans.Lines.fillable-line', 'fillable-line');
+        Blade::component('listingutils::Plans.Lines.months-lines', 'months-lines');
+        Blade::component('listingutils::Plans.Personalized.plan-line', 'personalized-line');
+        Blade::component('listingutils::Plans.Personalized.fillable-line', 'personalized-fillable-line');
+        Blade::component('listingutils::Plans.Personalized.months-lines', 'personalized-months-lines');
+        Blade::component('listingutils::Plans.Personalized.discount-line', 'personalized-discount-line');
     }
 
     public function register()

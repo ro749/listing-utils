@@ -50,7 +50,8 @@ class Plan{
 
     public function render($form){
         return view('listing-utils::Plans.plan', [
-            'plan' => $this, 'stack' => 'fill-plan-'.$this->id,
+            'plan' => $this, 
+            'id' => $this->id,
             'form' => $form
         ] );
     }

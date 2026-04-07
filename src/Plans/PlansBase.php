@@ -9,7 +9,9 @@ use Ro749\SharedUtils\Forms\BaseForm;
 use Ro749\SharedUtils\Forms\Field;
 use Ro749\SharedUtils\Forms\InputType;
 use Illuminate\Support\Facades\Log;
-use Ro749\ListingUtils\Plans\PlanFillableLine;
+use Ro749\ListingUtils\Plans\Lines\PlanLine;
+use Ro749\ListingUtils\Plans\Lines\MonthsLines;
+use Ro749\ListingUtils\Plans\Lines\FillableLine;
 class PlansBase
 {   
     public string $plans_table;
@@ -58,77 +60,32 @@ class PlansBase
         
 
         if(config()->has('listing.plans.personalized_plan')){
-            
-            $lines = config('listing.plans.personalized_plan.lines', []);
             $this->form = new BaseForm();
-            foreach ($lines as $key => $line) {
-                if(empty($line['editable'])){
-                    if(!empty($line['months'])){
-                        $monthsUntil = config('listing.plans.personalized_plan.final_date');
-                        if(str_contains($monthsUntil,'-')){
-                            $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
-                            $now = Carbon::now();
-                            $monthsUntil = $now->diffInMonths($targetDate);
-                        }
-                        $lines[$key] = new PlanMonthsLines(
-                            text: $line['text'],
-                            percentage: 0,
-                            num: $monthsUntil,
-                            month_tag: $this->months_tag,
-                            mensuality_tag: $this->mensuality_tag,
-                        );
-                    }
-                    else{
-                        $lines[$key] = new PlanFillableLine(text: $line['text'], percentage: 0);
-                    }
-                }
-                else{
-                    $this->form->fields['fill_personal_'.$key] = new Field(type: InputType::MONEY);
-                    $this->form->fields['fill_personal_month_'.$key] = new Field(type: InputType::NUMBER);
-                    if(!empty($line['months'])){
-                        if (config()->has('listing.plans.personalized_plan.final_date')) {
-                            $monthsUntil = config('listing.plans.personalized_plan.final_date');
-                        }
-                        else {
-                            $monthsUntil = null;
-                        }
-                        if(str_contains($monthsUntil,'-')){
-                            $targetDate = Carbon::parse(config('listing.plans.personalized_plan.final_date'));
-                            $now = Carbon::now();
-                            $monthsUntil = $now->diffInMonths($targetDate);
-                        }
-                        $lines[$key] = new PersonalizedMonthLines(
-                            text: $line['text'],
-                            num: $monthsUntil,
-                            month_tag: $this->months_tag,
-                            mensuality_tag: $this->mensuality_tag,
-                            percent: new Field(type: InputType::PERCENTAGE),
-                            amount: $this->form->fields['fill_personal_'.$key],
-                            months: $this->form->fields['fill_personal_month_'.$key],
-                        );
-                    }
-                    else{
-                        $lines[$key] = new PersonalizedPlanLine(
-                            text: $line['text'],
-                            percent:  new Field(type: InputType::PERCENTAGE),
-                            amount: $this->form->fields['fill_personal_'.$key],
-                        );
-                        if(isset($line['min_percentage'])){
-                            $lines[$key]->percent->min = $line['min_percentage'];
-                        }
-                        if(isset($line['max_percentage'])){
-                            $lines[$key]->percent->max = $line['max_percentage'];
-                        }
-                    }
-                }
+            $def_plan = $this->get_default_plan('personalized', '', 0);
+            $override_plan = config('listing.plans.personalized_plan.plan_override');
+            if($override_plan){
+                $this->personalized_plan = new ($override_plan)(
+                    id: 'personalized',
+                    title: config('listing.plans.personalized_plan.title','Personalizado'),
+                    enganche_tag: config('listing.plans.enganche_tag','Enganche'),
+                    liquidacion_tag: config('listing.plans.liquidacion_tag','Liquidación a la firma'),
+                    form: $this->form,
+                    top_lines: $def_plan->top_lines,
+                    bottom_lines: $def_plan->bottom_lines,
+                );
             }
-            $this->personalized_plan = $this->get_default_plan(
-                id: 'personal',
-                title: config('listing.plans.personalized_plan.title', 'Personalizado'),
-                discount: config('listing.plans.personalized_plan.discounts', 0),
-                personal: true
-            );
-            $this->personalized_plan->lines = $lines;
+            else{
+                $this->personalized_plan = new PersonalPlan(
+                    id: 'personalized',
+                    title: config('listing.plans.personalized_plan.title','Personalizado'),
+                    enganche_tag: config('listing.plans.enganche_tag','Enganche'),
+                    liquidacion_tag: config('listing.plans.liquidacion_tag','Liquidación a la firma'),
+                    form: $this->form,
+                    top_lines: $def_plan->top_lines,
+                    bottom_lines: $def_plan->bottom_lines,
+                );
+            }
+            
         }
 
         $this->plans = $this->get();
@@ -142,43 +99,43 @@ class PlansBase
         if($this->show_base_price){
             $top_lines[] = new PlanLine(
                 text: $this->price_tag, 
-                fillable_class: 'base-price',
-                fillable_id: 'base-price-'.$id
+                id: 'base-price-'.$id,
+                classes: ['base-price'],
             );
         }
         if(is_numeric($discount) && $discount != 0){
             $top_lines[] = new PlanLine(
                 text: $this->discount_tag, 
-                percentage: $discount,
-                fillable_class: 'discount',
-                fillable_id: 'discount-'.$id
+                percent: $discount,
+                id: 'discount-'.$id,
+                classes: ['discount'],
             );
         }
         if($this->total_on_top){
             $top_lines[] = new PlanLine(
                 text: $this->total_tag, 
-                fillable_class: 'total-price',
-                fillable_id: 'total-price-'.$id
+                id: 'total-price-'.$id,
+                classes: ['total-price'],
             );
             if($this->ppm){
                 $top_lines[] = new PlanLine(
                     text: $this->total_tag, 
-                    fillable_class: 'ppm-price',
-                    fillable_id: 'ppm-price-'.$id
+                    id: 'ppm-price-'.$id,
+                    classes: ['ppm-price'],
                 );
             }
         }
         else{
             $bottom_lines[] = new PlanLine(
                 text: $this->total_tag, 
-                fillable_class: 'total-price',
-                fillable_id: 'total-price-'.$id
+                id: 'total-price-'.$id,
+                classes: ['total-price']
             );
             if($this->ppm){
                 $bottom_lines[] = new PlanLine(
                     text: $this->total_tag, 
-                    fillable_class: 'ppm-price',
-                    fillable_id: 'ppm-price-'.$id
+                    id: 'ppm-price-'.$id,
+                    classes: ['ppm-price']
                 );
             }
         }
@@ -240,19 +197,26 @@ class PlansBase
                 ->where('plan','=', $plan->id)
                 ->get();
             foreach ($lines as $line) {
+                if($line->percent == 0) continue;
                 if($line->months != 0){
-                    $new_plan->lines[] = new PlanMonthsLines(
+                    $new_plan->lines[] = new MonthsLines(
                         text: $line->description,
-                        percentage: $line->percent,
+                        percent: $line->percent,
                         num: $monthsUntil,
                         month_tag: $this->months_tag,
-                        mensuality_tag: $this->mensuality_tag
+                        mensuality_tag: $this->mensuality_tag,
+                        id: $key.'-'.$line->id,
+                        classes: [$key.'-'.$line->id],
+                        plan_id: $plan->id
                     );
                 }
                 else{
-                    $new_plan->lines[] = new PlanFillableLine(
+                    $new_plan->lines[] = new FillableLine(
                         text: $line->description,
-                        percentage: $line->percent
+                        percent: $line->percent,
+                        id: $key.'-'.$line->id,
+                        classes: [$key.'-'.$line->id],
+                        plan_id: $plan->id
                     );
                 }
                 
@@ -278,7 +242,6 @@ class PlansBase
             $matrix[] = $row;
         }
         if($this->personalized_plan && $needs_personal){
-
             $matrix[] = [$this->personalized_plan];
         }
         return $matrix;

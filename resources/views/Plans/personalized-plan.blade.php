@@ -1,24 +1,34 @@
 <div>
 @include('listing-utils::Plans.plan',[
-    'plan' => $plan, 'stack' => $stack, 'form' => $form
+    'plan' => $plan, 'form' => $form, 'id' => $id
 ])
 </div>
 <p style="font-size: .833rem">*Plan sujeto a autorización interna y condiciones de venta</p>
 @push('scripts')
 <script>
     function changed_personal(){
-        $(document).trigger('personalized_plan_changed');
-        return;
-        var val0 = $('#fill_personal_0').get_number();
-        var val1 = $('#fill_personal_1').get_number();
-        if(val0+val1>data['price']){
-            val1 = data['price']-val0;
-            $('#fill_personal_1').set_money(val1);
-            $('#per_personal_1').set_percent(((val1/data['price'])*100.0));
+        var final_price = data['price'];
+        var discount = $('#fill_discount').get_number();
+        if(discount>0){
+            if(!$('#per_discount').data('flag')){
+                $('#per_discount').set_percent((discount/final_price)*100.0);
+            }
+            final_price = final_price - discount;
         }
-        var final_value = Number(data['price']) - val0 - val1;
-        $('#fill-plan-line-personal-2').set_money(final_value);
-        $('#per-plan-line-personal-2').set_percent(((final_value/data['price'])*100.0));
+        $('#fill-total-price-personalized').set_money(final_price);
+
+        if($('#fill_{{ $autofill }}').length){
+            var {{ $autofill }} = final_price
+            @foreach ($lines_for_fill as $fill_line)
+                -$('#fill_{{ $fill_line }}').get_number()          
+            @endforeach
+            ;
+            $('#fill_{{ $autofill }}').set_money({{ $autofill }});
+            $('#per_{{ $autofill }}').set_percent(({{ $autofill }}/final_price)*100.0);
+        }
+        $(document).trigger('personalized_plan_changed',[final_price]);
+        return;
+        
     }
 </script>
 @endpush

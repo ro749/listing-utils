@@ -4,35 +4,19 @@
     <table class="table">
         <tbody>
             
-            @if(isset($form))
             @foreach ($plan->top_lines as $line)
-                {{ $line->render($plan->id, strval($loop->index).'_top', $form) }}
+                <x-dynamic-component :component="$line->component" :element="$line"/>
             @endforeach
             @foreach ($plan->lines as $line)
-                {!! $line->render($plan->id, $loop->index, $form, $personal_plan) !!}
+                <x-dynamic-component :component="$line->component" :element="$line"/>
             @endforeach
-            @else
-            @foreach ($plan->top_lines as $line)
-                {!! $line->render($plan->id, $loop->index) !!}
-            @endforeach
-            @foreach ($plan->lines as $line)
-                {!! $line->render($plan->id, $loop->index) !!}
-            @endforeach
-            @endif
-            @if(isset($form))
             @foreach ($plan->bottom_lines as $line)
-                {!! $line->render($plan->id, strval($loop->index).'_bottom', $form) !!}
+                <x-dynamic-component :component="$line->component" :element="$line"/>
             @endforeach
-            @else
-            @foreach ($plan->bottom_lines as $line)
-                {!! $line->render($plan->id, $loop->index) !!}
-            @endforeach
-            @endif
 
         </tbody>
     </table>
 </div>
-
 @push('fill')
     @if($plan->show_base_price)
         $('#fill-base-price-{{ $plan->id }}').set_money(data['price']);         
@@ -51,6 +35,6 @@
     @else
         var final_price = parseFloat(data['{{ $plan->discount }}']);
     @endif
-    $('#fill-total-price-{{ $plan->id }}').set_money(final_price);
-    @stack($stack)
+    $('#fill_total-price-{{ $plan->id }}').set_money(final_price);
+    @stack($id)
 @endpush
