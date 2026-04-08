@@ -39,6 +39,7 @@ class ListingUtilsServiceProvider extends PackageServiceProvider
         Blade::component('listingutils::Plans.Lines.plan-line', 'plan-line');
         Blade::component('listingutils::Plans.Lines.fillable-line', 'fillable-line');
         Blade::component('listingutils::Plans.Lines.months-lines', 'months-lines');
+        Blade::component('listingutils::Plans.Lines.discount-line', 'discount-line');
         Blade::component('listingutils::Plans.Personalized.plan-line', 'personalized-line');
         Blade::component('listingutils::Plans.Personalized.fillable-line', 'personalized-fillable-line');
         Blade::component('listingutils::Plans.Personalized.months-lines', 'personalized-months-lines');

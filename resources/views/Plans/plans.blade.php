@@ -14,7 +14,9 @@ if(empty($form)){
 </div>
 @endforeach
 </x-smartForm>
-
+@push('fill')
+$('.fill-base-price').set_money(data['price']);   
+@endpush
 @if($personal_plan !== null)
     @push('fill')
         @foreach ($personal_plan as $key=>$value)

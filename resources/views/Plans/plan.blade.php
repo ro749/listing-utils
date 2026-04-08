@@ -28,7 +28,6 @@
         @if( $plan->discount != 0)
         var discount = data['price'] * {{ $plan->discount / 100.0 }};
         var final_price = data['price'] - discount;
-        $('#fill-discount-{{ $plan->id }}').set_money(discount);
         @else
         var final_price = parseFloat(data['price']); 
         @endif

@@ -1,8 +1,9 @@
 <?php
 namespace Ro749\ListingUtils\Plans\Lines;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Log;
 //this lines fills automaticly in base of a percent when the data of a unit is loaded
-class FillableLine
+class FillableLine extends Component
 {
     public $component = 'fillable-line';
     //the text of the first row, is an index from the list of line text

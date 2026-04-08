@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Ro749\ListingUtils\Plans\Lines\PlanLine;
 use Ro749\ListingUtils\Plans\Lines\MonthsLines;
 use Ro749\ListingUtils\Plans\Lines\FillableLine;
+use Ro749\ListingUtils\Plans\Lines\DiscountLine;
 class PlansBase
 {   
     public string $plans_table;
@@ -104,11 +105,12 @@ class PlansBase
             );
         }
         if(is_numeric($discount) && $discount != 0){
-            $top_lines[] = new PlanLine(
+            $top_lines[] = new DiscountLine(
                 text: $this->discount_tag, 
                 percent: $discount,
                 id: 'discount-'.$id,
                 classes: ['discount'],
+                plan_id: $id
             );
         }
         if($this->total_on_top){
