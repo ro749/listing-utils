@@ -33,7 +33,7 @@ if(empty($form)){
 @elseif(empty($sender))
 @push("scripts")
 <script>
-    $('#plan-div-personalized').hide();
+    //$('#plan-div-personalized').hide();
 </script>
 @endpush
 @endif
