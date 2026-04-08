@@ -33,6 +33,7 @@ if(empty($form)){
 @elseif(empty($sender))
 @push("scripts")
 <script>
+    console.log("no personal plan");
     //$('#plan-div-personalized').hide();
 </script>
 @endpush
