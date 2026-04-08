@@ -30,4 +30,10 @@ if(empty($form)){
         @endforeach
         changed_personal();
     @endpush
+@elseif(empty($sender))
+@push("scripts")
+<script>
+    $('#plan-div-personalized').hide();
+</script>
+@endpush
 @endif

@@ -264,11 +264,12 @@ class PlansBase
         return $this->form->fields[$name];
     }
     
-    public function render($personal_plan = null){
+    public function render($personal_plan = null,$sender = null){
         return view(config('overrides.views.plans'), [
             'plans' => $this->plans,
             'form'=>$this->form,
             'personal_plan'=>$personal_plan,
+            'sender'=>$sender
         ]);
     }
     public static function instance(): PlansBase

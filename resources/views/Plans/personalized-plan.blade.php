@@ -7,7 +7,11 @@
 @push('scripts')
 <script>
     function changed_personal(){
+        @if(config()->has('listing.plans.personalized_plan.discounts'))
+        var final_price = data['{{ config('listing.plans.personalized_plan.discounts') }}'];
+        @else
         var final_price = data['price'];
+        @endif
         var discount = $('#fill_discount').get_number();
         if(discount>0){
             if(!$('#per_discount').data('flag')){
@@ -15,7 +19,7 @@
             }
             final_price = final_price - discount;
         }
-        $('#fill-total-price-personalized').set_money(final_price);
+        $('#fill_total-price-personalized').set_money(final_price);
 
         if($('#fill_{{ $autofill }}').length){
             var {{ $autofill }} = final_price
@@ -31,4 +35,7 @@
         
     }
 </script>
+@endpush
+@push('fill')
+    changed_personal();
 @endpush
