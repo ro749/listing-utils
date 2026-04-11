@@ -26,8 +26,10 @@
         var value = (val/data['price'])*100.0;
         $('#per_{{ $element->id }}').set_value(value);
         is_updating_input = true;
+        $('#fill_{{ $element->id }}').data('flag', true);
         $('#per_{{ $element->id }}').trigger('input');
         changed_personal();
+        $('#fill_{{ $element->id }}').removeData('flag');
         is_updating_input = false;
         
     });

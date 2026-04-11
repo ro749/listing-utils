@@ -27,6 +27,7 @@ $('.fill-base-price').set_money(data['price']);
             $('#{{ str_replace('fill_','per_', $key) }}').prop('disabled', true);
             @else
             $('#{{ $key }}').parent().parent().parent().hide();
+            $('#mensuality_{{ str_replace('fill_','', $key) }}').hide();
             @endif
             @endif
         @endforeach
@@ -35,8 +36,7 @@ $('.fill-base-price').set_money(data['price']);
 @elseif(empty($sender))
 @push("scripts")
 <script>
-    console.log("no personal plan");
-    //$('#plan-div-personalized').hide();
+    $('#plan-div-personalized').hide();
 </script>
 @endpush
 @endif
