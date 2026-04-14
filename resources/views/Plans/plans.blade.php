@@ -31,6 +31,8 @@ $('.fill-base-price').set_money(data['price']);
             @endif
             @endif
         @endforeach
+    @endpush
+    @push('after_fill')
         changed_personal();
     @endpush
 @elseif(empty($sender))

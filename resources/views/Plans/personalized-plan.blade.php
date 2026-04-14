@@ -36,6 +36,3 @@
     }
 </script>
 @endpush
-@push('fill')
-    changed_personal();
-@endpush
