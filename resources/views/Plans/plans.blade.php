@@ -38,6 +38,7 @@ $('.fill-base-price').set_money(data['price']);
 @elseif(empty($sender))
 @push("scripts")
 <script>
+    console.log('empty sender');
     $('#plan-div-personalized').hide();
 </script>
 @endpush

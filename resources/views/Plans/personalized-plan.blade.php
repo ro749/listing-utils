@@ -21,18 +21,29 @@
         }
         $('#fill_total-price-personalized').set_money(final_price);
 
+        
+        $(document).trigger('personalized_plan_changed',[final_price]);
+        return;
+    }
+    $(document).on('personalized_plan_changed', function(event,final_price){
         if($('#fill_{{ $autofill }}').length){
             var {{ $autofill }} = final_price
             @foreach ($lines_for_fill as $fill_line)
-                -$('#fill_{{ $fill_line }}').get_number()          
+            @if($fill_line != 'discount')
+                -$('#fill_{{ $fill_line }}').get_number()      
+            @endif    
+            @endforeach
+            console.log(final_price);
+            @foreach ($lines_for_fill as $fill_line)
+            @if($fill_line != 'discount')
+                console.log('fill_{{ $fill_line }} '+$('#fill_{{ $fill_line }}').get_number());      
+            @endif  
             @endforeach
             ;
             $('#fill_{{ $autofill }}').set_money({{ $autofill }});
+            
             $('#per_{{ $autofill }}').set_percent(({{ $autofill }}/final_price)*100.0);
         }
-        $(document).trigger('personalized_plan_changed',[final_price]);
-        return;
-        
-    }
+    })
 </script>
 @endpush

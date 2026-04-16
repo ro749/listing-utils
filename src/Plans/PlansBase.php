@@ -58,9 +58,8 @@ class PlansBase
         $this->ppm = $ppm;
         $this->show_base_price = config('listing.plans.show_base_price',true);
 
-        
-
         if(config()->has('listing.plans.personalized_plan')){
+            Log::info('Personalized plan loaded');
             $this->form = new BaseForm();
             $def_plan = $this->get_default_plan('personalized', '', 0);
             $override_plan = config('listing.plans.personalized_plan.plan_override');
@@ -76,6 +75,7 @@ class PlansBase
                 );
             }
             else{
+                Log::info('Default plan loaded');
                 $this->personalized_plan = new PersonalPlan(
                     id: 'personalized',
                     title: config('listing.plans.personalized_plan.title','Personalizado'),
@@ -243,9 +243,12 @@ class PlansBase
             }
             $matrix[] = $row;
         }
+        Log::info('personalized_plan: '.json_encode($this->personalized_plan));
+        Log::info('needs_personal: '.($needs_personal?'true':'false'));
         if($this->personalized_plan && $needs_personal){
             $matrix[] = [$this->personalized_plan];
         }
+        Log::info('matrix: '.json_encode($matrix));
         return $matrix;
     }
 
