@@ -2,6 +2,9 @@
 if(empty($form)){
     $form = null;
 }
+if(empty($personal_plan)){
+    $personal_plan = null;
+}
 @endphp
 <x-smartForm :form="$form">
 @foreach ($plans as $row)
@@ -22,6 +25,7 @@ $('.fill-base-price').set_money(data['price']);
         @foreach ($personal_plan as $key=>$value)
             @if($key != 'id' && $key != 'quotation' && $key != 'created_at' && $key != 'updated_at')
             @if(!empty($value) && $value != '0.00')
+            $('#{{ $key }}').parent().parent().parent().show();
             $('#{{ $key }}').set_value('{{ $value }}');
             $('#{{ $key }}').prop('disabled', true);
             $('#{{ str_replace('fill_','per_', $key) }}').prop('disabled', true);
