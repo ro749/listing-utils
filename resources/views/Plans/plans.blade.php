@@ -6,7 +6,7 @@ if(empty($personal_plan)){
     $personal_plan = null;
 }
 @endphp
-<x-smartForm :form="$form">
+<x-form :form="$form">
 @foreach ($plans as $row)
 <div class="plan-row">
     @foreach($row as $plan)
@@ -16,7 +16,7 @@ if(empty($personal_plan)){
     @endforeach
 </div>
 @endforeach
-</x-smartForm>
+</x-form>
 @push('fill')
 $('.fill-base-price').set_money(data['price']);   
 @endpush

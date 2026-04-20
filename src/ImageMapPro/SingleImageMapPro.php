@@ -37,7 +37,7 @@ class SingleImageMapPro extends ImageMapProBase
     }
 
     function get_unit(Request $data){
-        $data_class = config('overrides.data.UnitData');
+        $data_class = config('overrides.datas.UnitData');
         $data = new $data_class($this->label_column, $data->input("unit"));
         $unit = $data->get_data();
         if($unit->{$this->data_column} != 0){
