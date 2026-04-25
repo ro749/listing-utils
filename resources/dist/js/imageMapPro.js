@@ -38,7 +38,7 @@
         var $this = $(this);
         function get_unit(unit){
             $.ajax({
-                url: 'imagemappro/'+options.id+'/unit',
+                url: 'imagemappro/unit',
                 method: 'GET',
                 dataType: 'json',
                 data: {unit: unit},
@@ -79,7 +79,7 @@
         });
         var $this = $(this);
         $.ajax({
-            url: 'imagemappro/'+options.id+'/map',
+            url: 'imagemappro/map',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
