@@ -51,6 +51,10 @@
     $('#per_{{ $element->id }}').set_value(0);
     @if($element->id != 'discount')
     $(document).on('personalized_plan_changed', function(event,final_price){
+        if($(document).data('no_auto_update_personalized')){
+            return;
+        }
+        //return;
         if($('#per_{{ $element->id }}').data('flag')){
             var percent = $('#per_{{ $element->id }}').get_number();
             $('#fill_{{ $element->id }}').set_value((percent/100.0)*final_price);

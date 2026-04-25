@@ -7,6 +7,7 @@
 @push('scripts')
 <script>
     function changed_personal(){
+        
         @if(config()->has('listing.plans.personalized_plan.discounts'))
         var final_price = data['{{ config('listing.plans.personalized_plan.discounts') }}'];
         @else
@@ -26,6 +27,9 @@
         return;
     }
     $(document).on('personalized_plan_changed', function(event,final_price){
+        if($(document).data('no_auto_update_personalized')){
+            return;
+        }
         if($('#fill_{{ $autofill }}').length){
             var {{ $autofill }} = final_price
             @foreach ($lines_for_fill as $fill_line)

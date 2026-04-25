@@ -17,7 +17,6 @@ class MultiFloorImageMapPro extends ImageMapProBase
     public string $floors_table = 'floors';
 
     public function __construct(
-        string $table,
         string $floor_column,
         string $type_column,
         string $data_column,
@@ -28,7 +27,6 @@ class MultiFloorImageMapPro extends ImageMapProBase
         string $floors_table = 'floors'
     ){
         parent::__construct(
-            table:$table, 
             colors: $colors,
             opacities: $opacities
         );
@@ -65,10 +63,10 @@ class MultiFloorImageMapPro extends ImageMapProBase
         $map_id = DB::table($this->floors_table)->where('floor',$floor)->value('map');
         $path = storage_path($this->files[$map_id]);
         $map = json_decode(file_get_contents($path),true);
-        $data = DB::table($this->table)
-        ->select('id',$this->type_column,$this->data_column)
-        ->where($this->floor_column,$floor)
-        ->get();
+        $unit_class = config('overrides.models.Unit');
+        $data = $unit_class::select('id',$this->type_column,$this->data_column)
+            ->where($this->floor_column,$floor)
+            ->get();
         $dispo = [];
         foreach($data as $d){
             $dispo[$d->{$this->type_column}] = $d->{$this->status_column};
@@ -77,14 +75,16 @@ class MultiFloorImageMapPro extends ImageMapProBase
     }
 
     function get_unit(Request $data){
-        $data = DB::table($this->table)->
-        where($this->floor_column,$data->input("floor"))->
-        where($this->type_column,$data->input("type"))->
-        first();
-        if($data->status != 0){
+        $unit_class = config('overrides.models.Unit');
+        $data_class = config('overrides.datas.UnitData');
+        $unit = $unit_class::where($this->floor_column,$data->input("floor"))
+            ->where($this->type_column,$data->input("type"))
+            ->first();
+        if($unit->status != 0){
             return null;
         }
-        return $data;
+        $data = new $data_class('id', $unit->id);
+        return $data->get_data();
     }
 
     public function render(){

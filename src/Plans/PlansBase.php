@@ -14,9 +14,7 @@ use Ro749\ListingUtils\Plans\Lines\MonthsLines;
 use Ro749\ListingUtils\Plans\Lines\FillableLine;
 use Ro749\ListingUtils\Plans\Lines\DiscountLine;
 class PlansBase
-{   
-    public string $plans_table;
-    public string $lines_table;
+{
     public string $months_tag = '';
     public string $mensuality_tag = '';
     public int $months;
@@ -42,8 +40,6 @@ class PlansBase
         bool $ppm = false,
     )
     {
-        $this->plans_table = config('listing.plans.table','plans');
-        $this->lines_table = config('listing.plans.lines_table','planlines');
         
         $this->months_tag = config('listing.plans.months_tag','MESES');
         $this->mensuality_tag = config('listing.plans.mensuality_tag','MENSUALIDAD');
@@ -59,7 +55,6 @@ class PlansBase
         $this->show_base_price = config('listing.plans.show_base_price',true);
 
         if(config()->has('listing.plans.personalized_plan')){
-            Log::info('Personalized plan loaded');
             $this->form = new BaseForm();
             $def_plan = $this->get_default_plan('personalized', '', 0);
             $override_plan = config('listing.plans.personalized_plan.plan_override');
@@ -75,7 +70,6 @@ class PlansBase
                 );
             }
             else{
-                Log::info('Default plan loaded');
                 $this->personalized_plan = new PersonalPlan(
                     id: 'personalized',
                     title: config('listing.plans.personalized_plan.title','Personalizado'),
@@ -173,7 +167,7 @@ class PlansBase
     public function get_plans_data()
     {
         
-        $plans_db = DB::table($this->plans_table)->get();
+        $plans_db = config('overrides.models.Plan')::get();
         $plans = [];
         
         foreach ($plans_db as $key => $plan) {
@@ -195,9 +189,7 @@ class PlansBase
                 $plan->{$this->title_column}, 
                 $plan->{$this->discount_column}
             );
-            $lines = DB::table($this->lines_table)
-                ->where('plan','=', $plan->id)
-                ->get();
+            $lines = config('overrides.models.PlanLine')::where('plan','=', $plan->id)->get();
             foreach ($lines as $line) {
                 if($line->percent == 0) continue;
                 if($line->months != 0){
@@ -243,10 +235,14 @@ class PlansBase
             }
             $matrix[] = $row;
         }
-        Log::info('personalized_plan: '.json_encode($this->personalized_plan));
-        Log::info('needs_personal: '.($needs_personal?'true':'false'));
         if($this->personalized_plan && $needs_personal){
-            $matrix[] = [$this->personalized_plan];
+            if(count($matrix) == 1 && count($matrix[0]) == 1){
+                $matrix[0][] = $this->personalized_plan;
+            }
+            else{
+                $matrix[] = [$this->personalized_plan];
+            }
+            
         }
         Log::info('matrix: '.json_encode($matrix));
         return $matrix;
