@@ -5,6 +5,7 @@ return [
     'overrides'=>[
         'views' => [
             'plans' => 'listing-utils::Plans.plans',
+            'sender-buttons' => 'listing-utils::Sender.sender-buttons'
         ],
     ]
 ];

@@ -24,7 +24,7 @@ class CotizationSenderBase extends BaseForm
     {
         $this->mail_class = config('listing.cotization_mail_class','App\Mail\CotizationMail');
         $client_id = session()->get('client_id');
-        $this->client = DB::table('clients')->where('id', $client_id)->first();
+        $this->client = (config('overrides.models.Client'))::where('id', $client_id)->first();
         $this->model_class = config('overrides.models.Quotation');
         $this->fields['unit'] = new Field(type: InputType::NUMBER);
         $this->fields['medium'] = new Field(type: InputType::NUMBER);
@@ -71,7 +71,7 @@ class CotizationSenderBase extends BaseForm
             $data['form'] = $this->fields['personal_plans']->form;
         }
         return view(
-            'listing-utils::Sender.sender-buttons', 
+            config('overrides.views.sender-buttons'),
             $data
         );
     }
