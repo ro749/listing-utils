@@ -5,6 +5,10 @@
     var is_updating_input = false;
     $('#per_{{ $element->id }}').on('input', function () {
         if(is_updating_input) return;
+        if($('#fill_{{ $element->id }}').data('flag')) {
+            $('#fill_{{ $element->id }}').removeData('flag');
+            return;
+        }
         var val = Number(Math.floor($(this).get_number() * 100) / 100.0);
         @if(config()->has('listing.plans.personalized_plan.discounts'))
         var value = (val/100.0)*data['{{ config('listing.plans.personalized_plan.discounts') }}'];
@@ -16,12 +20,16 @@
         $('#per_{{ $element->id }}').data('flag', true);
         $('#fill_{{ $element->id }}').trigger('input');
         changed_personal();
-        $('#per_{{ $element->id }}').removeData('flag');
+        //$('#per_{{ $element->id }}').removeData('flag');
         is_updating_input = false;
     });
     
     $('#fill_{{ $element->id }}').on('input', function () {
         if(is_updating_input) return;
+        if($('#per_{{ $element->id }}').data('flag')) {
+            $('#per_{{ $element->id }}').removeData('flag');
+            return;
+        }
         var val = $(this).get_number();
         var value = (val/data['price'])*100.0;
         $('#per_{{ $element->id }}').set_value(value);
@@ -29,7 +37,7 @@
         $('#fill_{{ $element->id }}').data('flag', true);
         $('#per_{{ $element->id }}').trigger('input');
         changed_personal();
-        $('#fill_{{ $element->id }}').removeData('flag');
+        //$('#fill_{{ $element->id }}').removeData('flag');
         is_updating_input = false;
         
     });
