@@ -26,22 +26,22 @@ class CotizationSenderBase extends BaseForm
         $client_id = session()->get('client_id');
         $this->client = (config('overrides.models.Client'))::where('id', $client_id)->first();
         $this->model_class = config('overrides.models.Quotation');
-        $this->fields['unit'] = new Field(type: InputType::NUMBER);
+        $this->fields['unit_id'] = new Field(type: InputType::NUMBER);
         $this->fields['medium'] = new Field(type: InputType::NUMBER);
-        $this->user = 'asesor';
+        $this->user = 'asesor_id';
         $this->guard = 'asesor';
         $this->fields['quoted_price'] = new CopyField(
             model_class: config('overrides.models.Unit'), 
             column: 'price',
-            id: 'unit'
+            id: 'unit_id'
         );
         if(!empty($plans->form)){
-            $this->fields['personal_plans'] = new FormField(form: $plans->form,owner_column: 'quotation');
+            $this->fields['personal_plans'] = new FormField(form: $plans->form,owner_column: 'quotation_id');
         }
     }
 
     public function before_process(array &$data){
-        $data['client'] = $this->client->id;
+        $data['client_id'] = $this->client->id;
     }
 
     public function after_process($model){

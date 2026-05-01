@@ -21,8 +21,6 @@
             final_price = final_price - discount;
         }
         $('#fill_total-price-personalized').set_money(final_price);
-
-        
         $(document).trigger('personalized_plan_changed',[final_price]);
         return;
     }
@@ -37,11 +35,7 @@
                 -$('#fill_{{ $fill_line }}').get_number()      
             @endif    
             @endforeach
-            console.log(final_price);
             @foreach ($lines_for_fill as $fill_line)
-            @if($fill_line != 'discount')
-                console.log('fill_{{ $fill_line }} '+$('#fill_{{ $fill_line }}').get_number());      
-            @endif  
             @endforeach
             ;
             $('#fill_{{ $autofill }}').set_money({{ $autofill }});
@@ -50,4 +44,7 @@
         }
     })
 </script>
+@push('after_fill')
+    changed_personal();
+@endpush
 @endpush

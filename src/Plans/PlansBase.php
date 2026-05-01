@@ -189,8 +189,7 @@ class PlansBase
                 $plan->{$this->title_column}, 
                 $plan->{$this->discount_column}
             );
-            $lines = config('overrides.models.PlanLine')::where('plan','=', $plan->id)->get();
-            foreach ($lines as $line) {
+            foreach ($plan->lines as $line) {
                 if($line->percent == 0) continue;
                 if($line->months != 0){
                     $new_plan->lines[] = new MonthsLines(

@@ -52,7 +52,7 @@
     function get_data(method){
         var formData = {};
         formData['medium'] = method;
-        formData['unit'] = data['id'];
+        formData['unit_id'] = data['id'];
         @if(!empty($form))
         $('#BaseForm').submit();
         var form = Alpine.$data($('#BaseForm')[0]).form;
