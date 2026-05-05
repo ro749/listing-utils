@@ -39,7 +39,7 @@ class MonthLines
             classes: $classes
         );
         if(empty($num_of_months)){
-            $form->fields['fill_months_'.$id] = new Field(type: InputType::NUMBER);
+            $form->fields['fill_months_'.$id] = new Field(type: InputType::NUMBER,min: 0);
             $this->months_line = new PlanLine(
                 text: $month_tag,
                 amount: $form->fields['fill_months_'.$id],
