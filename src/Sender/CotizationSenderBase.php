@@ -45,6 +45,7 @@ class CotizationSenderBase extends BaseForm
     }
 
     public function after_process($model){
+        Log::info($model);
         switch($model->medium){
             case CotizationMedium::LINK->value:
                 return route('client-view', ['id' => $model->id]);
@@ -53,7 +54,7 @@ class CotizationSenderBase extends BaseForm
             case CotizationMedium::MAIL->value:
                 $mail_class = $this->mail_class;
                 $mail = new $mail_class(
-                    unit: $model->unit,
+                    unit: $model->unit_id,
                     link: route('client-view', ['id' => $model->id])
                 );
                 Mail::to($this->client->mail)->send($mail);

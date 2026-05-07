@@ -243,7 +243,6 @@ class PlansBase
             }
             
         }
-        Log::info('matrix: '.json_encode($matrix));
         return $matrix;
     }
 
