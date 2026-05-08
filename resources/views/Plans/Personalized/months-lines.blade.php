@@ -24,7 +24,7 @@
 @push('scripts')
 <script>
     $('#fill_{{ $element->months_line->id }}').on('input', function () {
-        changed_personal();
+        fill_data();
     });
     $(document).on('personalized_plan_changed', function(){
         var value = $('#fill_{{ $element->line->id }}').get_number();

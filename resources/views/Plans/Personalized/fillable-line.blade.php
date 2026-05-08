@@ -19,7 +19,7 @@
         is_updating_input = true;
         $('#per_{{ $element->id }}').data('flag', true);
         $('#fill_{{ $element->id }}').trigger('input');
-        changed_personal();
+        fill_data();
         //$('#per_{{ $element->id }}').removeData('flag');
         is_updating_input = false;
     });
@@ -36,7 +36,7 @@
         is_updating_input = true;
         $('#fill_{{ $element->id }}').data('flag', true);
         $('#per_{{ $element->id }}').trigger('input');
-        changed_personal();
+        fill_data();
         //$('#fill_{{ $element->id }}').removeData('flag');
         is_updating_input = false;
         

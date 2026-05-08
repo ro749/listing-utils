@@ -30,6 +30,11 @@
         var final_price = data['price'] - discount;
         @else
         var final_price = parseFloat(data['price']); 
+        if($('#fill_discount_{{ $plan->id }}')){
+            var discount = $('#fill_discount_{{ $plan->id }}').get_number();
+            final_price -= discount;
+            $('#per_discount_{{ $plan->id }}').set_value(discount/data['price']*100.0);
+        }
         @endif
     @else
         var final_price = parseFloat(data['{{ $plan->discount }}']);

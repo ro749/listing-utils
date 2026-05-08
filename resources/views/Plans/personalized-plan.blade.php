@@ -13,7 +13,7 @@
         @else
         var final_price = data['price'];
         @endif
-        var discount = $('#fill_discount').get_number();
+        var discount = $('#fill_discount_personalized').get_number();
         if(discount>0){
             if(!$('#per_discount').data('flag')){
                 $('#per_discount').set_percent((discount/final_price)*100.0);
