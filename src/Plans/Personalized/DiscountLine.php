@@ -16,12 +16,22 @@ class DiscountLine extends FillableLine
         array $classes = [],
         string $plan_id = ''
     ){
+        if(empty($id)){
+            $id = 'discount_'.$plan_id;
+        }
+        if(empty($classes)){
+            $classes = ['discount_'.$plan_id];
+        }
         parent::__construct($form, $text, $id, $classes, $plan_id);
     }
 
     public function render(string $id, string $key, BaseForm $form = null)
     {
         return view('listing-utils::Plans.Lines.Personalized.discount-line');
+    }
+
+    public function to_upper(){
+        $this->text = mb_strtoupper($this->text, 'UTF-8');
     }
 
     public function get_fields(BaseForm $form,string $id, string $key,){

@@ -30,6 +30,10 @@ class DiscountLine extends Component
         $this->plan_id = $plan_id;
     }
 
+    public function to_upper(){
+        $this->text = mb_strtoupper($this->text, 'UTF-8');
+    }
+
     public function render()
     {
         return view('listingutils::Plans.Lines.discount-line');

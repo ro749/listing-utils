@@ -41,6 +41,10 @@ class FillableLine
         return view('listing-utils::Plans.Lines.Personalized.fillable-line');
     }
 
+    public function to_upper(){
+        $this->text = mb_strtoupper($this->text, 'UTF-8');
+    }
+
     public function get_fields(BaseForm $form,string $id, string $key,){
         if(!empty($this->percent)){
             $form->fields['per_'.$id.'_'.$key] = $this->percent;

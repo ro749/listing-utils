@@ -62,6 +62,12 @@ class MonthLines
 
     }
 
+    public function to_upper(){
+        $this->line->to_upper();
+        $this->months_line->to_upper();
+        $this->mensuality_line->to_upper();
+    }
+
     public function render(string $id, string $key, BaseForm $form = null)
     {
         return view('listing-utils::Plans.personalized-months-lines');

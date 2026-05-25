@@ -33,6 +33,12 @@ class MonthsLines
         $this->plan_id = $plan_id;
     }
 
+    public function to_upper(){
+        $this->line->to_upper();
+        $this->months_line->to_upper();
+        $this->mensuality_line->to_upper();
+    }
+
     public function render()
     {
         return view('listing-utils::Plans.Lines.months-lines');

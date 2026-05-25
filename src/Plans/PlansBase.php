@@ -28,8 +28,9 @@ class PlansBase
     public bool $total_on_top = false;
     public bool $ppm = false;
     public bool $show_base_price = true;
-    public ?Plan $personalized_plan = null;
 
+    public bool $mayus = false;
+    public ?Plan $personalized_plan = null;
     public ?BaseForm $form = null;
     public $plans = [];
 
@@ -53,6 +54,7 @@ class PlansBase
         $this->total_on_top = config('listing.plans.total_on_top',false);
         $this->ppm = $ppm;
         $this->show_base_price = config('listing.plans.show_base_price',true);
+        $this->mayus = config('listing.plans.mayus',false);
 
         if(config()->has('listing.plans.personalized_plan')){
             $this->form = new BaseForm();
@@ -241,11 +243,28 @@ class PlansBase
             else{
                 $matrix[] = [$this->personalized_plan];
             }
-            
+        }
+        if($this->mayus){
+            $this->process_texts($matrix);
         }
         return $matrix;
     }
 
+    public function process_texts($matrix) {
+        foreach ($matrix as $row) {
+            foreach ($row as $plan) {
+                foreach ($plan->top_lines as $line) {
+                    $line->to_upper();
+                }
+                foreach ($plan->lines as $line) {
+                    $line->to_upper();
+                }
+                foreach ($plan->bottom_lines as $line) {
+                    $line->to_upper();
+                }
+            }
+        }
+    }
     //regresa los planes en matrizes de como se van a acompodar
     public function get(bool $needs_personal = true): array{
         return $this->get_in_matrix(config('listing.plans.plans_per_row',2),$needs_personal);
