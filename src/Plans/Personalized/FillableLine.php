@@ -23,9 +23,9 @@ class FillableLine
     public function __construct(
         BaseForm $form,
         string $text,
+        string $plan_id,
         string $id='',
         array $classes = [],
-        string $plan_id = ''
     ){
         $this->text = $text;
         $this->id = $id;

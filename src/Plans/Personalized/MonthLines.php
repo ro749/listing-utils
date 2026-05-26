@@ -24,17 +24,18 @@ class MonthLines
         string $text,
         string $month_tag,
         string $mensuality_tag,
+        string $plan_id,
         //if 0 is going to be an input
         int|string $num_of_months = 0,
         string $id = '',
         array $classes = [],
-        string $plan_id = '',
     ){
         $this->plan_id = $plan_id;
         $this->num_of_months = $num_of_months;
         $this->line = new FillableLine(
             form: $form,
             text: $text,
+            plan_id: $plan_id,
             id: $id,
             classes: $classes
         );

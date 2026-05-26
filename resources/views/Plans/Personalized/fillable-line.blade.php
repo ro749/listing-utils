@@ -63,12 +63,16 @@
             return;
         }
         //return;
+        
+        console.log("{{ $element->id }}" + " on personalized_plan_changed");
         if($('#per_{{ $element->id }}').data('flag')){
             var percent = $('#per_{{ $element->id }}').get_number();
+            console.log("{{ $element->id }}" + " Setting fill");
             $('#fill_{{ $element->id }}').set_value((percent/100.0)*final_price);
         }
         else{
             var number = $('#fill_{{ $element->id }}').get_number();
+            console.log("{{ $element->id }}" + " Setting percentage");
             $('#per_{{ $element->id }}').set_percent((number/final_price)*100.0);
         }
     });

@@ -12,9 +12,9 @@ class DiscountLine extends FillableLine
     public function __construct(
         BaseForm $form,
         string $text,
+        string $plan_id,
         string $id='',
         array $classes = [],
-        string $plan_id = ''
     ){
         if(empty($id)){
             $id = 'discount_'.$plan_id;
@@ -22,7 +22,7 @@ class DiscountLine extends FillableLine
         if(empty($classes)){
             $classes = ['discount_'.$plan_id];
         }
-        parent::__construct($form, $text, $id, $classes, $plan_id);
+        parent::__construct($form, $text, $plan_id, $id, $classes);
     }
 
     public function render(string $id, string $key, BaseForm $form = null)
