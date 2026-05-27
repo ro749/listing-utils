@@ -17,10 +17,10 @@ class DiscountLine extends FillableLine
         array $classes = [],
     ){
         if(empty($id)){
-            $id = 'discount_'.$plan_id;
+            $id = $plan_id == 'personalized' ? 'discount' : 'discount_'.$plan_id;
         }
         if(empty($classes)){
-            $classes = ['discount_'.$plan_id];
+            $classes = [$plan_id == 'personalized' ? 'discount' : 'discount_'.$plan_id];
         }
         parent::__construct($form, $text, $plan_id, $id, $classes);
     }

@@ -32,8 +32,20 @@ class PersonalPlan extends Plan{
         parent::__construct($id, $title, $discount, $top_lines, $lines, $bottom_lines, $price_tag, $discount_tag, $total_tag, $ppm_tag, $total_on_top, $ppm, $show_base_price);
         $this->form = $form;
         $this->lines = $lines;
-        $this->lines[] = new Personalized\DiscountLine($form, $discount_tag, 'discount', $id, ['personalized discount']);
-        $this->lines[] = new Personalized\FillableLine($form, $enganche_tag, 'enganche', $id, ['personalized']);    
+        $this->lines[] = new Personalized\DiscountLine(
+            form: $form, 
+            text: $discount_tag, 
+            plan_id: $id, 
+            id: 'discount', 
+            classes: ['personalized discount']
+        );
+        $this->lines[] = new Personalized\FillableLine(
+            form: $form, 
+            text: $enganche_tag, 
+            plan_id: $id,
+            id: 'enganche', 
+            classes: ['personalized']
+        );    
         $this->lines[] = new Personalized\MonthLines(
             form: $form, 
             text: $plazo_tag,
