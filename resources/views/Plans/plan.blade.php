@@ -34,7 +34,7 @@
         if(discount_element){
             if(discount_element.is('input')){
                 if(discount_element.data('flag')){
-                    $('#per_discount_{{ $plan->id == 'personalized' ? '' : '_'.$plan->id }}').set_value(discount/data['price']*100.0);
+                    $('#per_discount{{ $plan->id == 'personalized' ? '' : '_'.$plan->id }}').set_value(discount/data['price']*100.0);
                 }
                 else{
                     var discount_percent = $('#per_discount{{ $plan->id == 'personalized' ? '' : '_'.$plan->id }}').get_number();
@@ -44,7 +44,7 @@
             }
             var discount = discount_element.get_number();
             final_price -= discount;
-            $('#per_discount_{{ $plan->id == 'personalized' ? '' : '_'.$plan->id }}').set_value(discount/data['price']*100.0);
+            $('#per_discount{{ $plan->id == 'personalized' ? '' : '_'.$plan->id }}').set_value(discount/data['price']*100.0);
         }
         @endif
     @else
