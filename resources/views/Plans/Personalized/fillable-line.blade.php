@@ -57,7 +57,7 @@
 
     $('#fill_{{ $element->id }}').set_value(0);
     $('#per_{{ $element->id }}').set_value(0);
-    @if($element->id != 'discount')
+    @if(!str_contains($element->id,'discount'))
     $(document).on('personalized_plan_changed', function(event,final_price){
         if($(document).data('no_auto_update_personalized')){
             return;
