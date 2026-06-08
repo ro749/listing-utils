@@ -6,7 +6,7 @@
     background-color: var(--success-focus);
     color: var(--success-main);
 }
-.UnitsStatus-1, .AsesorStatus-1, .AsesorCategories-1{
+.UnitsStatus-1, .AsesorStatus-1{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,6 +38,33 @@
     border-radius: var(--bs-border-radius-pill) !important;
     background-color: var(--neutral-100);
     color: var(--text-primary-light);
+}
+
+.AsesorCategories-0{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--primary-100);
+    color: var(--primary-600);
+}
+
+.AsesorCategories-1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--lilac-100);
+    color: var(--lilac-600);
+}
+
+.AsesorCategories-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--bs-border-radius-pill) !important;
+    background-color: var(--info-focus);
+    color: var(--info-main);
 }
 
 .plan-title{
