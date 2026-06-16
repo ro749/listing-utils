@@ -24,7 +24,6 @@ $('.fill-base-price').set_money(data['price']);
     @push('before_fill')
         @foreach ($personal_plan->toArray() as $key=>$value)
             @if($key != 'id' && $key != 'quotation' && $key != 'created_at' && $key != 'updated_at')
-            console.log('Filling personalized plan with {{ $key }}: {{ $value }}');
             @if(!empty($value) && $value != '0.00')
             $('#{{ $key }}').parent().parent().parent().show();
             $('#{{ $key }}').set_value('{{ $value }}');

@@ -22,11 +22,9 @@
         }
         $('#fill_total-price-personalized').set_money(final_price);
         if($(document).data('no_auto_update_personalized')){
-            console.log('no_auto_update_personalized');
             $(document).trigger('custom_personalized_plan_changed',[final_price]);
         }
         else{
-            console.log('auto_update_personalized');
             $(document).trigger('personalized_plan_changed',[final_price]);
         }
         return;
