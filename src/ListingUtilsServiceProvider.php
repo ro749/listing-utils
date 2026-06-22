@@ -49,7 +49,7 @@ class ListingUtilsServiceProvider extends PackageServiceProvider
     public function register()
     {
         parent::register();
-        $packageConfig = require __DIR__.'/../config/listing-utils.php';
+        $packageConfig = require base_path('vendor/ro749/listing-utils/config/listing-utils.php');
         config(['overrides' => $this->mergeConfigs($packageConfig['overrides'], config('overrides', []))]);    
     }
 
