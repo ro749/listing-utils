@@ -118,3 +118,18 @@
 .popup h4, .popup h5, .popup p{
     color: black !important;
 }
+
+.fields{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.select2{
+    width: 100% !important;
+}
+
+#SelectClient-fields{
+    width: 75% !important;
+}
