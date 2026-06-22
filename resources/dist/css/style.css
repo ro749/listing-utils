@@ -79,6 +79,10 @@
     padding: 1em;
 }
 
+.plan-div span{
+    color: black !important;
+}
+
 
 .left{
     text-align: left;
@@ -102,7 +106,6 @@
     .plan-div{
         width: 100%;
     }
-    
 }
 
 @media (max-width: 991px) {
@@ -110,4 +113,8 @@
         display:flex; 
         flex-direction: column; 
     }
+}
+
+.popup h4, .popup h5, .popup p{
+    color: black !important;
 }
