@@ -45,7 +45,6 @@ class CotizationSenderBase extends BaseForm
     }
 
     public function after_process($model){
-        Log::info($model);
         switch($model->medium){
             case CotizationMedium::LINK->value:
                 return route('client-view', ['id' => $model->id]);
