@@ -18,6 +18,8 @@ if(empty($personal_plan)){
 @endforeach
 </x-form>
 @push('fill')
+console.log('fill');
+console.log(data);
 $('.fill-base-price').set_money(data['price']);   
 @endpush
 @if($personal_plan !== null)
@@ -42,7 +44,10 @@ $('.fill-base-price').set_money(data['price']);
 @elseif(empty($sender))
 @push("scripts")
 <script>
-    $('#plan-div-personalized').hide();
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#plan-div-personalized').hide();
+    });
+    
     @stack('hide_personal')
 </script>
 @endpush
