@@ -4,12 +4,14 @@ namespace Ro749\ListingUtils\ImageMapPro;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use Closure;
 class SingleImageMapPro extends ImageMapProBase
 {
     public string $label_column;
     public string $data_column;
     public string $file;
+
+    public ?Closure $query_modifier = null;
 
     public function __construct()
     {
@@ -26,7 +28,11 @@ class SingleImageMapPro extends ImageMapProBase
     public function get_map(){
         $path = storage_path($this->file);
         $map = json_decode(file_get_contents($path),true);
-        $data = (config('overrides.models.Unit'))::select('id',$this->label_column,$this->data_column)->get();
+        $query = (config('overrides.models.Unit'))::select('id',$this->label_column,$this->data_column);
+        if(!empty($this->query_modifier)){
+            $query = ($this->query_modifier)($query);
+        } 
+        $data = $query->get();
         $dispo = [];
         foreach($data as $d){
             $dispo[$d->{$this->label_column}] = $d->{$this->data_column};

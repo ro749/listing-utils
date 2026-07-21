@@ -6,7 +6,7 @@
     background-color: var(--success-focus);
     color: var(--success-main);
 }
-.UnitsStatus-1, .AsesorStatus-1{
+.UnitsStatus-1, .AsesorStatus-1, .AsesorCategories-1{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,33 +40,6 @@
     color: var(--text-primary-light);
 }
 
-.AsesorCategories-0{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--bs-border-radius-pill) !important;
-    background-color: var(--primary-100);
-    color: var(--primary-600);
-}
-
-.AsesorCategories-1{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--bs-border-radius-pill) !important;
-    background-color: var(--lilac-100);
-    color: var(--lilac-600);
-}
-
-.AsesorCategories-2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: var(--bs-border-radius-pill) !important;
-    background-color: var(--info-focus);
-    color: var(--info-main);
-}
-
 .plan-title{
     text-align: center;
     font-size: 2em;
@@ -77,10 +50,6 @@
     margin: 1em;
     background-color: white;
     padding: 1em;
-}
-
-.plan-div span{
-    color: black !important;
 }
 
 
@@ -106,6 +75,7 @@
     .plan-div{
         width: 100%;
     }
+    
 }
 
 @media (max-width: 991px) {
@@ -113,23 +83,4 @@
         display:flex; 
         flex-direction: column; 
     }
-}
-
-.popup h4, .popup h5, .popup p{
-    color: black !important;
-}
-
-.fields{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.select2{
-    width: 100% !important;
-}
-
-#SelectClient-fields{
-    width: 75% !important;
 }

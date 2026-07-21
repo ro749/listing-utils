@@ -4,23 +4,23 @@ use Illuminate\Http\Request;
 
 Route::middleware(['web'])->group(function () {
 
-    Route::get('imagemappro/map', function (Request $request){
-        $impClass = config('overrides.image_map_pro');
+    Route::get('imagemappro/{imp}/map', function (Request $request, $impClass){
+        $impClass = config('overrides.image_map_pro.'.$impClass);
         $imp = new $impClass();
         return $imp->get_map();
     });
-    Route::get('imagemappro/tower', function (Request $request){
-        $impClass = config('overrides.image_map_pro');
+    Route::get('imagemappro/{imp}/tower', function (Request $request, $impClass){
+        $impClass = config('overrides.image_map_pro.'.$impClass);
         $imp = new $impClass();
         return $imp->get_tower_map();
     });
-    Route::get('imagemappro/floor', function (Request $request){
-        $impClass = config('overrides.image_map_pro');
+    Route::get('imagemappro/{imp}/floor', function (Request $request, $impClass){
+        $impClass = config('overrides.image_map_pro.'.$impClass);
         $imp = new $impClass();
         return $imp->get_floor_map($request->input('floor'));
     });
-    Route::get('imagemappro/unit', function (Request $request){
-        $impClass = config('overrides.image_map_pro');
+    Route::get('imagemappro/{imp}/unit', function (Request $request,  $impClass){
+        $impClass = config('overrides.image_map_pro.'.$impClass);
         $imp = new $impClass();
         return $imp->get_unit($request);
     });

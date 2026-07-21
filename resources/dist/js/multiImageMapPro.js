@@ -6,7 +6,7 @@
             current_floor = floor;
             
             $.ajax({
-                url: 'imagemappro/floor',
+                url: 'imagemappro/'+options.id+'/floor',
                 method: 'GET',
                 dataType: 'json',
                 data: {floor: floor},
@@ -20,7 +20,7 @@
 
         function get_unit(floor,type){
             $.ajax({
-                url: 'imagemappro/unit',
+                url: 'imagemappro/'+options.id+'/unit',
                 method: 'GET',
                 dataType: 'json',
                 data: {
@@ -64,7 +64,7 @@
         });
 
         $.ajax({
-            url: 'imagemappro/tower',
+            url: 'imagemappro/'+options.id+'/tower',
             method: 'GET',
             dataType: 'json',
             success: function (response) {

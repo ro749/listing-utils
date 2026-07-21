@@ -38,7 +38,7 @@
         var $this = $(this);
         function get_unit(unit){
             $.ajax({
-                url: 'imagemappro/unit',
+                url: 'imagemappro/'+options.id+'/unit',
                 method: 'GET',
                 dataType: 'json',
                 data: {unit: unit},
@@ -50,6 +50,9 @@
         } 
 
         ImageMapPro.subscribe((action) =>{
+            if(action.payload.map != options.id){
+                return;
+            }
             var selected_unit = $(this).data('selected_unit');
             if(action.type == "mapInit"){
                 if(ImageMapPro.isMobile()){
@@ -79,12 +82,12 @@
         });
         var $this = $(this);
         $.ajax({
-            url: 'imagemappro/map',
+            url: 'imagemappro/'+options.id+'/map',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
                 $this.data('selected_color', response.selected_color);
-                ImageMapPro.init('#image-map-pro',response.map);
+                ImageMapPro.init('#'+options.id,response.map);
             }
         });
     };
