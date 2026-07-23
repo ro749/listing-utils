@@ -3,7 +3,7 @@
 namespace Ro749\ListingUtils\Commands;
 
 use Illuminate\Console\Command;
-use Ro749\SharedUtils\Readers\DbReader;
+use Ro749\SharedUtils\Readers\DbRead;
 use Ro749\SharedUtils\Readers\DbUpdate;
 class ReadUnits extends Command
 {
@@ -35,14 +35,14 @@ class ReadUnits extends Command
             );
         }
         else{
-            $reader = new DbReader(
+            $reader = new DbRead(
                 model_class: config('overrides.models.Unit'),
                 required_columns: ['unit','price','status'],
                 add_new_columns: true
             );
         }
         
-        $reader->read_cvs($file);
+        $reader->read_csv($file);
         $this->call('migrate', [
             '--force' => true
         ]);
