@@ -22,7 +22,7 @@ class SingleImageMapPro extends ImageMapProBase
         );
         $this->label_column = config('listing.image_map_pro.label_column','unit');
         $this->data_column = config('listing.image_map_pro.data_column','status');
-        $this->file = config('listing.image_map_pro.file','imageMapPro.json');
+        $this->file = config('listing.image_map_pro.file','ImageMapPro.json');
     }
 
     public function get_map(){
