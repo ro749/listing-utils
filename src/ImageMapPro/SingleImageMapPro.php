@@ -18,7 +18,7 @@ class SingleImageMapPro extends ImageMapProBase
         parent::__construct(
             colors: config('listing.image_map_pro.colors',['#173111','#ff0000','#ffff00']),
             opacities: config('listing.image_map_pro.opacities',[0.4,0.4,0.4]),
-            selected_color: config('listing.image_map_pro.selected_color',"#ffffff"),
+            selected_color: config('listing.image_map_pro.selected_color',"#ffffff80"),
         );
         $this->label_column = config('listing.image_map_pro.label_column','unit');
         $this->data_column = config('listing.image_map_pro.data_column','status');

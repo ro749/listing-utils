@@ -9,12 +9,12 @@ abstract class ImageMapProBase
     public array $colors = [];
     public array $opacities = [];
 
-    public string $selected_color = "#ffffff";
+    public string $selected_color = "#ffffff80";
 
     public function __construct(
         array $colors = ['#00ff00','#ff0000','#ffff00'],
         array $opacities = [0.4,0.4,0.4],
-        string $selected_color = "#ffffff",
+        string $selected_color = "#ffffff80",
         string $status_column = 'status'
     ){
         $this->colors = $colors;
