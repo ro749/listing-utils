@@ -37,7 +37,6 @@ abstract class ImageMapProBase
 
     public function style_unit(&$child,&$dispo){
         if(!isset($dispo[$child["title"]])){
-            $this->no_color_unit($child);
             return;
         }
         $color_value = $dispo[$child["title"]];
