@@ -8,6 +8,7 @@ use Ro749\ListingUtils\Commands\ListingUtilsCommand;
 use Ro749\ListingUtils\Commands\MakeImageMapPro;
 use Ro749\ListingUtils\Commands\MakePlans;
 use Ro749\ListingUtils\Commands\ReadUnits;
+use Ro749\ListingUtils\Commands\ReadPlans;
 use Illuminate\Support\Facades\Blade;
 class ListingUtilsServiceProvider extends PackageServiceProvider
 {
@@ -28,7 +29,8 @@ class ListingUtilsServiceProvider extends PackageServiceProvider
                 ListingUtilsCommand::class,
                 MakeImageMapPro::class,
                 MakePlans::class,
-                ReadUnits::class
+                ReadUnits::class,
+                ReadPlans::class
             ])
             ->hasRoutes('web');
     }

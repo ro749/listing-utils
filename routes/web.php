@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 Route::middleware(['web'])->group(function () {
 
     Route::get('imagemappro/{imp}/map', function (Request $request, $impClass){
-        $impClass = config('overrides.image_map_pro.'.$impClass);
+        $impClass = config('overrides.image_map_pro.'.$impClass)??\Ro749\ListingUtils\ImageMapPro\SingleImageMapPro::class;
         $imp = new $impClass();
         return $imp->get_map();
     });
@@ -20,7 +20,7 @@ Route::middleware(['web'])->group(function () {
         return $imp->get_floor_map($request->input('floor'));
     });
     Route::get('imagemappro/{imp}/unit', function (Request $request,  $impClass){
-        $impClass = config('overrides.image_map_pro.'.$impClass);
+        $impClass = config('overrides.image_map_pro.'.$impClass)??\Ro749\ListingUtils\ImageMapPro\SingleImageMapPro::class;;
         $imp = new $impClass();
         return $imp->get_unit($request);
     });

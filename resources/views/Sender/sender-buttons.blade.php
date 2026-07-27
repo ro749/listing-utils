@@ -39,6 +39,7 @@
 </x-shared-utils::modal>
 @push('scripts')
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     $('#send-email-btn').on('click', function () {
         openPopup('ask-mail-modal');
     });
@@ -119,5 +120,6 @@
             }
         })
     });
+});
 </script>
 @endpush

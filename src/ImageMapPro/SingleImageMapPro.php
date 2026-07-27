@@ -26,7 +26,7 @@ class SingleImageMapPro extends ImageMapProBase
     }
 
     public function get_map(){
-        $path = storage_path($this->file);
+        $path = resource_path('image_map_pro/' . $this->file);
         $map = json_decode(file_get_contents($path),true);
         $query = (config('overrides.models.Unit'))::select('id',$this->label_column,$this->data_column);
         if(!empty($this->query_modifier)){

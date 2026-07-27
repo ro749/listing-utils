@@ -7,18 +7,8 @@ use Ro749\SharedUtils\Readers\DbRead;
 use Ro749\SharedUtils\Readers\DbUpdate;
 class ReadUnits extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'read:units {file} {--update : Update instead of create}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Command description';
 
     /**
