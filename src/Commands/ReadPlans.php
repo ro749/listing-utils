@@ -35,18 +35,21 @@ class ReadPlans extends Command
                     'discount' => $d['descuento'],
                     'final_date' => $d['meses']
                 ];
-                $plan_lines[] = [
-                    'plan_id' => $key+1,
-                    'description' => 'Plazo',
-                    'percent' => $d['plazo'],
-                    'months' => 'true'
-                ];
             }
+            
             if(!empty($d['enganche'])){
                 $plan_lines[] = [
                     'plan_id' => $key+1,
                     'description' => 'Enganche',
                     'percent' => $d['enganche']
+                ];
+            }
+            if(!empty($d['meses'])){
+                $plan_lines[] = [
+                    'plan_id' => $key+1,
+                    'description' => 'Plazo',
+                    'percent' => $d['plazo'],
+                    'months' => 'true'
                 ];
             }
             if(!empty($d['entrega'])){
