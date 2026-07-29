@@ -2,7 +2,7 @@
     <td class="right">
         <strong>
             <span id="desc-{{ $element->id }}" class="plan-line-desc @foreach($element->classes as $class) desc-{{ $class }} @endforeach">
-                {{ $element->text }}:
+                {!! $element->text !!}: 
             </span>
         </strong>
     </td>
