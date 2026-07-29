@@ -1,5 +1,5 @@
 @props(['personal_plan'=>null])
-<p class="plan-title" id="plan-title-{{ $plan->id }}">{{ $plan->title }}</p>
+<p class="plan-title" id="plan-title-{{ $plan->id }}">{!! $plan->title !!}</p>
 <div class="table-responsive">
     <table class="table">
         <tbody>
