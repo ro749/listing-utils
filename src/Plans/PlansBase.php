@@ -240,6 +240,9 @@ class PlansBase
             if(count($matrix) == 1 && count($matrix[0]) == 1){
                 $matrix[0][] = $this->personalized_plan;
             }
+            else if(count($matrix[0]) != count($matrix[count($matrix)-1])){
+                $matrix[count($matrix)-1][] = $this->personalized_plan;
+            }
             else{
                 $matrix[] = [$this->personalized_plan];
             }

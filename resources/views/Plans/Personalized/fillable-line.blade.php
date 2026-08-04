@@ -3,6 +3,7 @@
 <script>
     var is_updating_change = false;
     var is_updating_input = false;
+    document.addEventListener('DOMContentLoaded', function() {
     $('#per_{{ $element->id }}').on('input', function () {
         if(is_updating_input) return;
         if($('#fill_{{ $element->id }}').data('flag')) {
@@ -72,6 +73,8 @@
             $('#per_{{ $element->id }}').set_percent((number/final_price)*100.0);
         }
     });
+
     @endif
+    });
 </script>
 @endpush

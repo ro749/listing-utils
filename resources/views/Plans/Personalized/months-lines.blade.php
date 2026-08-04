@@ -23,6 +23,7 @@
 @endpush
 @push('scripts')
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
     $('#fill_{{ $element->months_line->id }}').on('input', function () {
         fill_data();
     });
@@ -35,6 +36,8 @@
             months = 1;
         }
         $('#fill_{{ $element->mensuality_line->id }}').set_money(value/months);
+    });
+    
     });
     </script>
 @endpush

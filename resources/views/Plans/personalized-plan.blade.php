@@ -29,6 +29,7 @@
         }
         return;
     }
+    document.addEventListener('DOMContentLoaded', function() {
     $(document).on('personalized_plan_changed', function(event,final_price){
         if($('#fill_{{ $autofill }}').length){
             var {{ $autofill }} = final_price
@@ -44,7 +45,9 @@
             
             $('#per_{{ $autofill }}').set_percent(({{ $autofill }}/final_price)*100.0);
         }
-    })
+    });
+    
+    });
 </script>
 @push('after_fill')
     changed_personal();
