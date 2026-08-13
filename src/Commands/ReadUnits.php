@@ -31,7 +31,7 @@ class ReadUnits extends Command
                 add_new_columns: true
             );
         }
-        
+        $reader->ignore_lines[] = 'id';
         $reader->read_csv($file);
         $this->call('migrate', [
             '--force' => true

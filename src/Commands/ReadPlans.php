@@ -22,20 +22,14 @@ class ReadPlans extends Command
         $plans = [];
         $plan_lines = [];
         foreach($data as $key => $d) {
-            if(empty($d['meses'])){
-                $plans[] = [
-                    'title' => $d['plan'],
-                    'discount' => $d['descuento'],
-                ];
-                
+            $new_plan = ['title' => $d['plan']];
+            if(!empty($d['descuento'])){
+                $new_plan['discount'] = $d['descuento'];
             }
-            else{
-                $plans[] = [
-                    'title' => $d['plan'],
-                    'discount' => $d['descuento'],
-                    'final_date' => $d['meses']
-                ];
+            if(!empty($d['meses'])){
+                $new_plan['final_date'] = $d['meses'];
             }
+            $plans[] = $new_plan;
             
             if(!empty($d['enganche'])){
                 $plan_lines[] = [

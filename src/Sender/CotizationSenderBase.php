@@ -53,7 +53,7 @@ class CotizationSenderBase extends BaseForm
             case CotizationMedium::MAIL->value:
                 $mail_class = $this->mail_class;
                 $mail = new $mail_class(
-                    unit: $model->unit_id,
+                    unit: $model->{config('listing.quote_unit_column','unit_id')},
                     link: route('client-view', ['id' => $model->id])
                 );
                 Mail::to($this->client->mail)->send($mail);
