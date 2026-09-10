@@ -2,7 +2,7 @@
 namespace Ro749\ListingUtils\Plans\Lines;
 class MonthsLines
 {
-    public $component = 'months-lines';
+    public $type = 'months';
     //if is string, the number is taken from the database, if is int, the number is taken from the variable
     public FillableLine $line;
     public PlanLine $months_line;

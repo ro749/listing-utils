@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Log;
 //a basic plan line, all is setted from the start or can be filled manually during runtime
 class PlanLine extends Component
 {
-    public $component = 'plan-line';
+    public $type = 'line';
     //the text of the first row, is an index from the list of line text
     public string $text;
     //almost always a percentage, is the second line

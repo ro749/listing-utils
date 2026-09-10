@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Log;
 //this lines fills automaticly in base of a percent when the data of a unit is loaded
 class FillableLine extends Component
 {
-    public $component = 'fillable-line';
+    public $type = 'fillable';
     //the text of the first row, is an index from the list of line text
     public string $text;
     //the percentage of the plan line from 0 to 100

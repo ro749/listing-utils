@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\Component;
 class DiscountLine extends Component
 {
-    public $component = 'discount-line';
+    public $type = 'discount';
     //the text of the first row, is an index from the list of line text
     public string $text;
     //the percentage of the plan line from 0 to 100

@@ -7,7 +7,7 @@ use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\Field;
 class DiscountLine extends FillableLine
 {
-    public $component = 'personalized-discount-line';
+    public $type = 'personalized-discount';
 
     public function __construct(
         BaseForm $form,

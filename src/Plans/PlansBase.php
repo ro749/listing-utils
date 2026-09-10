@@ -223,6 +223,7 @@ class PlansBase
 
     public function get_in_matrix(int $plans_per_row = 2,bool $needs_personal = true)
     {
+        
         $plans = $this->get_plans_data();
         $matrix = [];
         $rows = count($plans) / $plans_per_row;
@@ -297,5 +298,12 @@ class PlansBase
     {
         $plans = new (config('overrides.plans'));
         return $plans;
+    }
+
+    public function get_info(){
+        return [
+            'plans' => $this->plans,
+            'form' => $this->form->get_info()
+        ];
     }
 }

@@ -42,9 +42,9 @@ class SingleImageMapPro extends ImageMapProBase
         return $ans;
     }
 
-    function get_unit(Request $data){
+    function get_unit(Request $request){
         $data_class = config('overrides.datas.UnitData');
-        $data = new $data_class($this->label_column, $data->input("unit"));
+        $data = new $data_class($this->label_column, $request->input("unit"));
         $unit = $data->get_data();
         if($unit->{$this->data_column} != 0){
             return null;

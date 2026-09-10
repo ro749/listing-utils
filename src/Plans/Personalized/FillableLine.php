@@ -7,7 +7,7 @@ use Ro749\SharedUtils\Forms\InputType;
 use Ro749\SharedUtils\Forms\Field;
 class FillableLine
 {
-    public $component = 'personalized-fillable-line';
+    public $type = 'personalized-fillable';
     //the text of the first row, is an index from the list of line text
     public string $text;
     public ?Field $percent;

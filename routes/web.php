@@ -26,9 +26,9 @@ Route::middleware(['web'])->group(function () {
     });
 
     Route::post('sender', function (Request $request){
-        $plans = config('overrides.plans');
+        $plans = config('overrides.plans') ?? \Ro749\ListingUtils\Plans\PlansBase::class;
         $plans = new $plans();
-        $senderClass = config('overrides.sender');
+        $senderClass = config('overrides.sender') ?? \Ro749\ListingUtils\Sender\CotizationSenderBase::class;
         $sender = new $senderClass($plans);
         return $sender->prosses($request);
     });

@@ -9,7 +9,7 @@ use Ro749\SharedUtils\Forms\Field;
 use Illuminate\Support\Facades\Log;
 class MonthLines
 {
-    public $component = 'personalized-months-lines';
+    public $type = 'personalized-months';
     public FillableLine|StaticFillableLine $line;
     //depending if the months are editable or not
     public PlanLine|StaticPlanLine $months_line;
