@@ -2,7 +2,8 @@
 
 namespace Ro749\ListingUtils\Plans;
 use Illuminate\Support\Facades\Log;
-use Ro749\ListingUtils\Plans\Lines\PlanLine;
+use Ro749\ListingUtils\Plans\Lines\FillableLine as StaticFillableLine;
+use Ro749\ListingUtils\Plans\Personalized\FillableLine;
 use Ro749\SharedUtils\Forms\BaseForm;
 class PersonalPlan extends Plan{
     public BaseForm $form;
@@ -30,6 +31,7 @@ class PersonalPlan extends Plan{
         array $lines_for_fill = ['enganche', 'plazo'],
     ){
         parent::__construct($id, $title, $discount, $top_lines, $lines, $bottom_lines, $price_tag, $discount_tag, $total_tag, $ppm_tag, $total_on_top, $ppm, $show_base_price);
+        $this->is_personalized = true;
         $this->form = $form;
         $this->lines = $lines;
         $this->lines[] = new Personalized\DiscountLine(
@@ -55,7 +57,8 @@ class PersonalPlan extends Plan{
             id: 'plazo',
             plan_id: $id,
         );
-        $this->lines[] = new PlanLine(text: $liquidacion_tag, classes: ['personalized'], id: 'liquidacion');
+        $this->lines[] = new StaticFillableLine(text: $liquidacion_tag, classes: ['personalized'], id: 'liquidacion', plan_id: $id, percent: 100);
+        $this->lines[3]->type = 'fill-with-rest';
         $this->autofill = $autofill;
         $this->lines_for_fill = $lines_for_fill;
     }

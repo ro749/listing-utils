@@ -17,6 +17,8 @@ class Plan{
     public bool $ppm;
     public bool $show_base_price;
 
+    public bool $is_personalized = false;
+
     public function __construct(
         string $id,
         string $title,
